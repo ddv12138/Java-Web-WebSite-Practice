@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link href="./css/sweetalert.css" rel="stylesheet" type="text/css" />
+	<link href="./css/login.css" rel="stylesheet" type="text/css" />
+	<script src="./javascript/index.js"></script>
+	<script src="./javascript/sweetalert-dev.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://unpkg.com/wired-elements@latest/dist/wired-elements.bundled.min.js"></script>
+	<title>Home Page</title>
+</head>
+<body>
+	<form id="loginform">
+		<input name="username" id="realusername" style="display:none;">
+		<input name="passwd" id="realpasswd" type="password" style="display:none;">
+		<input name="func"  type="password" value="loginInValidate" style="display:none;" disable="disabled">
+		<div class="login-panle">
+			<wired-card elevation="5">
+				<wired-input placeholder="用户名" id="username"></wired-input><br/>
+				<wired-input placeholder="密码" type="password" id="passwd"></wired-input>
+				<wired-button id="button">Click Me</wired-button>
+	    	</wired-card>
+		</div>
+	</form>
+</body>
+</html>
