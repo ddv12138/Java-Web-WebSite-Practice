@@ -4,7 +4,6 @@ window.onload = function(){
 	$("#passwd").on("input",syncData);
 }
 var submitData = function(){
-	console.log($('#loginform').serialize());
 	$.ajax({
 		url:"./AccountManage",
 		type:"post",

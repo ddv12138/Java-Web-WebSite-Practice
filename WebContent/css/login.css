@@ -7,4 +7,8 @@
     left: 0;
     right: 0;
     margin: auto auto;
+    background-color: white;
+}
+.login-panle input{
+	background-color: transparent;
 }
