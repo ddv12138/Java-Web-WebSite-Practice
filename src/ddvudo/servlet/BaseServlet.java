@@ -27,6 +27,6 @@ public abstract class BaseServlet extends HttpServlet {
 		}
 	}
 	public void destroy() {
-		// 什么也不做
+		
 	}
 }
