@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href=" /favicon.ico" /> 
+	<link href="../css/sweetalert.css" rel="stylesheet" type="text/css" />
+	<link href="../css/signup.css" rel="stylesheet" type="text/css" />
+	<script src="../javascript/signup.js"></script>
+	<script src="../javascript/sweetalert-dev.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://unpkg.com/wired-elements@latest/dist/wired-elements.bundled.min.js"></script>
+	<title>注册-ddvudo</title>
+</head>
+<body>
+	<form id="signupform">
+		<input name="username" id="realusername" style="display:none;">
+		<input name="passwd" id="realpasswd" type="password" style="display:none;">
+		<input name="realconfirmpasswd" id="realconfirmpasswd" type="password" style="display:none;">
+		<input name="tel" id="realtel"  style="display:none;">
+		<input name="mail" id="realmail"  style="display:none;">
+		<input name="func"  type="password" value="signupValidate" style="display:none;" disable="disabled">
+		<div class="signup-panle">
+			<div class="signupcard">
+				<wired-card elevation="10">
+					<wired-input placeholder="用户名" id="username" style=""></wired-input><br/>
+					<wired-input placeholder="密码" type="password" id="passwd" ></wired-input><br/>
+					<wired-input placeholder="确认密码" type="password" id="confirmpasswd"></wired-input><br/>
+					<wired-input placeholder="手机号码" id="tel"></wired-input><br/>
+					<wired-input placeholder="邮箱" id="mail"></wired-input><br/>
+					<div class="signupbtn">
+						<wired-button id="signup">注册</wired-button>
+					</div>
+		    	</wired-card>
+	    	</div>
+		</div>
+	</form>
+	<script type="text/javascript" color="0,0,0" opacity='1' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+</body>
+</html>

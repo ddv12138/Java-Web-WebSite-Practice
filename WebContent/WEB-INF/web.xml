@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <servlet>
   	<servlet-name>AccountManage</servlet-name>
   	<servlet-class>ddvudo.servlet.AccountManage</servlet-class>
@@ -16,5 +17,5 @@
   <servlet-mapping>
         <servlet-name>AccountManage</servlet-name>
         <url-pattern>/AccountManage</url-pattern>
-    </servlet-mapping>
+  </servlet-mapping>
 </web-app>

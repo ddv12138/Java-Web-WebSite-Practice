@@ -1,0 +1,43 @@
+*{
+	font-family: myfont;
+	font-size:1.05em;
+}
+.signup-panle{
+	width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto auto;
+    background-color: white;
+}
+.signup-panle .signupbtn{
+	text-align: center;
+    font-size: 1rem;
+    margin: 0px 1rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+}
+.signup-panle input{
+	background-color: transparent;
+}
+.signup-panle .signupcard{
+	width: 25rem;
+    height: 30rem;
+    text-align: center;
+    padding:0.3rem;
+}
+.signup-panle .signupcard wired-card{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+.signup-panle .signupcard wired-card wired-input{
+	text-align: left;
+	width: 90%;
+	margin-bottom:3rem;
+}

@@ -1,7 +1,8 @@
 window.onload = function(){
-	$("#button").on("click",submitData);
+	$("#login").on("click",submitData);
 	$("#username").on("input",syncData);
 	$("#passwd").on("input",syncData);
+	$("#signup").on("click",tosignup);
 }
 var submitData = function(){
 	$.ajax({
@@ -18,4 +19,7 @@ var loginValidate = function(arg){
 var syncData = function(arg){
 	$("#realusername").val($("#username").val());
 	$("#realpasswd").val($("#passwd").val());
+}
+var tosignup = function(){
+	window.location.href="./signup/signup.html";
 }
