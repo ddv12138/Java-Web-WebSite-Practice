@@ -29,6 +29,11 @@
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
   	</dependency>
+  	<dependency>
+  		<groupId>servletapi</groupId>
+  		<artifactId>servletapi</artifactId>
+  		<version>2.4</version>
+  	</dependency>
   </dependencies>
   <dependencyManagement>
   	<dependencies>
