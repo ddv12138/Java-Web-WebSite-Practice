@@ -1,8 +1,5 @@
 window.onload = function(){
-	$("#login").on("click",submitData);
-	$("#username").on("input",syncData);
-	$("#passwd").on("input",syncData);
-	$("#signup").on("click",tosignup);
+	$("#loginBtn").on("click",submitData);
 }
 var submitData = function(){
 	$.ajax({
@@ -14,11 +11,7 @@ var submitData = function(){
 	});
 }
 var loginValidate = function(arg){
-	console.log(arg);
-}
-var syncData = function(arg){
-	$("#realusername").val($("#username").val());
-	$("#realpasswd").val($("#passwd").val());
+	console.log("1");
 }
 var tosignup = function(){
 	window.location.href="./signup/signup.html";
