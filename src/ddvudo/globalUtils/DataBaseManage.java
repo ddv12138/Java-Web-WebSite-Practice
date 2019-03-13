@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class DataBaseManage {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://www.ddvudo.tk:3307/TestWeb_2018_06_17";    
+    static final String DB_URL = "jdbc:mysql://www.ddvudo.tk:3306/TestWeb_2018_06_17";
     static final String USER = "webadmin";
     static final String PASS = "liukang951006";
     Connection conn;
