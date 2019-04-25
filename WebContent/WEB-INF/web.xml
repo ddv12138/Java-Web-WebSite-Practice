@@ -12,7 +12,7 @@
   
   <servlet>
   	<servlet-name>AccountManage</servlet-name>
-  	<servlet-class>ddvudo.servlet.AccountManage</servlet-class>
+  	<servlet-class>servlet.AccountManage</servlet-class>
   </servlet>
   <servlet-mapping>
         <servlet-name>AccountManage</servlet-name>

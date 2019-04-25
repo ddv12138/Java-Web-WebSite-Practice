@@ -1,15 +1,11 @@
-package ddvudo.servlet;
+package servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
+import globalUtils.UUIDManage;
+import passwdUtils.PasswdEncrypt;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ddvudo.globalUtils.UUIDManage;
-import ddvudo.passwdUtils.PasswdEncrypt;
+import java.io.PrintWriter;
 
 public class AccountManage extends BaseServlet {
 	private static final long serialVersionUID = 4293957245032244232L;
@@ -18,7 +14,7 @@ public class AccountManage extends BaseServlet {
 		try {
 			String username = request.getParameter("username");
 			String passwd = request.getParameter("passwd");
-			String EncPasswd = PasswdEncrypt.getInstance().passwdEncrypt(passwd);
+			String EncPasswd = PasswdEncrypt.passwdEncrypt(passwd);
 			if(username.equals("admin") && EncPasswd.equals("ISMvKXpXpadDiUoOSoAfww==")) {
 				String html = "<div style='color:green'>success</div>";
 				PrintWriter pw = response.getWriter();
@@ -26,11 +22,7 @@ public class AccountManage extends BaseServlet {
 				request.setCharacterEncoding("UTF-8");
 				response.setStatus(200);
 			}
-		}catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -40,7 +32,7 @@ public class AccountManage extends BaseServlet {
 		String passwd = request.getParameter("passwd");
 		String mail = request.getParameter("mail");
 		String phone = request.getParameter("tel");
-		String id = UUIDManage.getInstance().getUUIDString();
+		String id = UUIDManage.getUUIDString();
 		System.out.println(username);
 	}
 }
