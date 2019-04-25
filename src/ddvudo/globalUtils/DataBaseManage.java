@@ -8,9 +8,9 @@ import java.sql.Statement;
 
 public class DataBaseManage {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://www.ddvudo.tk:3306/TestWeb_2018_06_17";
-    static final String USER = "webadmin";
-    static final String PASS = "liukang951006";
+    static final String DB_URL = "jdbc:mysql://ddvudo.tk:3306/how2jdb";
+    static final String USER = "how2j";
+    static final String PASS = "liukang";
     Connection conn;
     private DataBaseManage() {
     	try {
@@ -19,7 +19,6 @@ public class DataBaseManage {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
     }

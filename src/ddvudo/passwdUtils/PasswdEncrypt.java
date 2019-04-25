@@ -11,7 +11,6 @@ public class PasswdEncrypt {
 		MessageDigest md5=MessageDigest.getInstance("MD5");
 		BASE64Encoder base64en = new BASE64Encoder();
 		String EncPasswd=base64en.encode(md5.digest(passwd.getBytes("utf-8")));
-//		String EncPasswd=base64en.encode(md5.digest(passwd.getBytes()));
 		return EncPasswd;
 	}
 	public static PasswdEncrypt getInstance() {

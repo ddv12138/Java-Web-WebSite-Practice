@@ -31,12 +31,10 @@ public class AccountManage extends BaseServlet {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
 	}
 	
-	@SuppressWarnings("unused")
 	public void signupValidate(HttpServletRequest request, HttpServletResponse response) {
 		String username = request.getParameter("username");
 		String passwd = request.getParameter("passwd");

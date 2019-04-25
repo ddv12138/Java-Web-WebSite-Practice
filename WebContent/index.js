@@ -5,13 +5,12 @@ var submitData = function(){
 	$.ajax({
 		url:"./AccountManage",
 		type:"post",
-		contentType : "application/x-www-form-urlencoded; charset=utf-8",
 		data: $('#loginform').serialize(),
-		success:loginValidate
+		complete:loginValidate
 	});
 }
 var loginValidate = function(arg){
-	console.log("1");
+	console.log(arg);
 }
 var tosignup = function(){
 	window.location.href="./signup/signup.html";
