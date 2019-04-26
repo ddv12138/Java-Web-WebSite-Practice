@@ -2,12 +2,7 @@ window.onload = function(){
 	$("#loginBtn").on("click",submitData);
 }
 var submitData = function(){
-	$.ajax({
-		url:"./AccountManage",
-		type:"post",
-		data: $('#loginform').serialize(),
-		complete:loginValidate
-	});
+	$.post("AccountManage?method=loginInValidate", $('#loginform').serialize(), loginValidate)
 }
 var loginValidate = function(arg){
 	console.log(arg);

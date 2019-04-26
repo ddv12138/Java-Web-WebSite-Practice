@@ -1,4 +1,4 @@
-package servlet;
+package WebComponent.servlet;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ public abstract class BaseServlet extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			String func = request.getParameter("func");
+            String func = request.getParameter("method");
 			if(func != null) {
 				Method method = this.getClass().getDeclaredMethod(func, HttpServletRequest.class, HttpServletResponse.class);
 				method.invoke(this, request, response); 
