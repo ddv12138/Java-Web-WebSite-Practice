@@ -2,27 +2,30 @@ package WebComponent.servlet;
 
 import ORM.Mapper.UserMapper;
 import ORM.POJO.User;
+import globalUtils.CommonResult;
 import globalUtils.DataBaseManage;
 import org.apache.ibatis.session.SqlSession;
 import passwdUtils.PasswdEncrypt;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class AccountManage extends BaseServlet {
 
-    public void loginInValidate(HttpServletRequest request, HttpServletResponse response) {
+    public void loginValidate(HttpServletRequest request, HttpServletResponse response) {
         try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
             String username = request.getParameter("username");
             String passwd = request.getParameter("passwd");
             String EncPasswd = PasswdEncrypt.passwdEncrypt(passwd);
             UserMapper um = session.getMapper(UserMapper.class);
             User u = um.selectByName(username);
-            boolean login = false;
-            if (u.getName().equals(username)) {
-                login = true;
+            if (u.getName().equals(username) && u.getPassword().equals(EncPasswd)) {
+                response.getWriter().println(new CommonResult(true, "登录成功", null));
+            } else {
+                response.getWriter().println(new CommonResult(false, "登陆失败", null));
             }
-            response.getWriter().println(login);
         } catch (Exception e) {
             e.printStackTrace();
         }
