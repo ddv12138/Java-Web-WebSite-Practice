@@ -7,10 +7,8 @@ import globalUtils.DataBaseManage;
 import org.apache.ibatis.session.SqlSession;
 import passwdUtils.PasswdEncrypt;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class AccountManage extends BaseServlet {
 
@@ -18,6 +16,7 @@ public class AccountManage extends BaseServlet {
         try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
             String username = request.getParameter("username");
             String passwd = request.getParameter("passwd");
+            String data = request.getParameter("data");
             String EncPasswd = PasswdEncrypt.passwdEncrypt(passwd);
             UserMapper um = session.getMapper(UserMapper.class);
             User u = um.selectByName(username);

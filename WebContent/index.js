@@ -1,8 +1,12 @@
 window.onload = function(){
-	$("#loginBtn").on("click",submitData);
+	layui.use("form", function () {
+		layui.form.on("submit(loginform)", submitData)
+	})
 }
-var submitData = function(){
-	$.post("RPC.DO?method=loginValidate", $('#loginform').serialize(), loginValidate)
+var submitData = function (arg) {
+	console.log(arg)
+	$.post("AccountManage?method=loginValidate", $(arg.elem).serialize(), loginValidate);
+	return false;
 }
 var loginValidate = function(arg){
 	console.log(arg);

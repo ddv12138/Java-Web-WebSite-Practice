@@ -15,8 +15,8 @@ public class BaseServlet extends HttpServlet {
 		try {
             String func = request.getParameter("method");
 			if(null != func) {
-				Method method = getClass().getDeclaredMethod(func, HttpServletRequest.class, HttpServletResponse.class);
-				method.invoke(this, request, response); 
+				Method method = this.getClass().getDeclaredMethod(func, HttpServletRequest.class, HttpServletResponse.class);
+				method.invoke(this, request, response);
 			}
 		}catch(NoSuchMethodException e) {
 			e.printStackTrace();
