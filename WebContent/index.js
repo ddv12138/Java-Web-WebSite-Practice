@@ -1,5 +1,5 @@
 function initLeftTab() {
-    $.post("/getTabList", {parentid: null}, renderTabList);
+    $.post("ResourceManage?method=getTabList", {parentid: null}, renderTabList);
 }
 
 function renderTabList(arg) {

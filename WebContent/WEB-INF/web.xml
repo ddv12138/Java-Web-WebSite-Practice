@@ -29,4 +29,13 @@
         <servlet-name>AccountManage</servlet-name>
         <url-pattern>/AccountManage</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResourceManage</servlet-name>
+        <servlet-class>WebComponent.servlet.ResourceManage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResourceManage</servlet-name>
+        <url-pattern>/ResourceManage</url-pattern>
+    </servlet-mapping>
 </web-app>
