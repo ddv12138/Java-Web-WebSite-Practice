@@ -20,5 +20,6 @@
     </environments>
     <mappers>
         <mapper class="ORM.Mapper.UserMapper"/>
+        <mapper class="ORM.Mapper.ResourceMapper"/>
     </mappers>
 </configuration>

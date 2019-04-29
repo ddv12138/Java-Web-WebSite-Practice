@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta content="webkit" name="renderer">
@@ -8,42 +8,25 @@
     <link href=" ./favicon.ico" rel="shortcut icon"/>
     <link href="./layui/css/layui.css" media="all" rel="stylesheet">
     <link href="./css/sweetalert.css" rel="stylesheet" type="text/css"/>
-    <link href="./css/login.css" rel="stylesheet" type="text/css"/>
-    <script src="./index.js"></script>
+    <script src="index.js"></script>
     <script src="./javascript/sweetalert-dev.js"></script>
     <script src="./layui/layui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <title>ddvudo</title>
+    <title>首页</title>
 </head>
 <body>
 <div class="layui-container">
     <div class="layui-row">
-        <div class="layui-col-md3">
-            <form class="layui-form" lay-filter="loginform">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="username"
-                               placeholder="请输入用户名"
-                               required type="text"></div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="passwd"
-                               placeholder="请输入密码"
-                               required type="password"></div>
-                </div>
-                <button class="layui-btn" lay-filter="*" lay-submit>登陆</button>
-                <button class="layui-btn layui-btn-primary">注册</button>
-            </form>
+        <div class="layui-col-md12">
+            <ul class="layui-nav layui-nav-tree layui-nav-side" lay-filter="main-nav-bar">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">默认展开</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-	<script type="text/javascript" color="0,0,0" opacity='1' zIndex="-1"
-			count="100"
-			src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 </body>
 </html>
