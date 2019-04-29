@@ -3,6 +3,7 @@ package WebComponent.servlet;
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
 import com.alibaba.fastjson.JSON;
+import com.mysql.cj.util.StringUtils;
 import globalUtils.CommonResult;
 import globalUtils.DataBaseManage;
 import org.apache.ibatis.session.SqlSession;
@@ -16,12 +17,16 @@ public class ResourceManage extends BaseServlet {
         String pid = request.getParameter("parentid");
         try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
             ResourceMapper rm = session.getMapper(ResourceMapper.class);
-            if (null == pid) {
+            if ((StringUtils.isNullOrEmpty(pid.trim()))) {
                 ResourceTable rt = new ResourceTable();
-                rt.setIstop(0);
+                rt.setIstop(1);
                 ResourceTable[] res = rm.selectByExample(rt);
                 response.getWriter().println(new CommonResult(true, "sucess", JSON.toJSONString(res)));
                 return;
+            } else {
+                ResourceTable rt = new ResourceTable();
+                rt.setId(Integer.parseInt(pid));
+                ResourceTable[] res = rm.selectByExample(rt);
             }
         } catch (Exception e) {
             e.printStackTrace();
