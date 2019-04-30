@@ -19,6 +19,7 @@ public class ResourceSqlProvider {
             if (null != res.getLevel()) SET("level=#{level}");
             if (null != res.getUrlpath()) SET("urlpath=#{urlpath}");
             if (null != res.getOrder()) SET("order=#{order}");
+            if (null != res.isHaschild()) SET("haschild=#{haschild}");
             WHERE("id=#{id}");
         }}.toString();
     }
@@ -36,6 +37,7 @@ public class ResourceSqlProvider {
             if (null != res.getLevel()) WHERE("level=#{level}");
             if (null != res.getUrlpath()) WHERE("urlpath=#{urlpath}");
             if (null != res.getOrder()) WHERE("order=#{order}");
+            if (null != res.isHaschild()) WHERE("haschild=#{haschild}");
         }}.toString();
     }
 
@@ -50,6 +52,7 @@ public class ResourceSqlProvider {
             if (null != res.getLevel()) SET("level=#{level}");
             if (null != res.getOrder()) SET("order=#{order}");
             if (null != res.getUrlpath()) SET("urlpath=#{urlpath}");
+            if (null != res.isHaschild()) SET("haschild=#{haschild}");
             for (Condition con : conds) {
                 WHERE(con.toString());
             }

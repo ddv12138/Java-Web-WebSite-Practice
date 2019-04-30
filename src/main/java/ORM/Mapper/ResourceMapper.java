@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import java.util.List;
 
 public interface ResourceMapper {
-    @Insert("insert into Resourcetable(id,name,cnname,istop,leftvalue,rightvalue,level,order,urlpath) values(#{id},#{name},#{cnname},#{istop},#{leftvalue},#{rightvalue},#{level},#{order},#{urlpath})")
+    @Insert("insert into Resourcetable(id,name,cnname,istop,leftvalue,rightvalue,level,order,urlpath,haschild) values(#{id},#{name},#{cnname},#{istop},#{leftvalue},#{rightvalue},#{level},#{order},#{urlpath},#{haschild})")
     int InsertByAllvalue(ResourceTable res);
 
     @SelectProvider(type = ResourceSqlProvider.class, method = "selectByExample")

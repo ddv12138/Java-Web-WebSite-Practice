@@ -3,14 +3,44 @@ package ORM.POJO;
 public class ResourceTable {
     Integer id, istop, leftvalue, rightvalue, level, order;
     String name, cnname, urlpath;
+    Boolean haschild;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\":")
+                .append(id);
+        sb.append(",\"istop\":")
+                .append(istop);
+        sb.append(",\"leftvalue\":")
+                .append(leftvalue);
+        sb.append(",\"rightvalue\":")
+                .append(rightvalue);
+        sb.append(",\"level\":")
+                .append(level);
+        sb.append(",\"order\":")
+                .append(order);
+        sb.append(",\"name\":\"")
+                .append(name).append('\"');
+        sb.append(",\"cnname\":\"")
+                .append(cnname).append('\"');
+        sb.append(",\"urlpath\":\"")
+                .append(urlpath).append('\"');
+        sb.append(",\"haschild\":")
+                .append(haschild);
+        sb.append('}');
+        return sb.toString();
+    }
 
     public ResourceTable() {
     }
 
-    public ResourceTable(Integer istop, String name, String cnname) {
-        this.istop = istop;
-        this.name = name;
-        this.cnname = cnname;
+    public Boolean isHaschild() {
+        return haschild;
+    }
+
+    public void setHaschild(boolean haschild) {
+        this.haschild = haschild;
     }
 
     public Integer getLevel() {
@@ -85,28 +115,4 @@ public class ResourceTable {
         this.cnname = cnname;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":")
-                .append(id);
-        sb.append(",\"istop\":")
-                .append(istop);
-        sb.append(",\"leftvalue\":")
-                .append(leftvalue);
-        sb.append(",\"rightvalue\":")
-                .append(rightvalue);
-        sb.append(",\"level\":")
-                .append(level);
-        sb.append(",\"order\":")
-                .append(order);
-        sb.append(",\"name\":\"")
-                .append(name).append('\"');
-        sb.append(",\"cnname\":\"")
-                .append(cnname).append('\"');
-        sb.append(",\"urlpath\":\"")
-                .append(urlpath).append('\"');
-        sb.append('}');
-        return sb.toString();
-    }
 }
