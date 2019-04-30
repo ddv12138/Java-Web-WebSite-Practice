@@ -36,7 +36,7 @@ function renderTabList(arg, msg, reponseobj, node) {
         var data = res.data;
         for (var i = 0; i < data.length; i++) {
             var li = document.createElement("li");
-            li.setAttribute("class", "layui-nav-item layui-nav-itemed");
+            li.setAttribute("class", "layui-nav-item");
             var a = document.createElement("a");
             a.innerHTML = data[i].cnname;
             a.setAttribute("nodevalue", JSON.stringify(data[i]));
