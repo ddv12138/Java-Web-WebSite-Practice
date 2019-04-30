@@ -1,8 +1,8 @@
 package ORM.POJO;
 
 public class ResourceTable {
-    Integer id, istop, leftvalue, rightvalue;
-    String name, cnname;
+    Integer id, istop, leftvalue, rightvalue, level, order;
+    String name, cnname, urlpath;
 
     public ResourceTable() {
     }
@@ -11,6 +11,30 @@ public class ResourceTable {
         this.istop = istop;
         this.name = name;
         this.cnname = cnname;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    public String getUrlpath() {
+        return urlpath;
+    }
+
+    public void setUrlpath(String urlpath) {
+        this.urlpath = urlpath;
     }
 
     public Integer getId() {
@@ -72,10 +96,16 @@ public class ResourceTable {
                 .append(leftvalue);
         sb.append(",\"rightvalue\":")
                 .append(rightvalue);
+        sb.append(",\"level\":")
+                .append(level);
+        sb.append(",\"order\":")
+                .append(order);
         sb.append(",\"name\":\"")
                 .append(name).append('\"');
         sb.append(",\"cnname\":\"")
                 .append(cnname).append('\"');
+        sb.append(",\"urlpath\":\"")
+                .append(urlpath).append('\"');
         sb.append('}');
         return sb.toString();
     }

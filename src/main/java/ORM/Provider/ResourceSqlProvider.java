@@ -16,6 +16,9 @@ public class ResourceSqlProvider {
             if (null != res.getIstop()) SET("istop=#{istop}");
             if (null != res.getLeftvalue()) SET("leftvalue=#{leftvalue}");
             if (null != res.getRightvalue()) SET("rightvalue=#{rightvalue}");
+            if (null != res.getLevel()) SET("level=#{level}");
+            if (null != res.getUrlpath()) SET("urlpath=#{urlpath}");
+            if (null != res.getOrder()) SET("order=#{order}");
             WHERE("id=#{id}");
         }}.toString();
     }
@@ -30,6 +33,9 @@ public class ResourceSqlProvider {
             if (null != res.getIstop()) WHERE("istop=#{istop}");
             if (null != res.getLeftvalue()) WHERE("leftvalue=#{leftvalue}");
             if (null != res.getRightvalue()) WHERE("rightvalue=#{rightvalue}");
+            if (null != res.getLevel()) WHERE("level=#{level}");
+            if (null != res.getUrlpath()) WHERE("urlpath=#{urlpath}");
+            if (null != res.getOrder()) WHERE("order=#{order}");
         }}.toString();
     }
 
@@ -41,6 +47,9 @@ public class ResourceSqlProvider {
             if (null != res.getIstop()) SET("istop=#{res.istop}");
             if (null != res.getLeftvalue()) SET("leftvalue=#{res.leftvalue}");
             if (null != res.getRightvalue()) SET("rightvalue=#{res.rightvalue}");
+            if (null != res.getLevel()) SET("level=#{level}");
+            if (null != res.getOrder()) SET("order=#{order}");
+            if (null != res.getUrlpath()) SET("urlpath=#{urlpath}");
             for (Condition con : conds) {
                 WHERE(con.toString());
             }
@@ -54,6 +63,25 @@ public class ResourceSqlProvider {
             for (Condition con : conds) {
                 WHERE(con.toString());
             }
+        }}.toString();
+    }
+
+    public String selectNextLevelNode(ResourceTable res) {
+        return new SQL() {{
+            SELECT("*");
+            FROM("Resourcetable");
+            WHERE("leftvalue>" + res.getLeftvalue());
+            WHERE("rightvalue<" + res.getRightvalue());
+            WHERE("level = " + (res.getLevel() + 1));
+        }}.toString();
+    }
+
+    public String selectAllSubNode(ResourceTable res) {
+        return new SQL() {{
+            SELECT("*");
+            FROM("Resourcetable");
+            WHERE("leftvalue>" + res.getLeftvalue());
+            WHERE("rightvalue<" + res.getRightvalue());
         }}.toString();
     }
 }

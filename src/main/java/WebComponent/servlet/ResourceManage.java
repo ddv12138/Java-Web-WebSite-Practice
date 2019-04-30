@@ -15,7 +15,8 @@ import java.io.IOException;
 public class ResourceManage extends BaseServlet {
     public void getTabList(HttpServletRequest request, HttpServletResponse response) {
         String pid = request.getParameter("parentid");
-        try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
+        SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
+        try {
             ResourceMapper rm = session.getMapper(ResourceMapper.class);
             if ((StringUtils.isNullOrEmpty(pid.trim()))) {
                 ResourceTable rt = new ResourceTable();
@@ -24,17 +25,21 @@ public class ResourceManage extends BaseServlet {
                 response.getWriter().println(new CommonResult(true, "sucess", JSON.toJSONString(res)));
                 return;
             } else {
-                ResourceTable rt = new ResourceTable();
-                rt.setId(Integer.parseInt(pid));
-                ResourceTable[] res = rm.selectByExample(rt);
+                ResourceTable pnode = rm.selectByID(Integer.parseInt(pid));
+                ResourceTable[] res = rm.selectNextLevelNode(pnode);
+                response.getWriter().println(new CommonResult(true, "sucess", JSON.toJSONString(res)));
+                return;
             }
         } catch (Exception e) {
             e.printStackTrace();
+            session.rollback();
             try {
                 response.getWriter().println(new CommonResult(false, e.getMessage(), null));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        } finally {
+            session.close();
         }
         try {
             response.getWriter().println(new CommonResult(false, "fail", null));

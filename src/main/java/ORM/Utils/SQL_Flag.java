@@ -2,7 +2,6 @@ package ORM.Utils;
 
 public enum SQL_Flag {
     bt(">"),
-    eq("="),
     lt("<"),
     btc(">="),
     ltc("<="),
