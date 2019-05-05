@@ -15,13 +15,18 @@ import java.io.IOException;
 public class ResourceManage extends BaseServlet {
     public void getTabList(HttpServletRequest request, HttpServletResponse response) {
         String pid = request.getParameter("parentid");
+        boolean ismanage = null != request.getParameter("ismanage");
         SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
         try {
             ResourceMapper rm = session.getMapper(ResourceMapper.class);
-            if ((StringUtils.isNullOrEmpty(pid.trim()))) {
+            if ((StringUtils.isNullOrEmpty(pid.trim())) && !ismanage) {
                 ResourceTable rt = new ResourceTable();
                 rt.setIstop(1);
                 ResourceTable[] res = rm.selectByExample(rt);
+                response.getWriter().println(new CommonResult(true, "sucess", JSON.toJSONString(res)));
+                return;
+            } else if ((StringUtils.isNullOrEmpty(pid.trim())) && ismanage) {
+                ResourceTable res = rm.selectByID(1);
                 response.getWriter().println(new CommonResult(true, "sucess", JSON.toJSONString(res)));
                 return;
             } else {

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.post("/WEB/ResourceManage?method=getTabList", {parentid: null}, renderNodeTree);
+    $.post("/WEB/ResourceManage?method=getTabList", {parentid: null, ismanage: true}, renderNodeTree);
 })
 
 function renderNodeTree(arg) {
@@ -37,6 +37,8 @@ function renderNodeTree(arg) {
                 dblClickExpand: false,
                 showLine: true,
                 selectedMulti: false,
+                addHoverDom: addHoverDom,
+                removeHoverDom: removeHoverDom,
             }
         };
         zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, arg.data);
@@ -44,6 +46,25 @@ function renderNodeTree(arg) {
     }
 }
 
+var newCount = 0;
+
+function addHoverDom(treeId, treeNode) {
+    var sObj = $("#" + treeNode.tId + "_span");
+    if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+    var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+        + "' title='add node' onfocus='this.blur();'></span>";
+    sObj.after(addStr);
+    var btn = $("#addBtn_" + treeNode.tId);
+    if (btn) btn.bind("click", function () {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.addNodes(treeNode, {id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
+        return false;
+    });
+};
+
+function removeHoverDom(treeId, treeNode) {
+    $("#addBtn_" + treeNode.tId).unbind().remove();
+};
 function treeValueFilter(treeid, pnode, res) {
     if (res.state) {
         return res.data
