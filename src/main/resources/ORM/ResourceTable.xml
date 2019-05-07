@@ -2,10 +2,19 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.mybatis.example.BlogMapper">
-    <select id="selectBlog" resultType="Blog">
-        select *
-        from Blog
-        where id = #{id}
-    </select>
+<mapper namespace="ORM.Mapper.ResourceMapper">
+    <insert id="insertByParent">
+        UPDATE Resourcetable
+        SET leftvalue = leftvalue + 2
+        WHERE leftvalue > #{pnode.leftvalue};
+        UPDATE Resourcetable
+        SET rightvalue = rightvalue + 2
+        WHERE rightvalue > #{pnode.leftvalue};
+        UPDATE Resourcetable
+        SET haschild = true
+        WHERE id = #{pnode.id};
+        insert into Resourcetable(name, cnname, istop, leftvalue, rightvalue, level, `order`, urlpath, haschild)
+        values (#{node.name}, #{node.cnname}, #{node.istop}, #{node.leftvalue}, #{node.rightvalue}, #{node.level},
+                #{node.order}, #{node.urlpath}, #{node.haschild});
+    </insert>
 </mapper>

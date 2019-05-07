@@ -56,7 +56,11 @@ public class ResourceTable {
     }
 
     public void setOrder(Integer order) {
-        this.order = order;
+        if (null == order) {
+            this.order = this.leftvalue;
+        } else {
+            this.order = order;
+        }
     }
 
     public String getUrlpath() {

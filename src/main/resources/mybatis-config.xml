@@ -21,5 +21,6 @@
     <mappers>
         <mapper class="ORM.Mapper.UserMapper"/>
         <mapper class="ORM.Mapper.ResourceMapper"/>
+        <mapper resource="ORM/ResourceTable.xml"/>
     </mappers>
 </configuration>

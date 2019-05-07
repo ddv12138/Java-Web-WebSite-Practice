@@ -52,4 +52,8 @@ public class ResourceManage extends BaseServlet {
             e.printStackTrace();
         }
     }
+
+    public void insertNodeByParent(HttpServletRequest request, HttpServletResponse response) {
+
+    }
 }

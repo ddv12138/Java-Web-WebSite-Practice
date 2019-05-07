@@ -31,4 +31,6 @@ public interface ResourceMapper {
 
     @SelectProvider(type = ResourceSqlProvider.class, method = "selectAllSubNode")
     ResourceTable[] selectAllSubNode(ResourceTable res);
+
+    Integer insertByParent(@Param("pnode") ResourceTable pnode, @Param("node") ResourceTable node);
 }
