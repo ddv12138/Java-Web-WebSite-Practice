@@ -14,8 +14,46 @@
     <script src="../layui/layui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="../zTree_v3/js/jquery.ztree.all.js"></script>
+    <script src="resinsert.js"></script>
 </head>
 <body>
-
+<div class="layui-fluid">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">节点名称</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="name" placeholder="请输入节点名称"
+                       required type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">节点中文名称</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" lay-verify="required" name="name" placeholder="请输入节点中文名称"
+                       required type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否菜单节点</label>
+            <div class="layui-input-block">
+                <input name="istop" title="是" type="radio" value="0">
+                <input checked name="istop" title="否" type="radio" value="1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">资源路径</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" class="layui-input" name="urlpath" placeholder="请输入资源路径" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否有子节点</label>
+            <div class="layui-input-block">
+                <input name="haschild" title="是" type="radio" value="0">
+                <input checked name="haschild" title="否" type="radio" value="1">
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

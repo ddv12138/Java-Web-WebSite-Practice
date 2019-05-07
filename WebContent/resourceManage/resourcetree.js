@@ -56,8 +56,21 @@ function addHoverDom(treeId, treeNode) {
     sObj.after(addStr);
     var btn = $("#addBtn_" + treeNode.tId);
     if (btn) btn.bind("click", function () {
-        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-        zTree.addNodes(treeNode, {id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
+        // var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        // zTree.addNodes(treeNode, {id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
+        layui.use('layer', function () {
+            layui.layer.open({
+                type: 2,
+                content: ["./resinsert.html"],
+                btn: ['确认'],
+                id: "resinsert_frame",
+                yes: function (index, layero) {
+                    console.log(index);
+                    console.log(layero);
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                }
+            })
+        });
         return false;
     });
 };
