@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.post("/WEB/ResourceManage?method=getTabList", {parentid: null, ismanage: true}, renderNodeTree);
+    $.post("../ResourceManage?method=getTabList", {parentid: null, ismanage: true}, renderNodeTree);
 })
 
 function renderNodeTree(arg) {
