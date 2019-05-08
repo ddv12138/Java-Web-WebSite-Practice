@@ -5,8 +5,11 @@ window.onload = function () {
             var res;
             data.field.pnodeid = GetUrlParam("pnodeid")
             $.post("../ResourceManage?method=insertNodeByParent", data.field, function (arg) {
-                res = arg;
-                console.log(res);
+                res = JSON.parse(arg);
+                if (res.state) {
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                }
             })
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         })

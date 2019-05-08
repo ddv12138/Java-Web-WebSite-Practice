@@ -1,6 +1,8 @@
 package ORM.Utils;
 
+import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
+import org.apache.ibatis.session.SqlSession;
 
 public class ResourceUtil {
     private static ResourceUtil ourInstance = new ResourceUtil();
@@ -24,5 +26,12 @@ public class ResourceUtil {
         node.setUrlpath(urlpath);
         node.setHaschild(haschild);
         return node;
+    }
+
+    public int deleteResource(ResourceTable node, SqlSession session) {
+        Integer res = null;
+        ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+        res = mapper.deleteRes(node, node.getRightvalue() - node.getLeftvalue() + 1);
+        return res;
     }
 }

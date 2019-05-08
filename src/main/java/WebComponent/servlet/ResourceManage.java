@@ -2,6 +2,7 @@ package WebComponent.servlet;
 
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
+import ORM.Utils.ResourceUtil;
 import com.alibaba.fastjson.JSON;
 import com.mysql.cj.util.StringUtils;
 import globalUtils.CommonResult;
@@ -56,7 +57,11 @@ public class ResourceManage extends BaseServlet {
     public void insertNodeByParent(HttpServletRequest request, HttpServletResponse response) {
         SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
         try {
-            String pnodeid = request.getParameter("pnodeid");
+            Integer pnodeid = null;
+            if (null != request.getParameter("pnodeid")) {
+                pnodeid = Integer.parseInt(request.getParameter("pnodeid"));
+            }
+            if (null == pnodeid) return;
             String name = request.getParameter("name");
             String cnname = request.getParameter("cnname");
             String urlpath = request.getParameter("urlpath");
@@ -64,14 +69,48 @@ public class ResourceManage extends BaseServlet {
             if (null != request.getParameter("istop")) {
                 istop = Integer.parseInt(request.getParameter("istop"));
             }
-            Integer haschild = null;
+            Boolean haschild = null;
             if (null != request.getParameter("haschild")) {
-                haschild = Integer.parseInt(request.getParameter("haschild"));
+                haschild = Boolean.parseBoolean(request.getParameter("haschild"));
             }
-
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            ResourceTable pnode = mapper.selectByID(pnodeid);
+            ResourceTable subnode = ResourceUtil.getInstance().getNewSubNode(pnode, name, cnname, istop, null, urlpath, haschild);
+            int i = mapper.insertByParent(pnode, subnode);
+            if (i >= 0) {
+                session.commit();
+                response.getWriter().println(new CommonResult(true, "插入成功", subnode.toString()));
+            } else {
+                response.getWriter().println(new CommonResult(false, "插入失败", subnode.toString()));
+                throw new RuntimeException("节点插入失败");
+            }
         } catch (Exception e) {
             session.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void deleteNode(HttpServletRequest request, HttpServletResponse response) {
+        SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
+        try {
+            if (null == request.getParameter("id")) {
+                response.getWriter().println(new CommonResult(false, "参数为空", null));
+                return;
+            }
+            int id = Integer.parseInt(request.getParameter("id"));
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            ResourceTable res = mapper.selectByID(id);
+            if (null == res) {
+                response.getWriter().println(new CommonResult(false, "节点不存在", null));
+                return;
+            }
+            ResourceUtil.getInstance().deleteResource(res, session);
+            session.commit();
+            response.getWriter().println(new CommonResult(true, "节点删除成功", null));
+        } catch (Exception e) {
+            session.rollback();
         } finally {
             session.close();
         }

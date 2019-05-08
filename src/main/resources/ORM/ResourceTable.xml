@@ -17,4 +17,15 @@
         values (#{node.name}, #{node.cnname}, #{node.istop}, #{node.leftvalue}, #{node.rightvalue}, #{node.level},
                 #{node.order}, #{node.urlpath}, #{node.haschild});
     </insert>
+    <delete id="deleteRes">
+        DELETE
+        FROM Resourcetable
+        WHERE leftvalue BETWEEN #{node.leftvalue} AND #{node.rightvalue};
+        UPDATE Resourcetable
+        SET rightvalue = rightvalue - #{offset}
+        WHERE rightvalue > #{node.rightvalue};
+        UPDATE Resourcetable
+        SET leftvalue = leftvalue - #{offset}
+        WHERE leftvalue > #{node.rightvalue};
+    </delete>
 </mapper>

@@ -33,4 +33,6 @@ public interface ResourceMapper {
     ResourceTable[] selectAllSubNode(ResourceTable res);
 
     Integer insertByParent(@Param("pnode") ResourceTable pnode, @Param("node") ResourceTable node);
+
+    Integer deleteRes(@Param("node") ResourceTable node, @Param("offset") int offset);
 }

@@ -44,4 +44,14 @@ public class TestMybatis {
             session.commit();
         }
     }
+
+    @Test
+    public void DeleteRes() {
+        try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
+            ResourceMapper rm = session.getMapper(ResourceMapper.class);
+            ResourceTable parent = rm.selectByID(20);
+            System.out.println(ResourceUtil.getInstance().deleteResource(parent, session));
+            session.commit();
+        }
+    }
 }

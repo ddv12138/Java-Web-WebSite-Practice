@@ -39,6 +39,9 @@ function renderNodeTree(arg) {
                 selectedMulti: false,
                 addHoverDom: addHoverDom,
                 removeHoverDom: removeHoverDom,
+            },
+            callback: {
+                beforeRemove: removeResNode
             }
         };
         zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, arg.data);
@@ -56,8 +59,6 @@ function addHoverDom(treeId, treeNode) {
     sObj.after(addStr);
     var btn = $("#addBtn_" + treeNode.tId);
     if (btn) btn.bind("click", function () {
-        // var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-        // zTree.addNodes(treeNode, {id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
         var frameResize = function (layero, index) {
             layer.iframeAuto(index);
         }
@@ -77,7 +78,11 @@ function addHoverDom(treeId, treeNode) {
                 content: ["./resinsert.html?pnodeid=" + treeNode.id],
                 id: "resinsert_frame",
                 area: ['500px', '300px'],
-                resize: false
+                resize: false,
+                end: function () {
+                    var zTree = $.fn.zTree.getZTreeObj(treeId);
+                    zTree.reAsyncChildNodes(treeNode, "refresh", false);
+                }
             })
         });
         return false;
@@ -87,8 +92,21 @@ function addHoverDom(treeId, treeNode) {
 function removeHoverDom(treeId, treeNode) {
     $("#addBtn_" + treeNode.tId).unbind().remove();
 };
+
 function treeValueFilter(treeid, pnode, res) {
     if (res.state) {
         return res.data
     }
+}
+
+function removeResNode(treeid, treeNode) {
+    $.post("../ResourceManage?method=deleteNode", {id: treeNode.id}, function (arg) {
+        arg = JSON.parse(arg);
+        if (arg.state) {
+            var zTree = $.fn.zTree.getZTreeObj(treeId);
+            zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
+            return true;
+        }
+        return false;
+    })
 }
