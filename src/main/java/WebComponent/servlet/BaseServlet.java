@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
 public class BaseServlet extends HttpServlet {
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response){
+        String func = request.getParameter("method");
 		try {
-            String func = request.getParameter("method");
 			if(null != func) {
 				Method method = this.getClass().getDeclaredMethod(func, HttpServletRequest.class, HttpServletResponse.class);
 				method.invoke(this, request, response);
@@ -21,7 +21,7 @@ public class BaseServlet extends HttpServlet {
 		}catch(NoSuchMethodException e) {
 			e.printStackTrace();
 			try {
-				response.getWriter().println(new CommonResult(false,"未找到服务",null));
+                response.getWriter().println(new CommonResult(false, "未找到服务[" + func + "]", null));
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}

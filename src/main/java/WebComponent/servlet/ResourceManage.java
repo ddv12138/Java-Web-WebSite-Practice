@@ -54,6 +54,26 @@ public class ResourceManage extends BaseServlet {
     }
 
     public void insertNodeByParent(HttpServletRequest request, HttpServletResponse response) {
+        SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
+        try {
+            String pnodeid = request.getParameter("pnodeid");
+            String name = request.getParameter("name");
+            String cnname = request.getParameter("cnname");
+            String urlpath = request.getParameter("urlpath");
+            Integer istop = null;
+            if (null != request.getParameter("istop")) {
+                istop = Integer.parseInt(request.getParameter("istop"));
+            }
+            Integer haschild = null;
+            if (null != request.getParameter("haschild")) {
+                haschild = Integer.parseInt(request.getParameter("haschild"));
+            }
 
+        } catch (Exception e) {
+            session.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }

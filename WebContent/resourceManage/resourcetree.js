@@ -58,17 +58,26 @@ function addHoverDom(treeId, treeNode) {
     if (btn) btn.bind("click", function () {
         // var zTree = $.fn.zTree.getZTreeObj("treeDemo");
         // zTree.addNodes(treeNode, {id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
+        var frameResize = function (layero, index) {
+            layer.iframeAuto(index);
+        }
         layui.use('layer', function () {
+            layui.layer.config({
+                success: frameResize,
+                full: frameResize,
+                min: frameResize,
+                restore: frameResize,
+                resizing: frameResize
+            });
             layui.layer.open({
                 type: 2,
-                content: ["./resinsert.html"],
-                btn: ['确认'],
+                title: '资源详细信息',
+                anim: 1,
+                maxmin: true,
+                content: ["./resinsert.html?pnodeid=" + treeNode.id],
                 id: "resinsert_frame",
-                yes: function (index, layero) {
-                    console.log(index);
-                    console.log(layero);
-                    layer.close(index); //如果设定了yes回调，需进行手工关闭
-                }
+                area: ['500px', '300px'],
+                resize: false
             })
         });
         return false;
