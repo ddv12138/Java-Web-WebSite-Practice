@@ -71,7 +71,7 @@ public class ResourceManage extends BaseServlet {
             }
             Boolean haschild = null;
             if (null != request.getParameter("haschild")) {
-                haschild = Boolean.parseBoolean(request.getParameter("haschild"));
+                haschild = "1".equals(request.getParameter("haschild"));
             }
             ResourceMapper mapper = session.getMapper(ResourceMapper.class);
             ResourceTable pnode = mapper.selectByID(pnodeid);

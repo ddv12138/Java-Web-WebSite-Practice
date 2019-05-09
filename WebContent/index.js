@@ -4,10 +4,14 @@ function initLeftTab() {
 
 function nodeClick(arg) {
     var node = arg.target;
-    var data = JSON.parse(node.getAttribute("nodevalue"));
-    $.post("ResourceManage?method=getTabList", {parentid: data.id}, function (arg) {
-        renderSubTabList(arg, node)
-    });
+    if (node.className == 'layui-nav-more') node = node.parentElement;
+    //点击时如果未展开过则加载子节点
+    if (!node.getAttribute("expanded")) {
+        var data = JSON.parse(node.getAttribute("nodevalue"));
+        $.post("ResourceManage?method=getTabList", {parentid: data.id}, function (arg) {
+            renderSubTabList(arg, node)
+        });
+    }
 }
 
 function renderSubTabList(arg, node) {
@@ -20,7 +24,19 @@ function renderSubTabList(arg, node) {
             a.innerHTML = data[i].cnname;
             a.setAttribute("nodevalue", JSON.stringify(data[i]));
             a.setAttribute("href", "javascript:;");
+            $(a).click(nodeClick);
+            if (data[i].haschild) {
+                var span = document.createElement("span");
+                span.setAttribute("class", "layui-nav-more");
+                a.appendChild(span);
+            }
             dd.append(a);
+            var dls = node.parentElement.getElementsByClassName("layui-nav-child");
+            if (!dls || dls.length <= 0) {
+                var dl = document.createElement("dl");
+                dl.setAttribute("class", "layui-nav-child");
+                node.parentElement.appendChild(dl);
+            }
             node.parentElement.getElementsByClassName("layui-nav-child")[0].appendChild(dd);
             layui.use("element", function () {
                 layui.element.render("nav", "main-nav-bar");

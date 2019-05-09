@@ -1,21 +1,36 @@
 window.onload = function () {
+    var pageMode = GetUrlParam("pageMode");
     layui.use('form', function () {
         layui.form.on("submit(insert_res_form)", function (data) {
-            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-            var res;
-            data.field.pnodeid = GetUrlParam("pnodeid")
-            $.post("../ResourceManage?method=insertNodeByParent", data.field, function (arg) {
-                res = JSON.parse(arg);
-                if (res.state) {
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭
-                }
-            })
+            if (pageMode == "insert") {
+                data.field.pnodeid = GetUrlParam("pnodeid");
+                $.post("../ResourceManage?method=insertNodeByParent", data.field, function (arg) {
+                    arg = JSON.parse(arg);
+                    if (arg.state) {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }
+                });
+            } else if (pageMode == "update") {
+                console.log(id);
+                console.log(data.field);
+            }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         })
     });
 }
-
+var id = null;
+var setUpdateNodeInfo = function (arg) {
+    var pageMode = GetUrlParam("pageMode");
+    if (!pageMode) return;
+    if (pageMode == "update") {
+        layui.use('form', function () {
+            arg.constructor = Object;
+            id = arg.id;
+            layui.form.val("resinsert", arg)
+        });
+    }
+}
 function GetUrlParam(paraName) {
     var url = document.location.toString();
     var arrObj = url.split("?");
