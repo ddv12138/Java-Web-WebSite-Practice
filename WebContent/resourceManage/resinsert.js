@@ -12,21 +12,28 @@ window.onload = function () {
                     }
                 });
             } else if (pageMode == "update") {
-                console.log(id);
+                data.field.id = updateid;
                 console.log(data.field);
+                $.post("../ResourceManage?method=updateResNodeInfo", data.field, function (arg) {
+                    arg = JSON.parse(arg);
+                    if (arg.state) {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }
+                });
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         })
     });
 }
-var id = null;
+var updateid = null;
 var setUpdateNodeInfo = function (arg) {
     var pageMode = GetUrlParam("pageMode");
     if (!pageMode) return;
     if (pageMode == "update") {
         layui.use('form', function () {
             arg.constructor = Object;
-            id = arg.id;
+            updateid = arg.id;
             layui.form.val("resinsert", arg)
         });
     }

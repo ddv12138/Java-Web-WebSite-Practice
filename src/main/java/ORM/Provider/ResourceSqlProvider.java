@@ -14,11 +14,7 @@ public class ResourceSqlProvider {
             if (null != res.getName()) SET("name=#{name}");
             if (null != res.getCnname()) SET("cnname=#{cnname}");
             if (null != res.getIstop()) SET("istop=#{istop}");
-            if (null != res.getLeftvalue()) SET("leftvalue=#{leftvalue}");
-            if (null != res.getRightvalue()) SET("rightvalue=#{rightvalue}");
-            if (null != res.getLevel()) SET("level=#{level}");
             if (null != res.getUrlpath()) SET("urlpath=#{urlpath}");
-            if (null != res.getOrder()) SET("order=#{order}");
             if (null != res.isHaschild()) SET("haschild=#{haschild}");
             WHERE("id=#{id}");
         }}.toString();

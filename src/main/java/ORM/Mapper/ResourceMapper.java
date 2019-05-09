@@ -3,10 +3,7 @@ package ORM.Mapper;
 import ORM.POJO.ResourceTable;
 import ORM.Provider.ResourceSqlProvider;
 import ORM.Utils.Condition;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -31,6 +28,9 @@ public interface ResourceMapper {
 
     @SelectProvider(type = ResourceSqlProvider.class, method = "selectAllSubNode")
     ResourceTable[] selectAllSubNode(ResourceTable res);
+
+    @UpdateProvider(type = ResourceSqlProvider.class, method = "updateByExample")
+    int updateByExample(ResourceTable res);
 
     Integer insertByParent(@Param("pnode") ResourceTable pnode, @Param("node") ResourceTable node);
 

@@ -83,6 +83,11 @@ function addHoverDom(treeId, treeNode) {
                 resize: false,
                 end: function () {
                     var zTree = $.fn.zTree.getZTreeObj(treeId);
+                    if (treeNode.getParentNode()) {
+                        zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
+                    } else {
+                        zTree.rrefresh();
+                    }
                     zTree.reAsyncChildNodes(treeNode, "refresh", false);
                 }
             })
@@ -104,7 +109,11 @@ function addHoverDom(treeId, treeNode) {
                 resize: false,
                 end: function () {
                     var zTree = $.fn.zTree.getZTreeObj(treeId);
-                    zTree.reAsyncChildNodes(treeNode, "refresh", false);
+                    if (treeNode.getParentNode()) {
+                        zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
+                    } else {
+                        zTree.rrefresh();
+                    }
                 },
                 success: function (layero, index) {
                     if (layero.find("#resinsert_frame").find("iframe")[0])
