@@ -100,6 +100,10 @@ public class ResourceManage extends BaseServlet {
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
+            if (id == 1 || id == 2) {
+                response.getWriter().println(new CommonResult(false, "不允许删除此节点", null));
+                return;
+            }
             ResourceMapper mapper = session.getMapper(ResourceMapper.class);
             ResourceTable res = mapper.selectByID(id);
             if (null == res) {

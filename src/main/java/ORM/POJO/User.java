@@ -1,8 +1,5 @@
 package ORM.POJO;
 
-import org.apache.ibatis.type.Alias;
-
-@Alias("usertable")
 public class User {
     int id;
     String name, password;

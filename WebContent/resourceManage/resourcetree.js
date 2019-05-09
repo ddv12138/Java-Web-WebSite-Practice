@@ -143,6 +143,9 @@ function removeResNode(treeid, treeNode) {
             var zTree = $.fn.zTree.getZTreeObj(treeId);
             zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
             return true;
+        } else {
+            alert(arg.msg);
+            return false;
         }
         return false;
     })
