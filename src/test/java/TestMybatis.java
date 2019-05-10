@@ -54,4 +54,13 @@ public class TestMybatis {
             session.commit();
         }
     }
+
+    @Test
+    public void TestReturnTypes() {
+        try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
+            ResourceMapper rm = session.getMapper(ResourceMapper.class);
+            System.out.println(rm.listResource());
+            session.commit();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import ORM.Utils.Condition;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ResourceMapper {
     @Insert("insert into Resourcetable(id,name,cnname,istop,leftvalue,rightvalue,level,order,urlpath,haschild) values(#{id},#{name},#{cnname},#{istop},#{leftvalue},#{rightvalue},#{level},#{order},#{urlpath},#{haschild})")
@@ -35,4 +36,10 @@ public interface ResourceMapper {
     Integer insertByParent(@Param("pnode") ResourceTable pnode, @Param("node") ResourceTable node);
 
     Integer deleteRes(@Param("node") ResourceTable node, @Param("offset") int offset);
+
+    @Select("Select * from Resourcetable where id = #{id}")
+    Map selectMapByID(int id);
+
+    @MapKey("id")
+    Map listResource();
 }

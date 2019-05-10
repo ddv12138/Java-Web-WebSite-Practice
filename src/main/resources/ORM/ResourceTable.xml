@@ -28,4 +28,8 @@
         SET leftvalue = leftvalue - #{offset}
         WHERE leftvalue > #{node.rightvalue};
     </delete>
+    <select id="listResource" resultType="map">
+        select *
+        from Resourcetable;
+    </select>
 </mapper>

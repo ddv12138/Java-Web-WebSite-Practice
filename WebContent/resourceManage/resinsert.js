@@ -13,14 +13,19 @@ window.onload = function () {
                 });
             } else if (pageMode == "update") {
                 data.field.id = updateid;
-                console.log(data.field);
-                $.post("../ResourceManage?method=updateResNodeInfo", data.field, function (arg) {
-                    arg = JSON.parse(arg);
-                    if (arg.state) {
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
+                $.ajax({
+                    url: "../updateResNodeInfo",
+                    contentType: "application/json",
+                    data: JSON.stringify(data.field),
+                    type: "post",
+                    complete: function (arg) {
+                        arg = JSON.parse(arg.responseText);
+                        if (arg.state) {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        }
                     }
-                });
+                })
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         })
