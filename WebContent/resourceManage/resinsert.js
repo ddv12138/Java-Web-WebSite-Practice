@@ -39,7 +39,9 @@ var setUpdateNodeInfo = function (arg) {
         layui.use('form', function () {
             arg.constructor = Object;
             updateid = arg.id;
-            layui.form.val("resinsert", arg)
+            layui.form.val("resinsert", arg);
+            $("input[name=haschild][value=true]").attr("checked", arg.haschild);
+            $("input[name=sex][value=2]").attr("checked", data.UserSex == 2 ? true : false);
         });
     }
 }
