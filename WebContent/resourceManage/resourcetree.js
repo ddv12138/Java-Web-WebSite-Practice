@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    $.post("../ResourceManage?method=getTabList", {parentid: null, ismanage: true}, renderNodeTree);
+    // $.post("../ResourceManage?method=getTabList", {parentid: null, ismanage: true}, renderNodeTree);
+    $.post("../getTabList", {parentid: null, ismanage: true}, renderNodeTree);
     layui.use('layer', function () {
         layui.layer.config({
             success: frameResize,

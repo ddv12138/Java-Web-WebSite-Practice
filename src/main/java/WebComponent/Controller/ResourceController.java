@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Controller
-public class HelloController {
+public class ResourceController {
     @RequestMapping("/getTabList")
     @ResponseBody
     public CommonResult getTabList(@RequestBody(required = false) Map par) throws IOException {
@@ -24,7 +24,7 @@ public class HelloController {
 
     @RequestMapping("/updateResNodeInfo")
     @ResponseBody
-    public CommonResult updateResNodeInfo(@RequestBody(required = false) ResourceTable res) {
+    public CommonResult updateResNodeInfo(@RequestBody ResourceTable res) {
         SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
         try {
             ResourceMapper mapper = session.getMapper(ResourceMapper.class);
