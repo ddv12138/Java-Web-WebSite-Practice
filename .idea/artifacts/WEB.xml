@@ -33,6 +33,15 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.8" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.8" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-analyzers-common:8.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-analyzers-smartcn:8.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-analyzers:3.6.2" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-core:8.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-highlighter:8.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-memory:8.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-queries:8.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-queryparser:8.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.lucene:lucene-sandbox:8.1.0" />
         </element>
       </element>
     </root>

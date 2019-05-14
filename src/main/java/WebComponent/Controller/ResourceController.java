@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Controller
 public class ResourceController {
     @RequestMapping("/getTabList")
     @ResponseBody
-    public CommonResult getTabList(@RequestBody(required = false) Map par) throws IOException {
-        System.out.println(par);
+    public CommonResult getTabList(@RequestBody(required = false) String parentid, @RequestBody(required = false) Boolean ismanage) throws IOException {
         return new CommonResult(true, "", null);
     }
 

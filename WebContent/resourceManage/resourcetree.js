@@ -1,6 +1,13 @@
 $(document).ready(function () {
     // $.post("../ResourceManage?method=getTabList", {parentid: null, ismanage: true}, renderNodeTree);
-    $.post("../getTabList", {parentid: null, ismanage: true}, renderNodeTree);
+    // $.post("../getTabList", JSON.stringify({parentid: null, ismanage: true}), renderNodeTree);
+    $.ajax({
+        url: "../getTabList",
+        data: JSON.stringify({parentid: null, ismanage: true}),
+        type: "post",
+        contentType: "json",
+        callback: renderNodeTree
+    })
     layui.use('layer', function () {
         layui.layer.config({
             success: frameResize,
