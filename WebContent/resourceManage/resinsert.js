@@ -19,6 +19,7 @@ window.onload = function () {
                     data: JSON.stringify(data.field),
                     type: "post",
                     complete: function (arg) {
+                        console.log(arg)
                         arg = JSON.parse(arg.responseText);
                         if (arg.state) {
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -41,7 +42,6 @@ var setUpdateNodeInfo = function (arg) {
             updateid = arg.id;
             layui.form.val("resinsert", arg);
             $("input[name=haschild][value=true]").attr("checked", arg.haschild);
-            $("input[name=sex][value=2]").attr("checked", data.UserSex == 2 ? true : false);
         });
     }
 }

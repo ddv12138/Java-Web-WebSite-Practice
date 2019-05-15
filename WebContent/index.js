@@ -1,5 +1,11 @@
 function initLeftTab() {
-    $.post("ResourceManage?method=getTabList", {parentid: null}, renderTabList);
+    $.ajax({
+        url: "./getTabList",
+        data: JSON.stringify({parentid: null}),
+        type: "post",
+        contentType: "application/json",
+        complete: renderTabList
+    })
 }
 
 function nodeClick(arg) {
@@ -8,14 +14,22 @@ function nodeClick(arg) {
     //点击时如果未展开过则加载子节点
     if (!node.getAttribute("expanded")) {
         var data = JSON.parse(node.getAttribute("nodevalue"));
-        $.post("ResourceManage?method=getTabList", {parentid: data.id}, function (arg) {
-            renderSubTabList(arg, node)
-        });
+        $.ajax({
+            url: "./getTabList",
+            data: JSON.stringify({parentid: data.id}),
+            type: "post",
+            contentType: "application/json",
+            complete: function (arg) {
+                arg = JSON.parse(arg.responseText);
+                arg = JSON.parse(arg.result);
+                renderSubTabList(arg, node);
+            }
+        })
     }
 }
 
 function renderSubTabList(arg, node) {
-    var res = JSON.parse(arg);
+    var res = arg;
     if (res.state && !node.getAttribute("expanded")) {
         var data = res.data;
         for (var i = 0; i < data.length; i++) {
@@ -47,7 +61,8 @@ function renderSubTabList(arg, node) {
 }
 
 function renderTabList(arg, msg, reponseobj, node) {
-    var res = JSON.parse(arg);
+    var res = JSON.parse(arg.responseText);
+    res = JSON.parse(res.result);
     if (res.state) {
         var data = res.data;
         for (var i = 0; i < data.length; i++) {

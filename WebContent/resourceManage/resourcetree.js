@@ -34,7 +34,7 @@ function renderNodeTree(arg) {
             },
             async: {
                 enable: true,
-                dataType: "json",
+                dataType: "text",
                 contentType: "application/json",
                 dataFilter: treeValueFilter,
                 url: "../getTabList",
