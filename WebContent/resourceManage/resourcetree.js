@@ -1,12 +1,10 @@
 $(document).ready(function () {
-    // $.post("../ResourceManage?method=getTabList", {parentid: null, ismanage: true}, renderNodeTree);
-    // $.post("../getTabList", JSON.stringify({parentid: null, ismanage: true}), renderNodeTree);
     $.ajax({
         url: "../getTabList",
         data: JSON.stringify({parentid: null, ismanage: true}),
         type: "post",
-        contentType: "json",
-        callback: renderNodeTree
+        contentType: "application/json",
+        complete: renderNodeTree
     })
     layui.use('layer', function () {
         layui.layer.config({
@@ -20,7 +18,8 @@ $(document).ready(function () {
 })
 
 function renderNodeTree(arg) {
-    arg = JSON.parse(arg);
+    arg = JSON.parse(arg.responseText);
+    arg = JSON.parse(arg.result);
     if (arg.state) {
         var zTreeObj;
         var setting = {
@@ -35,9 +34,10 @@ function renderNodeTree(arg) {
             },
             async: {
                 enable: true,
-                dataType: "text",
+                dataType: "json",
+                contentType: "application/json",
                 dataFilter: treeValueFilter,
-                url: "../ResourceManage?method=getTabList",
+                url: "../getTabList",
                 type: "post",
                 autoParam: ["id=parentid"]
             },
@@ -140,7 +140,7 @@ function removeHoverDom(treeId, treeNode) {
 
 function treeValueFilter(treeid, pnode, res) {
     if (res.state) {
-        return res.data
+        return JSON.parse(res.data);
     }
 }
 
