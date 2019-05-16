@@ -113,4 +113,32 @@ public class ResourceController {
         }
         return result;
     }
+
+    @RequestMapping("/deleteNode")
+    @ResponseBody
+    public CommonResult deleteNode(@RequestBody LinkedHashMap<String, String> par) {
+        SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
+        try {
+            if (null == par.get("id")) {
+                return new CommonResult(false, "参数为空", null);
+            }
+            int id = Integer.parseInt(par.get("id"));
+            if (id == 1 || id == 2) {
+                return new CommonResult(false, "不允许删除此节点", null);
+            }
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            ResourceTable res = mapper.selectByID(id);
+            if (null == res) {
+                return new CommonResult(false, "节点不存在", null);
+            }
+            ResourceUtil.getInstance().deleteResource(res, session);
+            session.commit();
+            return new CommonResult(true, "节点删除成功", null);
+        } catch (Exception e) {
+            session.rollback();
+        } finally {
+            session.close();
+        }
+        return new CommonResult(false, "参数为空", null);
+    }
 }

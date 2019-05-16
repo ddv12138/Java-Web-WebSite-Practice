@@ -1,16 +1,22 @@
 window.onload = function () {
     var pageMode = GetUrlParam("pageMode");
+    layui.form.render();
     layui.form.on("submit(insert_res_form)", function (data) {
         if (pageMode == "insert") {
             data.field.pnodeid = GetUrlParam("pnodeid");
-            $.post(ddvudo.getContextPath() + "/insertNodeByParent", data.field, function (arg) {
-                console.log(arg);
-                arg = JSON.parse(arg);
-                if (arg.state) {
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭
+            $.ajax({
+                url: ddvudo.getContextPath() + "/insertNodeByParent",
+                contentType: "application/json",
+                data: JSON.stringify(data.field),
+                type: "post",
+                complete: function (arg) {
+                    arg = JSON.parse(arg.responseText);
+                    if (arg.state) {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }
                 }
-            });
+            })
         } else if (pageMode == "update") {
             data.field.id = updateid;
             $.ajax({
@@ -19,7 +25,6 @@ window.onload = function () {
                 data: JSON.stringify(data.field),
                 type: "post",
                 complete: function (arg) {
-                    console.log(arg)
                     arg = JSON.parse(arg.responseText);
                     if (arg.state) {
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -41,6 +46,7 @@ var setUpdateNodeInfo = function (arg) {
         layui.form.val("resinsert", arg);
         $("input[name=haschild][value=true]").attr("checked", arg.haschild);
     }
+    layui.form.render();
 }
 
 function GetUrlParam(paraName) {

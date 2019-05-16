@@ -6,14 +6,12 @@ $(document).ready(function () {
         contentType: "application/json",
         complete: renderNodeTree
     })
-    layui.use('layer', function () {
-        layui.layer.config({
-            success: frameResize,
-            full: frameResize,
-            min: frameResize,
-            restore: frameResize,
-            resizing: frameResize
-        });
+    layui.layer.config({
+        success: frameResize,
+        full: frameResize,
+        min: frameResize,
+        restore: frameResize,
+        resizing: frameResize
     });
 })
 
@@ -79,26 +77,24 @@ function addHoverDom(treeId, treeNode) {
     sObj.after(addStr);
     var btn = $("#addBtn_" + treeNode.tId);
     if (btn) btn.bind("click", function () {
-        layui.use('layer', function () {
-            layui.layer.open({
-                type: 2,
-                title: '资源详细信息',
-                anim: 1,
-                maxmin: true,
-                content: ["./resinsert.html?pageMode=insert&pnodeid=" + treeNode.id],
-                id: "resinsert_frame",
-                area: ['500px', '300px'],
-                resize: false,
-                end: function () {
-                    var zTree = $.fn.zTree.getZTreeObj(treeId);
-                    if (treeNode.getParentNode()) {
-                        zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
-                    } else {
-                        zTree.rrefresh();
-                    }
-                    zTree.reAsyncChildNodes(treeNode, "refresh", false);
+        layui.layer.open({
+            type: 2,
+            title: '资源详细信息',
+            anim: 1,
+            maxmin: true,
+            content: ["./resinsert.html?pageMode=insert&pnodeid=" + treeNode.id],
+            id: "resinsert_frame",
+            area: ['500px', '300px'],
+            resize: false,
+            end: function () {
+                var zTree = $.fn.zTree.getZTreeObj(treeId);
+                if (treeNode.getParentNode()) {
+                    zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
+                } else {
+                    zTree.rrefresh();
                 }
-            })
+                zTree.reAsyncChildNodes(treeNode, "refresh", false);
+            }
         });
         return false;
     });
@@ -144,18 +140,24 @@ function treeValueFilter(treeid, pnode, res) {
     }
 }
 
-function removeResNode(treeid, treeNode) {
-    $.post("../ResourceManage?method=deleteNode", {id: treeNode.id}, function (arg) {
-        arg = JSON.parse(arg);
-        if (arg.state) {
-            var zTree = $.fn.zTree.getZTreeObj(treeId);
-            zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
-            return true;
-        } else {
-            alert(arg.msg);
+function removeResNode(treeId, treeNode) {
+    $.ajax({
+        url: ddvudo.getContextPath() + "/deleteNode",
+        contentType: "application/json",
+        data: JSON.stringify({id: treeNode.id}),
+        type: "post",
+        complete: function (arg) {
+            arg = JSON.parse(arg.responseText);
+            if (arg.state) {
+                var zTree = $.fn.zTree.getZTreeObj(treeId);
+                zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
+                return true;
+            } else {
+                alert(arg.msg);
+                return false;
+            }
             return false;
         }
-        return false;
     })
 }
 
