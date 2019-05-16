@@ -1,4 +1,4 @@
-package passwdUtils;
+package globalUtils.passwdUtils;
 
 import sun.misc.BASE64Encoder;
 

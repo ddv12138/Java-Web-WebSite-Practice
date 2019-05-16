@@ -4,6 +4,7 @@ ddvudo.getContextPath = function () {
     var contextPath = document.location.pathname;
     var index = contextPath.substr(1).indexOf("/");
     contextPath = contextPath.substr(0, index + 1) + "/";
+    if (contextPath == "/") contextPath = window.location.origin + "/";
     delete index;
-    return contextPath;
+    return window.location.origin;
 }
