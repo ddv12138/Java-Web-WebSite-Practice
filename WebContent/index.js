@@ -1,6 +1,6 @@
 function initLeftTab() {
     $.ajax({
-        url: "./getTabList",
+        url: ddvudo.getContextPath() + "/getTabList",
         data: JSON.stringify({parentid: null}),
         type: "post",
         contentType: "application/json",
@@ -11,11 +11,18 @@ function initLeftTab() {
 function nodeClick(arg) {
     var node = arg.target;
     if (node.className == 'layui-nav-more') node = node.parentElement;
+    var nodevaluestr = node.getAttribute("nodevalue");
+    if (nodevaluestr) {
+        var nodeValue = JSON.parse(nodevaluestr);
+        if ($("#main-content-frame").attr("src") != nodeValue.urlpath) {
+            $("#main-content-frame").attr("src", nodeValue.urlpath);
+        }
+    }
     //点击时如果未展开过则加载子节点
     if (!node.getAttribute("expanded")) {
         var data = JSON.parse(node.getAttribute("nodevalue"));
         $.ajax({
-            url: "./getTabList",
+            url: ddvudo.getContextPath() + "/getTabList",
             data: JSON.stringify({parentid: data.id}),
             type: "post",
             contentType: "application/json",
@@ -52,9 +59,7 @@ function renderSubTabList(arg, node) {
                 node.parentElement.appendChild(dl);
             }
             node.parentElement.getElementsByClassName("layui-nav-child")[0].appendChild(dd);
-            layui.use("element", function () {
-                layui.element.render("nav", "main-nav-bar");
-            })
+            layui.element.render("nav", "main-nav-bar");
             node.setAttribute("expanded", true);
         }
     }
@@ -79,15 +84,14 @@ function renderTabList(arg, msg, reponseobj, node) {
             li.appendChild(dl);
             if (!node) node = $("#main-nav-bar");
             node.append(li);
-            layui.use("element", function () {
-                layui.element.render("nav", "main-nav-bar");
-            })
+            layui.element.render("nav", "main-nav-bar");
             if (i == 0) {
                 $("#main-content-frame").attr("src", data[i].urlpath);
             }
         }
     }
 }
-window.onload = function(){
+
+window.onload = function () {
     initLeftTab();
-};
+}

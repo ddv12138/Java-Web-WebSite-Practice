@@ -2,6 +2,7 @@ package WebComponent.Controller;
 
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
+import ORM.Utils.ResourceUtil;
 import com.alibaba.fastjson.JSON;
 import com.mysql.cj.util.StringUtils;
 import globalUtils.CommonResult;
@@ -69,5 +70,47 @@ public class ResourceController {
             session.close();
         }
         return new CommonResult(false, "更新失败", null);
+    }
+
+    @RequestMapping("/insertNodeByParent")
+    @ResponseBody
+    public CommonResult insertNodeByParent(@RequestBody LinkedHashMap<String, String> par) {
+        CommonResult result = null;
+        SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
+        try {
+            Integer pnodeid = null;
+            if (null != par.get("pnodeid")) {
+                pnodeid = Integer.parseInt(par.get("pnodeid"));
+            }
+            if (null == pnodeid) return new CommonResult(false, "插入失败", null);
+            String name = par.get("name");
+            String cnname = par.get("cnname");
+            String urlpath = par.get("urlpath");
+            Integer istop = null;
+            if (null != par.get("istop")) {
+                istop = Integer.parseInt(par.get("istop"));
+            }
+            Boolean haschild = null;
+            if (null != par.get("haschild")) {
+                haschild = "1".equals(par.get("haschild"));
+            }
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            ResourceTable pnode = mapper.selectByID(pnodeid);
+            ResourceTable subnode = ResourceUtil.getInstance().getNewSubNode(pnode, name, cnname, istop, null, urlpath, haschild);
+            int i = mapper.insertByParent(pnode, subnode);
+            if (i >= 0) {
+                session.commit();
+                result = new CommonResult(true, "插入成功", subnode.toString());
+            } else {
+                result = new CommonResult(false, "插入失败", subnode.toString());
+                throw new RuntimeException("节点插入失败");
+            }
+        } catch (Exception e) {
+            session.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
     }
 }

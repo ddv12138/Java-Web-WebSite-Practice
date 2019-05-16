@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $.ajax({
-        url: "../getTabList",
+        url: ddvudo.getContextPath() + "/getTabList",
         data: JSON.stringify({parentid: null, ismanage: true}),
         type: "post",
         contentType: "application/json",
@@ -37,7 +37,7 @@ function renderNodeTree(arg) {
                 dataType: "text",
                 contentType: "application/json",
                 dataFilter: treeValueFilter,
-                url: "../getTabList",
+                url: ddvudo.getContextPath() + "/getTabList",
                 type: "post",
                 autoParam: ["id=parentid"]
             },

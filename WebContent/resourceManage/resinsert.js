@@ -1,50 +1,48 @@
 window.onload = function () {
     var pageMode = GetUrlParam("pageMode");
-    layui.use('form', function () {
-        layui.form.on("submit(insert_res_form)", function (data) {
-            if (pageMode == "insert") {
-                data.field.pnodeid = GetUrlParam("pnodeid");
-                $.post("../ResourceManage?method=insertNodeByParent", data.field, function (arg) {
-                    arg = JSON.parse(arg);
+    layui.form.on("submit(insert_res_form)", function (data) {
+        if (pageMode == "insert") {
+            data.field.pnodeid = GetUrlParam("pnodeid");
+            $.post(ddvudo.getContextPath() + "/insertNodeByParent", data.field, function (arg) {
+                console.log(arg);
+                arg = JSON.parse(arg);
+                if (arg.state) {
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                }
+            });
+        } else if (pageMode == "update") {
+            data.field.id = updateid;
+            $.ajax({
+                url: ddvudo.getContextPath() + "/updateResNodeInfo",
+                contentType: "application/json",
+                data: JSON.stringify(data.field),
+                type: "post",
+                complete: function (arg) {
+                    console.log(arg)
+                    arg = JSON.parse(arg.responseText);
                     if (arg.state) {
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭
                     }
-                });
-            } else if (pageMode == "update") {
-                data.field.id = updateid;
-                $.ajax({
-                    url: "../updateResNodeInfo",
-                    contentType: "application/json",
-                    data: JSON.stringify(data.field),
-                    type: "post",
-                    complete: function (arg) {
-                        console.log(arg)
-                        arg = JSON.parse(arg.responseText);
-                        if (arg.state) {
-                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            parent.layer.close(index); //再执行关闭
-                        }
-                    }
-                })
-            }
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        })
-    });
+                }
+            })
+        }
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    })
 }
 var updateid = null;
 var setUpdateNodeInfo = function (arg) {
     var pageMode = GetUrlParam("pageMode");
     if (!pageMode) return;
     if (pageMode == "update") {
-        layui.use('form', function () {
-            arg.constructor = Object;
-            updateid = arg.id;
-            layui.form.val("resinsert", arg);
-            $("input[name=haschild][value=true]").attr("checked", arg.haschild);
-        });
+        arg.constructor = Object;
+        updateid = arg.id;
+        layui.form.val("resinsert", arg);
+        $("input[name=haschild][value=true]").attr("checked", arg.haschild);
     }
 }
+
 function GetUrlParam(paraName) {
     var url = document.location.toString();
     var arrObj = url.split("?");
