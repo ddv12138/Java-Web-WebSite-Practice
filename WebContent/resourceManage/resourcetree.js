@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $.ajax({
-        url: ddvudo.getContextPath() + "/getTabList",
+        url: "../getTabList",
         data: JSON.stringify({parentid: null, ismanage: true}),
         type: "post",
         contentType: "application/json",
@@ -35,7 +35,7 @@ function renderNodeTree(arg) {
                 dataType: "text",
                 contentType: "application/json",
                 dataFilter: treeValueFilter,
-                url: ddvudo.getContextPath() + "/getTabList",
+                url: "../getTabList",
                 type: "post",
                 autoParam: ["id=parentid"]
             },
@@ -142,7 +142,7 @@ function treeValueFilter(treeid, pnode, res) {
 
 function removeResNode(treeId, treeNode) {
     $.ajax({
-        url: ddvudo.getContextPath() + "/deleteNode",
+        url: "../deleteNode",
         contentType: "application/json",
         data: JSON.stringify({id: treeNode.id}),
         type: "post",

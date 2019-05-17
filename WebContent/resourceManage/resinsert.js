@@ -5,7 +5,7 @@ window.onload = function () {
         if (pageMode == "insert") {
             data.field.pnodeid = GetUrlParam("pnodeid");
             $.ajax({
-                url: ddvudo.getContextPath() + "/insertNodeByParent",
+                url: "../insertNodeByParent",
                 contentType: "application/json",
                 data: JSON.stringify(data.field),
                 type: "post",
@@ -20,7 +20,7 @@ window.onload = function () {
         } else if (pageMode == "update") {
             data.field.id = updateid;
             $.ajax({
-                url: ddvudo.getContextPath() + "/updateResNodeInfo",
+                url: "../updateResNodeInfo",
                 contentType: "application/json",
                 data: JSON.stringify(data.field),
                 type: "post",

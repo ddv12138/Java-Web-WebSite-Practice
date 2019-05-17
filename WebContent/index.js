@@ -1,6 +1,6 @@
 function initLeftTab() {
     $.ajax({
-        url: ddvudo.getContextPath() + "/getTabList",
+        url: "./getTabList",
         data: JSON.stringify({parentid: null}),
         type: "post",
         contentType: "application/json",
@@ -22,7 +22,7 @@ function nodeClick(arg) {
     if (!node.getAttribute("expanded")) {
         var data = JSON.parse(node.getAttribute("nodevalue"));
         $.ajax({
-            url: ddvudo.getContextPath() + "/getTabList",
+            url: "./getTabList",
             data: JSON.stringify({parentid: data.id}),
             type: "post",
             contentType: "application/json",
