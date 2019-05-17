@@ -45,6 +45,8 @@ var setUpdateNodeInfo = function (arg) {
         updateid = arg.id;
         layui.form.val("resinsert", arg);
         $("input[name=haschild][value=true]").attr("checked", arg.haschild);
+        $("input[name=istop]").removeAttr("checked");
+        $("input[name=istop][value=" + arg.istop + "]").attr("checked", "chencked");
     }
     layui.form.render();
 }

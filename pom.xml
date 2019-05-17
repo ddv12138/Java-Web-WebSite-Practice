@@ -118,5 +118,10 @@
 			<artifactId>lucene-analyzers-smartcn</artifactId>
 			<version>8.1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>SSRServerDetection</groupId>
+			<artifactId>SSRServerDetection</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
