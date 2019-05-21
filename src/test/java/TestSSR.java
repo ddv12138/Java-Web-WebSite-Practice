@@ -16,7 +16,7 @@ public class TestSSR {
             String linkurl = "https://sub.2cy.network/link/HxivbVvNR6KfVNUB?mu=0";
             URLConnection con = URLConnHandler.getInstance(linkurl).getConnection();
             Airport data = DataResolve.getInstance().Decode(URLIOHandler.getInstance(URLIOHandler.LinkType.SSR).getResponseContent(con), URLIOHandler.LinkType.SSR);
-            ArrayList<Result> testRsult = DataResolve.getInstance().serverPingTestMultiThread(1000, data.getServers());
+            ArrayList<Result> testRsult = DataResolve.getInstance().serverPingTestMultiThread(100, data.getServers());
             System.out.println(JSON.toJSONString(testRsult));
         } catch (Exception e) {
             e.printStackTrace();
