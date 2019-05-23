@@ -7,7 +7,7 @@ import tk.ddvudo.ssrdetection.beans.Airport;
 import tk.ddvudo.ssrdetection.beans.Result;
 
 import java.net.URLConnection;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TestSSR {
     @Test
@@ -16,7 +16,7 @@ public class TestSSR {
             String linkurl = "https://sub.2cy.network/link/HxivbVvNR6KfVNUB?mu=0";
             URLConnection con = URLConnHandler.getInstance(linkurl).getConnection();
             Airport data = DataResolve.getInstance().Decode(URLIOHandler.getInstance(URLIOHandler.LinkType.SSR).getResponseContent(con), URLIOHandler.LinkType.SSR);
-            ArrayList<Result> testRsult = DataResolve.getInstance().serverPingTestMultiThread(100, data.getServers());
+            List<Result> testRsult = DataResolve.getInstance().serverPingTestMultiThread(100, data.getServers());
             System.out.println(JSON.toJSONString(testRsult));
         } catch (Exception e) {
             e.printStackTrace();
