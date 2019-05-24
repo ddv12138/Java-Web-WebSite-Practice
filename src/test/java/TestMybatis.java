@@ -31,7 +31,7 @@ public class TestMybatis {
         try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
 //            ResourceMapper rm = session.getMapper(ResourceMapper.class);
 //            ResourceTable parent = rm.selectByID(2);
-//            ResourceTable node = ResourceUtil.getInstance().getNewSubNode(parent, "1q2w", "yuio", 0, null, null, false);
+//            ResourceTable node = ResourceService.getInstance().getNewSubNode(parent, "1q2w", "yuio", 0, null, null, false);
 //            System.out.println(node);
 //            System.out.println(rm.insertByParent(parent, node));
 //            session.commit();
@@ -43,7 +43,7 @@ public class TestMybatis {
         try (SqlSession session = DataBaseManage.getSqlSessionFactory().openSession()) {
 //            ResourceMapper rm = session.getMapper(ResourceMapper.class);
 //            ResourceTable parent = rm.selectByID(20);
-//            System.out.println(ResourceUtil.getInstance().deleteResource(parent, session));
+//            System.out.println(ResourceService.getInstance().deleteResource(parent, session));
 //            session.commit();
         }
     }

@@ -2,7 +2,7 @@ package WebComponent.Controller;
 
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
-import ORM.Utils.ResourceUtil;
+import Services.ResourceService;
 import com.alibaba.fastjson.JSON;
 import com.mysql.cj.util.StringUtils;
 import globalUtils.CommonResult;
@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.LinkedHashMap;
 
 @Controller
 public class ResourceController {
+    @Resource
+    ResourceService service;
     @RequestMapping("/getTabList")
     @ResponseBody
     public CommonResult getTabList(@RequestBody LinkedHashMap<String, Object> par) {
@@ -94,15 +97,12 @@ public class ResourceController {
             if (null != par.get("haschild")) {
                 haschild = "1".equals(par.get("haschild"));
             }
-            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
-            ResourceTable pnode = mapper.selectByID(pnodeid);
-            ResourceTable subnode = ResourceUtil.getInstance().getNewSubNode(pnode, name, cnname, istop, null, urlpath, haschild);
-            int i = mapper.insertByParent(pnode, subnode);
-            if (i >= 0) {
+            int subnode = service.insertNodeByParent(pnodeid, name, cnname, istop, null, urlpath, haschild);
+            if (subnode > 0) {
                 session.commit();
-                result = new CommonResult(true, "插入成功", subnode.toString());
+                result = new CommonResult(true, "插入成功", subnode);
             } else {
-                result = new CommonResult(false, "插入失败", subnode.toString());
+                result = new CommonResult(false, "插入失败", subnode);
                 throw new RuntimeException("节点插入失败");
             }
         } catch (Exception e) {
@@ -117,28 +117,10 @@ public class ResourceController {
     @RequestMapping("/deleteNode")
     @ResponseBody
     public CommonResult deleteNode(@RequestBody LinkedHashMap<String, String> par) {
-        SqlSession session = DataBaseManage.getSqlSessionFactory().openSession();
-        try {
-            if (null == par.get("id")) {
-                return new CommonResult(false, "参数为空", null);
-            }
-            int id = Integer.parseInt(par.get("id"));
-            if (id == 1 || id == 2) {
-                return new CommonResult(false, "不允许删除此节点", null);
-            }
-            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
-            ResourceTable res = mapper.selectByID(id);
-            if (null == res) {
-                return new CommonResult(false, "节点不存在", null);
-            }
-            ResourceUtil.getInstance().deleteResource(res, session);
-            session.commit();
+        if (service.deleteResource(par.get("id")) > 0) {
             return new CommonResult(true, "节点删除成功", null);
-        } catch (Exception e) {
-            session.rollback();
-        } finally {
-            session.close();
+        } else {
+            return new CommonResult(false, "操作错误", null);
         }
-        return new CommonResult(false, "参数为空", null);
     }
 }

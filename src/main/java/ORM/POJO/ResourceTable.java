@@ -1,5 +1,8 @@
 package ORM.POJO;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ResourceTable {
     Integer id, istop, leftvalue, rightvalue, level, order;
     String name, cnname, urlpath;

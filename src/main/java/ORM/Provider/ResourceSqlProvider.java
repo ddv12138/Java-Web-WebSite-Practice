@@ -7,6 +7,7 @@ import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
 
+
 public class ResourceSqlProvider {
     public String updateByExample(ResourceTable res) {
         return new SQL() {{
