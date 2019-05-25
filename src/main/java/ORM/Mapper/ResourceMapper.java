@@ -4,12 +4,13 @@ import ORM.POJO.ResourceTable;
 import ORM.Provider.ResourceSqlProvider;
 import ORM.Utils.Condition;
 import org.apache.ibatis.annotations.*;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
-@Mapper(componentModel = "spring", uses = {})
-public interface ResourceMapper extends Mapper<ResourceTable> {
+@Mapper(componentModel = "spring")
+public interface ResourceMapper {
     @Insert("insert into Resourcetable(id,name,cnname,istop,leftvalue,rightvalue,level,order,urlpath,haschild) values(#{id},#{name},#{cnname},#{istop},#{leftvalue},#{rightvalue},#{level},#{order},#{urlpath},#{haschild})")
     int InsertByAllvalue(ResourceTable res);
 
