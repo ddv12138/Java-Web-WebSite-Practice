@@ -147,6 +147,7 @@ function removeResNode(treeId, treeNode) {
         contentType: "application/json",
         data: JSON.stringify({id: treeNode.id}),
         type: "post",
+        async: false,
         complete: function (arg) {
             if (!arg instanceof Object) {
                 try {
