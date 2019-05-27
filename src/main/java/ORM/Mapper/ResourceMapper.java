@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface ResourceMapper {
-    @Insert("insert into Resourcetable(id,name,cnname,istop,leftvalue,rightvalue,level,order,urlpath,haschild) values(#{id},#{name},#{cnname},#{istop},#{leftvalue},#{rightvalue},#{level},#{order},#{urlpath},#{haschild})")
-    int InsertByAllvalue(ResourceTable res);
-
     @SelectProvider(type = ResourceSqlProvider.class, method = "selectByExample")
     ResourceTable[] selectByExample(ResourceTable res);
 

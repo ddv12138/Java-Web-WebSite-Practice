@@ -2,6 +2,8 @@ package Services;
 
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
+import com.alibaba.fastjson.JSON;
+import globalUtils.CommonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,27 @@ public class ResourceService {
             throw new RuntimeException("节点不存在");
         }
         return mapper.deleteRes(res, res.getRightvalue() - res.getLeftvalue() + 1);
+    }
+
+    public int updateResNodeInfo(ResourceTable res) {
+        return mapper.updateByExample(res);
+    }
+
+    public CommonResult getTabList(String pid, boolean ismanage) {
+        CommonResult resp;
+        if ((com.mysql.cj.util.StringUtils.isNullOrEmpty(pid)) && !ismanage) {
+            ResourceTable rt = new ResourceTable();
+            rt.setIstop(1);
+            ResourceTable[] res = mapper.selectByExample(rt);
+            resp = new CommonResult(true, "sucess", JSON.toJSONString(res));
+        } else if ((com.mysql.cj.util.StringUtils.isNullOrEmpty(pid)) && ismanage) {
+            ResourceTable res = mapper.selectByID(1);
+            resp = new CommonResult(true, "sucess", JSON.toJSONString(res));
+        } else {
+            ResourceTable pnode = mapper.selectByID(Integer.parseInt(pid));
+            ResourceTable[] res = mapper.selectNextLevelNode(pnode);
+            resp = new CommonResult(true, "sucess", JSON.toJSONString(res));
+        }
+        return resp;
     }
 }

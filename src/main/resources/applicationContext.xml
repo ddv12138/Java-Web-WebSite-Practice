@@ -35,7 +35,6 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <!--mapperInterface属性指定映射器接口，用于实现此接口并生成映射器对象-->
         <property name="mapperInterface" value="ORM.Mapper.ResourceMapper"/>
-
     </bean>
 
     <!--事务管理器-->
