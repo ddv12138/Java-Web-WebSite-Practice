@@ -43,20 +43,7 @@ public class ResourceController {
     @ResponseBody
     public CommonResult insertNodeByParent(@RequestBody LinkedHashMap<String, String> par) {
         CommonResult result = null;
-        Integer pnodeid = null;
-        if (null != par.get("pnodeid")) {
-            pnodeid = Integer.parseInt(par.get("pnodeid"));
-        }
-        if (null == pnodeid) return new CommonResult(false, "插入失败", null);
-        Integer istop = null;
-        if (null != par.get("istop")) {
-            istop = Integer.parseInt(par.get("istop"));
-        }
-        Boolean haschild = null;
-        if (null != par.get("haschild")) {
-            haschild = "1".equals(par.get("haschild"));
-        }
-        int subnode = service.insertNodeByParent(pnodeid, par.get("name"), par.get("cnname"), istop, null, par.get("urlpath"), haschild);
+        int subnode = service.insertNodeByParent(par.get("pnodeid"), par.get("name"), par.get("cnname"), par.get("istop"), null, par.get("urlpath"), par.get("haschild"));
         if (subnode > 0) {
             result = new CommonResult(true, "插入成功", subnode);
         } else {

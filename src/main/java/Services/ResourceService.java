@@ -6,26 +6,41 @@ import com.alibaba.fastjson.JSON;
 import globalUtils.CommonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
 @Service
+@Transactional
 public class ResourceService {
     @Resource
     private ResourceMapper mapper;
 
-    public int insertNodeByParent(int pid, String name, String cnname, int istop, Integer order, String urlpath, boolean haschild) {
-        ResourceTable pnode = mapper.selectByID(pid);
+    public int insertNodeByParent(String pid, String name, String cnname, String istopstr, String orderstr, String urlpath, String haschildstr) {
+        Integer pnodeid = null;
+        if (null != pid) {
+            pnodeid = Integer.parseInt(pid);
+        }
+        if (null == pnodeid) return -1;
+        ResourceTable pnode = mapper.selectByID(pnodeid);
         ResourceTable node = new ResourceTable();
+        node.setName(name);
+        node.setCnname(cnname);
+        node.setUrlpath(urlpath);
+
+        if (null != istopstr) {
+            node.setIstop(Integer.parseInt(istopstr));
+        }
+        if (null != orderstr) {
+            node.setOrder(Integer.parseInt(orderstr));
+        }
+        if (null != haschildstr) {
+            node.setHaschild("1".equals(haschildstr));
+        }
+
         node.setLeftvalue(pnode.getLeftvalue() + 1);
         node.setRightvalue(pnode.getLeftvalue() + 2);
         node.setLevel(pnode.getLevel() + 1);
-        node.setName(name);
-        node.setCnname(cnname);
-        node.setIstop(istop);
-        node.setOrder(order);
-        node.setUrlpath(urlpath);
-        node.setHaschild(haschild);
         return mapper.insertByParent(pnode, node);
     }
 
@@ -35,7 +50,9 @@ public class ResourceService {
             throw new RuntimeException("参数为空");
         }
         int id = Integer.parseInt(sid);
-        if (id == 1 || id == 2) {
+        ResourceTable test = mapper.selectByID(99);
+        mapper.deleteRes(test, test.getRightvalue() - test.getLeftvalue() + 1);
+        if (id == 1 || id == 2 || id == 100) {
             throw new RuntimeException("不允许删除的节点");
         }
         ResourceTable res = mapper.selectByID(id);
