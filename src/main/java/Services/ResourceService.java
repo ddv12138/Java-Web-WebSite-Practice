@@ -50,9 +50,7 @@ public class ResourceService {
             throw new RuntimeException("参数为空");
         }
         int id = Integer.parseInt(sid);
-        ResourceTable test = mapper.selectByID(99);
-        mapper.deleteRes(test, test.getRightvalue() - test.getLeftvalue() + 1);
-        if (id == 1 || id == 2 || id == 100) {
+        if (id == 1 || id == 2) {
             throw new RuntimeException("不允许删除的节点");
         }
         ResourceTable res = mapper.selectByID(id);

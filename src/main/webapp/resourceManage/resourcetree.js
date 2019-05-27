@@ -141,24 +141,35 @@ function treeValueFilter(treeid, pnode, res) {
 }
 
 function removeResNode(treeId, treeNode) {
+    var flag = false;
     $.ajax({
         url: "../deleteNode",
         contentType: "application/json",
         data: JSON.stringify({id: treeNode.id}),
         type: "post",
         complete: function (arg) {
-            arg = JSON.parse(arg.responseText);
+            if (!arg instanceof Object) {
+                try {
+                    arg = JSON.parse(arg.responseText);
+                } catch (e) {
+                    flag = false;
+                    return;
+                }
+            }
             if (arg.state) {
                 var zTree = $.fn.zTree.getZTreeObj(treeId);
                 zTree.reAsyncChildNodes(treeNode.getParentNode(), "refresh", false);
-                return true;
+                flag = true;
             } else {
                 alert(arg.msg);
-                return false;
+                flag = false;
+                return;
             }
-            return false;
+            flag = false;
+            return;
         }
-    })
+    });
+    return flag;
 }
 
 function frameResize(layero, index) {

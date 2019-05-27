@@ -1,19 +1,5 @@
 window.onload = function () {
-    layui.table.render({
-        elem: '#restable',
-        cols: [[
-            {field: 'group', title: '分组', sort: true,},
-            {field: 'remarks', title: '标识', sort: true},
-            {field: 'server', title: '地址', sort: true},
-            {field: 'address', title: 'IP地址', sort: true},
-            {field: 'port', title: '端口', sort: true},
-            {field: 'passwd', title: '密码', sort: true},
-            {field: 'method', title: '加密方法', sort: true},
-            {field: 'obfs', title: 'obfs', sort: true},
-            {field: 'obfsparam', title: 'obfsparam', sort: true},
-            {field: 'rtt_avg', title: '平均延迟', sort: true}
-        ]]
-    });
+    layui.table.render();
     layui.form.render();
     layui.form.on("submit(searchform)", function (data) {
         var renderPar = {
