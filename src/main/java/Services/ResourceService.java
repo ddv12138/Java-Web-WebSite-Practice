@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,26 +18,16 @@ public class ResourceService {
     private ResourceMapper mapper;
 
     public int insertNodeByParent(String pid, String name, String cnname, String istopstr, String orderstr, String urlpath, String haschildstr) {
-        Integer pnodeid = null;
-        if (null != pid) {
-            pnodeid = Integer.parseInt(pid);
-        }
-        if (null == pnodeid) return -1;
-        ResourceTable pnode = mapper.selectByID(pnodeid);
+        Optional<Integer> pnodeid = Optional.ofNullable(pid).map(id -> Integer.parseInt(pid));
+        ResourceTable pnode = mapper.selectByID(pnodeid.get());
         ResourceTable node = new ResourceTable();
         node.setName(name);
         node.setCnname(cnname);
         node.setUrlpath(urlpath);
 
-        if (null != istopstr) {
-            node.setIstop(Integer.parseInt(istopstr));
-        }
-        if (null != orderstr) {
-            node.setOrder(Integer.parseInt(orderstr));
-        }
-        if (null != haschildstr) {
-            node.setHaschild("1".equals(haschildstr));
-        }
+        node.setIstop(Integer.parseInt(Optional.ofNullable(istopstr).get()));
+        node.setOrder(Integer.parseInt(Optional.ofNullable(orderstr).get()));
+        node.setHaschild(Optional.ofNullable(haschildstr).map(hc -> hc.equals("1")).get());
 
         node.setLeftvalue(pnode.getLeftvalue() + 1);
         node.setRightvalue(pnode.getLeftvalue() + 2);
