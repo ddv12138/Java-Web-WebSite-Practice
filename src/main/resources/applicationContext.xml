@@ -28,12 +28,12 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="flyway" class="org.flywaydb.core.Flyway">
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
         <constructor-arg ref="flywayConfig"/>
     </bean>
 
     <!--2创建一个sql会话工厂bean，指定数据源-->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" depends-on="flyway">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:ORM/*.xml"/>
         <property name="typeAliasesPackage" value="ORM,Services"/><!--指定实体类包，自动将实体类的简单类名映射为别名-->
