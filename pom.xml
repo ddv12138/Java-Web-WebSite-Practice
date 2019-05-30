@@ -54,6 +54,11 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.56</version>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>5.2.4</version>
+		</dependency>
 		<!--spring相关包-->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -213,6 +218,11 @@
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-smartcn</artifactId>
 			<version>${lucene.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.16.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,24 +1,19 @@
-import ORM.POJO.ResourceTable;
+import org.flywaydb.core.Flyway;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Optional;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
 public class TestResult {
-    @Test
-    public void TestOptional() {
-        ResourceTable res = new ResourceTable();
-        res.setId(0);
-        res.setName("asd");
-        res.setCnname("asdasd");
-        System.out.println(test(res));
-    }
+    @Autowired
+    Flyway flyway;
 
-    private String test(ResourceTable t) {
-        return Optional.ofNullable(t).map(r -> {
-            System.out.println(r.getName());
-            System.out.println(t.getName());
-            return t.getName();
-        }).toString();
+    @Test
+    public void Test() {
+        flyway.migrate();
     }
 }
