@@ -26,7 +26,6 @@ public class ResourceService {
         node.setUrlpath(urlpath);
 
         node.setIstop(Integer.parseInt(Optional.ofNullable(istopstr).get()));
-        node.setOrder(Integer.parseInt(Optional.ofNullable(orderstr).get()));
         node.setHaschild(Optional.ofNullable(haschildstr).map(hc -> hc.equals("1")).get());
 
         node.setLeftvalue(pnode.getLeftvalue() + 1);
