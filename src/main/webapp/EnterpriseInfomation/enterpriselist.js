@@ -6,24 +6,18 @@ function init_list() {
             {field: 'name', title: '企业名称', sort: true, width: 300},
             {field: 'code', title: '标识', sort: true, width: 150},
             {field: 'regday', title: '地址', sort: true, width: 150},
-            {field: 'legalRepresentative', title: '法人', sort: true},
+            {field: 'legalrepresentative', title: '法人', width: 150},
             {field: 'capital', title: '注册资本', sort: true, width: 150},
             {field: 'province', title: '省份', sort: true},
             {field: 'city', title: '城市', sort: true},
-            {field: 'address', title: '地址', sort: true, width: 300},
-            {field: 'businessScope', title: '从事行业', sort: true, width: 300},
+            {field: 'address', title: '地址', width: 300},
+            {field: 'businessscope', title: '从事行业', width: 300},
         ]],
         toolbar: 'default',
         totalRow: true,
         page: true,
         parseData: function (arg) {
-            console.log(arg);
-            // var data = [];
-            // if (arg.data) {
-            //     for (var i = 0; i < arg.data.length; i++) {
-            //         data.push($.extend(arg.data[i].result, arg.data[i].server));
-            //     }
-            // }
+            console.log(arg)
             return res = {
                 "code": 0,
                 "msg": "sucess",
@@ -34,10 +28,21 @@ function init_list() {
         url: '../getEnterpriseList',
         contentType: "application/json",
         method: "post",
+        id: "enterpriselist"
     };
     layui.table.render(renderPar);
 }
 
 window.onload = function () {
+    $("#searchbtn").click(function () {
+        layui.table.reload('enterpriselist', {
+            page: {
+                curr: 1 //重新从第 1 页开始
+            }
+            , where: {
+                name: $("#searchname").val()
+            }
+        });
+    });
     init_list();
 }

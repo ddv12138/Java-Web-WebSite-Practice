@@ -9,9 +9,6 @@
                             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
                             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!--spring注解-->
-    <context:component-scan base-package="ORM,Services"/>
-
     <!-- 导入外部的配置文件 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -36,9 +33,9 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" depends-on="flyway">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:ORM/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
         <property name="typeAliasesPackage" value="ORM,Services"/><!--指定实体类包，自动将实体类的简单类名映射为别名-->
     </bean>
-
     <bean id="resourceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <!--sqlSessionFactory属性指定要用到的SqlSessionFactory实例-->
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
@@ -46,7 +43,7 @@
         <property name="mapperInterface" value="ORM.Mapper.ResourceMapper"/>
     </bean>
 
-    <bean id="enterpriseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="enterpriseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" depends-on="sqlSessionFactory">
         <!--sqlSessionFactory属性指定要用到的SqlSessionFactory实例-->
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <!--mapperInterface属性指定映射器接口，用于实现此接口并生成映射器对象-->
@@ -62,4 +59,6 @@
     <tx:annotation-driven/>
     <mvc:annotation-driven/>
 
+    <!--spring注解-->
+    <context:component-scan base-package="ORM,Services"/>
 </beans>

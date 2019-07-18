@@ -3,6 +3,7 @@ package Services;
 import ORM.Mapper.EnterpriseMapper;
 import ORM.POJO.Enterprise;
 import ORM.POJO.EnterpriseExample;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +16,13 @@ public class EnterpriseService {
     @Resource
     EnterpriseMapper mapper;
 
-    public List<Enterprise> listEnterprise(long offset, int limit) {
+    public List<Enterprise> listEnterprise(long offset, int limit, String nameLike) {
         EnterpriseExample example = new EnterpriseExample();
         example.setLimit(limit);
         example.setOffset(offset);
+        if (StringUtils.isNotEmpty(nameLike)) {
+            example.createCriteria().andNameLike("%" + nameLike + "%");
+        }
         return mapper.selectByExample(example);
     }
 

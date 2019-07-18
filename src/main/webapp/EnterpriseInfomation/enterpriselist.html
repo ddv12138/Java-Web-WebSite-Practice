@@ -18,7 +18,14 @@
     <script src="./enterpriselist.js"></script>
 </head>
 <body>
-<div class="layui-container">
+<div class="layui-layout-body">
+    <div class="demoTable">
+        搜索名称：
+        <div class="layui-inline">
+            <input autocomplete="off" class="layui-input" id="searchname" name="name">
+        </div>
+        <button class="layui-btn" data-type="reload" id="searchbtn">搜索</button>
+    </div>
     <table class="layui-table" id="restable" lay-even lay-skin="line">
     </table>
 </div>
