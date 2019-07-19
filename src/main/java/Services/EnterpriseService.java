@@ -1,14 +1,15 @@
 package Services;
 
 import ORM.Mapper.EnterpriseMapper;
-import ORM.POJO.Enterprise;
 import ORM.POJO.EnterpriseExample;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -16,18 +17,18 @@ public class EnterpriseService {
     @Resource
     EnterpriseMapper mapper;
 
-    public List<Enterprise> listEnterprise(long offset, int limit, String nameLike) {
+    public Map listEnterprise(long offset, int limit, String nameLike) {
         EnterpriseExample example = new EnterpriseExample();
-        example.setLimit(limit);
-        example.setOffset(offset);
         if (StringUtils.isNotEmpty(nameLike)) {
             example.createCriteria().andNameLike("%" + nameLike + "%");
         }
-        return mapper.selectByExample(example);
-    }
-
-    public long countEnterprise() {
-        EnterpriseExample example = new EnterpriseExample();
-        return mapper.countByExample(example);
+        long count = mapper.countByExample(example);
+        example.setLimit(limit);
+        example.setOffset(offset);
+        List data = mapper.selectByExample(example);
+        Map res = new LinkedHashMap<String, Object>();
+        res.put("data", data);
+        res.put("count", count);
+        return res;
     }
 }

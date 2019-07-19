@@ -196,7 +196,7 @@
         </trim>
     </insert>
     <select id="countByExample" parameterType="ORM.POJO.EnterpriseExample" resultType="java.lang.Long">
-        select count(*) from Enterprise_all
+        select count(1) from Enterprise_all
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
