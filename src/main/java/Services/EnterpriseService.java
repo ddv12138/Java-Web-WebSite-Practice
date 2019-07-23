@@ -26,7 +26,7 @@ public class EnterpriseService {
         example.setLimit(limit);
         example.setOffset(offset);
         List data = mapper.selectByExample(example);
-        Map res = new LinkedHashMap<String, Object>();
+        Map<String, Object> res = new LinkedHashMap<>();
         res.put("data", data);
         res.put("count", count);
         return res;
