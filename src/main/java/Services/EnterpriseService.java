@@ -2,7 +2,7 @@ package Services;
 
 import ORM.Mapper.EnterpriseMapper;
 import ORM.POJO.EnterpriseExample;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

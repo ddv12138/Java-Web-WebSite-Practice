@@ -35,6 +35,7 @@ public class TestLucene {
     }
 
     private static Directory createIndex(SmartChineseAnalyzer analyzer, List<String> products) throws IOException {
+        //noinspection deprecation
         Directory index = new RAMDirectory();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         try (IndexWriter writer = new IndexWriter(index, config)) {
