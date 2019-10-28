@@ -17,7 +17,7 @@ public class EnterpriseService {
     @Resource
     EnterpriseMapper mapper;
 
-    public Map listEnterprise(long offset, int limit, String nameLike) {
+    public Map<String, Object> listEnterprise(long offset, int limit, String nameLike) {
         EnterpriseExample example = new EnterpriseExample();
         if (StringUtils.isNotEmpty(nameLike)) {
             example.createCriteria().andNameLike("%" + nameLike + "%");
