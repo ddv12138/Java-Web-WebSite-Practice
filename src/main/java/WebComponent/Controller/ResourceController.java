@@ -23,9 +23,9 @@ public class ResourceController {
         if (null == par.get("parentid")) {
             pid = null;
         }
-        Boolean ismanage = (Boolean) par.get("ismanage");
-        if (null == par.get("ismanage")) ismanage = false;
-        return service.getTabList(pid, ismanage);
+		Boolean isManage = (Boolean) par.get("ismanage");
+		if (null == par.get("ismanage")) isManage = false;
+		return service.getTabList(pid, isManage);
     }
 
     @RequestMapping("/updateResNodeInfo")
