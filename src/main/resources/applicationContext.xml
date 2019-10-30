@@ -27,18 +27,10 @@
         <property name="configLocation" value="classpath:mybatis-config.xml"></property>
         <property name="typeAliasesPackage" value="ORM,Services"/><!--指定实体类包，自动将实体类的简单类名映射为别名-->
     </bean>
-    <bean id="resourceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <!--sqlSessionFactory属性指定要用到的SqlSessionFactory实例-->
-        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <!--mapperInterface属性指定映射器接口，用于实现此接口并生成映射器对象-->
-        <property name="mapperInterface" value="ORM.Mapper.ResourceMapper"/>
-    </bean>
-
-    <bean id="enterpriseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" depends-on="sqlSessionFactory">
-        <!--sqlSessionFactory属性指定要用到的SqlSessionFactory实例-->
-        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <!--mapperInterface属性指定映射器接口，用于实现此接口并生成映射器对象-->
-        <property name="mapperInterface" value="ORM.Mapper.EnterpriseMapper"/>
+    <!--自动配置该包下所有的DAO类-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="ORM.Mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
     <!--事务管理器-->

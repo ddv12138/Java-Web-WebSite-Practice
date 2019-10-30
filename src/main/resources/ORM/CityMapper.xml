@@ -3,17 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ORM.Mapper.CityMapper">
-    <insert id="insert" parameterType="ORM.POJO.City" useGeneratedKeys="false">
-        insert into City(city_id, city_name, max_lat, min_lat, max_lng, min_lng)
-        values (#{city_id}, #{city_name}, #{max_lat}, #{min_lat}, #{max_lng}, #{min_lng})
-    </insert>
     <select id="selectByName" parameterType="String" resultType="ORM.POJO.City">
         select *
         from City
         where city_name = #{city_name}
     </select>
     <insert id="initDefaultData" useGeneratedKeys="false">
-        insert OR ignore into City(city_id, city_name, max_lat, min_lat, max_lng, min_lng)
+        insert into City(city_id, city_name, max_lat, min_lat, max_lng, min_lng)
         values ('310000', '上海', '31.36552', '31.106158', '121.600985', '121.360095'),
                ('110000', '北京', '40.074766', '39.609408', '116.796856', '115.980476'),
                ('440100', '广州', '23.296086', '22.737277', '113.773905', '113.038013'),

@@ -3,46 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ORM.Mapper.DistrictMapper">
-    <select id="createTable">
-        create table if not exists District
-        (
-            uuid integer primary key autoincrement,
-            id,
-            name,
-            longitude,
-            latitude,
-            border,
-            unit_price,
-            count,
-            city_id,
-            city_name
-        );
-    </select>
-    <insert id="bathInsertList" parameterType="java.util.List" useGeneratedKeys="true">
-        insert or replace into District(
-        id ,
-        name,
-        longitude,
-        latitude,
-        border,
-        unit_price,
-        count,
-        city_id,
-        city_name) values
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.id},#{item.name},#{item.longitude},#{item.latitude},#{item.border},#{item.unit_price},#{item.count},#{item.city_id},#{item.city_name})
-        </foreach>
-    </insert>
     <select id="selectByName" parameterType="String" resultType="ORM.POJO.District">
         select *
         from District
         where name = #{name};
     </select>
-    <delete id="deleteByCityId" parameterType="String">
-        delete
-        from District
-        where city_id = #{city_id}
-    </delete>
     <select id="selectByCity" parameterType="ORM.POJO.City" resultType="ORM.POJO.District">
         select *
         from District

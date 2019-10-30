@@ -8,10 +8,4 @@
         from House
         where houseId = #{houseId};
     </select>
-
-    <select id="selectHouseByCityName" resultType="ORM.POJO.House" parameterType="String">
-        select *
-        from House
-        where houseId = #{houseId};
-    </select>
 </mapper>

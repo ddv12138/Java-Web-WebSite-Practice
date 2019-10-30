@@ -7,7 +7,18 @@ window.onload = function () {
 
     var city = "武汉";
 
-    var cityCenter = $.post();
+    var cityCenter = null;
+
+    $.ajax({
+        url: "../getCommunitiesByCity",
+        // dataType:"json",
+        // contentType:"application/json",
+        data: city,
+        type: "post",
+        complete: function (arg) {
+            console.log(arg);
+        }
+    });
 
     const points = null;
     console.log(points);

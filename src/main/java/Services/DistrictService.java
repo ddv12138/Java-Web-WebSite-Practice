@@ -11,34 +11,14 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DistrictService implements DistrictMapper {
+public class DistrictService {
 	@Resource
 	DistrictMapper mapper;
 
-	@Override
-	public void createTable() {
-		mapper.createTable();
-	}
-
-	@Override
-	public int bathInsertList(List<District> districts) {
-		int res = mapper.bathInsertList(districts);
-		return res;
-	}
-
-
-	@Override
 	public District selectByName(String name) {
 		return mapper.selectByName(name);
 	}
 
-	@Override
-	public int deleteByCityId(String city_id) {
-		int count = mapper.deleteByCityId(city_id);
-		return count;
-	}
-
-	@Override
 	public List<District> selectByCity(City city) {
 		return mapper.selectByCity(city);
 	}

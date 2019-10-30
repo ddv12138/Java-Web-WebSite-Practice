@@ -38,5 +38,9 @@
         <mapper class="ORM.Mapper.UserMapper"/>
         <mapper class="ORM.Mapper.EnterpriseMapper"/>
         <mapper class="ORM.Mapper.ResourceMapper"/>
+        <mapper class="ORM.Mapper.CityMapper"/>
+        <mapper class="ORM.Mapper.DistrictMapper"/>
+        <mapper class="ORM.Mapper.CommunityMapper"/>
+        <mapper class="ORM.Mapper.HouseMapper"/>
     </mappers>
 </configuration>
