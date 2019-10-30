@@ -7,6 +7,7 @@ import Services.CommunityService;
 import globalUtils.CommonResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -23,7 +24,7 @@ public class CommunityController {
 
 	@RequestMapping("/getCommunitiesByCity")
 	@ResponseBody
-	public CommonResult getCommunityByCity(String cityName) {
+	public CommonResult getCommunityByCity(@RequestParam String cityName) {
 		City city = cityService.selectByName(cityName);
 		List<Community> communities = communityService.selectByCity(city);
 		return new CommonResult(true, "success", communities);

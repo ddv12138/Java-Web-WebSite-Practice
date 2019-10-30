@@ -11,8 +11,8 @@ window.onload = function () {
 
     $.ajax({
         url: "../getCommunitiesByCity",
-        // dataType:"json",
-        // contentType:"application/json",
+        dataType: "text",
+        contentType: "application/json",
         data: city,
         type: "post",
         complete: function (arg) {
