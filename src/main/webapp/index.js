@@ -66,20 +66,21 @@ function renderSubTabList(arg, node) {
 }
 
 function renderTabList(arg, msg, reponseobj, node) {
-    var res = JSON.parse(arg.responseText);
+    let res = JSON.parse(arg.responseText);
     res = JSON.parse(res.result);
     if (res.state) {
-        var data = res.data;
-        for (var i = 0; i < data.length; i++) {
-            var li = document.createElement("li");
+        const data = res.data;
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+            const li = document.createElement("li");
             li.setAttribute("class", "layui-nav-item");
-            var a = document.createElement("a");
+            const a = document.createElement("a");
             a.innerHTML = data[i].cnname;
             a.setAttribute("nodevalue", JSON.stringify(data[i]));
             a.setAttribute("href", "javascript:;");
             $(a).click(nodeClick);
             li.append(a);
-            var dl = document.createElement("dl");
+            const dl = document.createElement("dl");
             dl.setAttribute("class", "layui-nav-child");
             li.appendChild(dl);
             if (!node) node = $("#main-nav-bar");
