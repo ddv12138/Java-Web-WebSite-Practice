@@ -14,10 +14,10 @@
 
     <!--1定义一个jdbc数据源，创建一个驱动管理数据源的bean -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${driverClass}"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="${jdbcUrl}"/>
-        <property name="username" value="${user}"/>
-        <property name="password" value="${password}"/>
+        <property name="username" value="how2j"/>
+        <property name="password" value="liukang"/>
     </bean>
 
     <!--2创建一个sql会话工厂bean，指定数据源-->

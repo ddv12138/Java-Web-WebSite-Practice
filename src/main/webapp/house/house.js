@@ -11,14 +11,7 @@ window.onload = function () {
             let points = [];
             commData = JSON.parse(JSON.parse(commData).data);
             commData.forEach(function (loc) {
-                let baiduloc = [loc.longitude, loc.latitude];
-                var gaodeLoc = null;
-                AMap.convertFrom(baiduloc, 'baidu', function (status, result) {
-                    if (result.info === 'ok') {
-                        gaodeLoc = [result.locations[0].lng, result.locations[0].lat]; // Array.<LngLat>
-                        points.push({lng: gaodeLoc[0], lat: gaodeLoc[1], count: loc.unit_price});
-                    }
-                });
+                points.push({lng: loc.gaode_lng, lat: loc.gaode_lat, count: loc.unit_price});
             });
             console.log(points);
             if (!isSupportCanvas()) {

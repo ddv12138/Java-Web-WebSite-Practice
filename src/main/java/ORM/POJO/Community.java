@@ -2,7 +2,23 @@ package ORM.POJO;
 
 public class Community {
 	int unit_price, count, uuid;
-	String name, district_name, city_name, longitude, latitude, id, district_id, city_id;
+	String name, district_name, city_name, longitude, latitude, id, district_id, city_id, gaode_lng, gaode_lat;
+
+	public String getGaode_lng() {
+		return gaode_lng;
+	}
+
+	public void setGaode_lng(String gaode_lng) {
+		this.gaode_lng = gaode_lng;
+	}
+
+	public String getGaode_lat() {
+		return gaode_lat;
+	}
+
+	public void setGaode_lat(String gaode_lat) {
+		this.gaode_lat = gaode_lat;
+	}
 
 	public int getUuid() {
 		return uuid;

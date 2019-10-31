@@ -40,4 +40,8 @@ public class CommunityService {
 		return mapper.selectHetMapDataByCity(city);
 	}
 
+	public int updateOneLoc(Community community) {
+		return mapper.updateOneLoc(community);
+	}
+
 }

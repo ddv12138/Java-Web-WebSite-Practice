@@ -19,10 +19,9 @@
         where district_id = #{id};
     </select>
     <select id="selectHetMapDataByCity" resultType="ORM.POJO.Community" parameterType="ORM.POJO.City">
-        select uuid,latitude,longitude,unit_price,name
+        select uuid,gaode_lat,gaode_lng,unit_price,name
         from Community
         where city_id = #{city_id}
-        order by count;
     </select>
     <select id="countPreHouseNumByDistrict" resultType="Integer" parameterType="ORM.POJO.District">
         select sum(count)
@@ -34,4 +33,7 @@
         from Community
         where city_id = #{city_id}
     </select>
+    <update id="updateOneLoc" parameterType="ORM.POJO.Community">
+        update Community set gaode_lat = #{gaode_lat},gaode_lng=#{gaode_lng} where uuid=#{uuid}
+    </update>
 </mapper>
