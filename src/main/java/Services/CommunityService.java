@@ -36,8 +36,8 @@ public class CommunityService {
 		return mapper.countPreHouseNumByCity(city);
 	}
 
-	public List<Community> selectByCity(City city) {
-		return mapper.selectByCity(city);
+	public List<Community> selectHetMapDataByCity(City city) {
+		return mapper.selectHetMapDataByCity(city);
 	}
 
 }

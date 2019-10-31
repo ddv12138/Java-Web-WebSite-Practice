@@ -1,59 +1,77 @@
 window.onload = function () {
-    const dom = document.getElementById("container");
-    const myChart = echarts.init(dom);
-    const app = {};
-    let option = null;
-    app.title = '热力图与百度地图扩展';
-
-    var city = "武汉";
-
-    var cityCenter = null;
-
-    $.ajax({
-        url: "../getCommunitiesByCity",
-        dataType: "text",
-        contentType: "application/json",
-        data: city,
-        type: "post",
-        complete: function (arg) {
-            console.log(arg);
-        }
-    });
-
-    const points = null;
-    console.log(points);
-    myChart.setOption(option = {
-        animation: false,
-        bmap: {
-            center: "wuhan",
-            zoom: 14,
-            roam: true
-        },
-        visualMap: {
-            show: false,
-            top: 'top',
-            min: 0,
-            max: 5,
-            seriesIndex: 0,
-            calculable: true,
-            inRange: {
-                color: ['blue', 'blue', 'green', 'yellow', 'red']
+    let cityStr = "武汉";
+    $.post("../getCityInfo", {cityName: cityStr}, function (cityData, status) {
+        cityData = JSON.parse(JSON.parse(cityData).data).results[0];
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            center: [cityData.location.lng, cityData.location.lat],
+            zoom: 11
+        });
+        $.post("../getCommunitiesByCity", {cityName: cityStr}, function (commData, status) {
+            let points = [];
+            commData = JSON.parse(JSON.parse(commData).data);
+            commData.forEach(function (loc) {
+                let baiduloc = [loc.longitude, loc.latitude];
+                var gaodeLoc = null;
+                AMap.convertFrom(baiduloc, 'baidu', function (status, result) {
+                    if (result.info === 'ok') {
+                        gaodeLoc = [result.locations[0].lng, result.locations[0].lat]; // Array.<LngLat>
+                        points.push({lng: gaodeLoc[0], lat: gaodeLoc[1], count: loc.unit_price});
+                    }
+                });
+            });
+            console.log(points);
+            if (!isSupportCanvas()) {
+                alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
             }
-        },
-        series: [{
-            type: 'effectScatter',
-            coordinateSystem: 'bmap',
-            data: points,
-            pointSize: 5,
-            blurSize: 6
-        }]
-    });
-    if (!app.inNode) {
-        // 添加百度地图插件
-        var bmap = myChart.getModel().getComponent('bmap').getBMap();
-        bmap.addControl(new BMap.MapTypeControl());
-    }
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
+            var heatmap;
+            map.plugin(["AMap.Heatmap"], function () {
+                //初始化heatmap对象
+                heatmap = new AMap.Heatmap(map, {
+                    radius: 25, //给定半径
+                    opacity: [0, 0.8]
+                    /*,
+                    gradient:{
+                        0.5: 'blue',
+                        0.65: 'rgb(117,211,248)',
+                        0.7: 'rgb(0, 255, 0)',
+                        0.9: '#ffea00',
+                        1.0: 'red'
+                    }
+                     */
+                });
+                //设置数据集：该数据为北京部分“公园”数据
+                heatmap.setDataSet({
+                    data: points,
+                    max: 80000
+                });
+            });
+        })
+    })
 };
+
+function isSupportCanvas() {
+    var elem = document.createElement('canvas');
+    return !!(elem.getContext && elem.getContext('2d'));
+}
+
+function setGradient() {
+    /*格式如下所示:
+   {
+         0:'rgb(102, 255, 0)',
+         .5:'rgb(255, 170, 0)',
+         1:'rgb(255, 0, 0)'
+   }*/
+    var gradient = {
+        .1: '#82B8DA',
+        .2: '#66A9D7',
+        .3: '#4394C2',
+        .4: '#3B8BBE',
+        .5: '#2F7EB9',
+        .6: '#226DB0',
+        .7: '#125CA3',
+        .8: '#18639E',
+        .9: '#073067',
+    };
+    heatmapOverlay.setOptions({"gradient": gradient});
+}

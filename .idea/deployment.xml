@@ -5,7 +5,7 @@
       <paths name="ddvudo">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$/out/artifacts/TestWeb_Web_exploded" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/target/TestWeb-1.0-SNAPSHOT" web="/" />
           </mappings>
         </serverdata>
       </paths>

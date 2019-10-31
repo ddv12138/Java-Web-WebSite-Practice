@@ -18,8 +18,8 @@
         from Community
         where district_id = #{id};
     </select>
-    <select id="selectByCity" resultType="ORM.POJO.Community" parameterType="ORM.POJO.City">
-        select *
+    <select id="selectHetMapDataByCity" resultType="ORM.POJO.Community" parameterType="ORM.POJO.City">
+        select uuid,latitude,longitude,unit_price,name
         from Community
         where city_id = #{city_id}
         order by count;

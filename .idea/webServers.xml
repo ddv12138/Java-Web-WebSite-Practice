@@ -2,10 +2,10 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="518f4f88-d258-45b0-8421-af17b65b4586" name="ddvudo" url="http://ddvudo.top">
-        <fileTransfer host="ddvudo.top" port="22" rootFolder="/home/ubuntu/apache-tomcat-9.0.19/webapps/ROOT" accessType="SFTP">
+      <webServer id="518f4f88-d258-45b0-8421-af17b65b4586" name="ddvudo" url="http://188.131.157.4">
+        <fileTransfer host="188.131.157.4" port="22" rootFolder="/home/ubuntu/apache-tomcat-9.0.19/webapps/ROOT" accessType="SFTP">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+            <advancedOptions controlEncoding="UTF-8" dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
           <option name="port" value="22" />
         </fileTransfer>

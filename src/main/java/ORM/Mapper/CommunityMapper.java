@@ -20,5 +20,5 @@ public interface CommunityMapper {
 
 	Integer countPreHouseNumByCity(City city);
 
-	List<Community> selectByCity(City city);
+	List<Community> selectHetMapDataByCity(City city);
 }
