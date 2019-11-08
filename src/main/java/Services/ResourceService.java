@@ -5,16 +5,16 @@ import ORM.POJO.ResourceTable;
 import com.alibaba.fastjson.JSON;
 import globalUtils.CommonResult;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class ResourceService {
-    @Resource
+	@Autowired
     private ResourceMapper mapper;
 
     public int insertNodeByParent(String pid, String name, String cnname, String istopstr, String orderstr, String urlpath, String haschildstr) {

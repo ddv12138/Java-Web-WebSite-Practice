@@ -4,16 +4,16 @@ import ORM.Mapper.CommunityMapper;
 import ORM.POJO.City;
 import ORM.POJO.Community;
 import ORM.POJO.District;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 @Transactional
 public class CommunityService {
-	@Resource
+	@Autowired
 	CommunityMapper mapper;
 
 	public Community selectByName(String name) {

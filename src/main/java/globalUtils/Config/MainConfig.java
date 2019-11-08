@@ -12,7 +12,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
-@ComponentScan(basePackages = {"ORM", "Services"})
+@ComponentScan(basePackages = {"ORM.Mapper", "Services", "WebComponent"})
 @PropertySource(value = "classpath:jdbc.properties")
 public class MainConfig {
 	@Autowired

@@ -13,9 +13,9 @@
     <context:annotation-config/>
 
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-    <context:component-scan base-package="WebComponent.Controller">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+    <!--    <context:component-scan base-package="WebComponent.Controller">-->
+    <!--        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    <!--    </context:component-scan>-->
 
     <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
     <mvc:annotation-driven/>
