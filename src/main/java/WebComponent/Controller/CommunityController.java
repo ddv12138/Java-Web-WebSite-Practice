@@ -4,7 +4,6 @@ import ORM.POJO.City;
 import ORM.POJO.Community;
 import Services.CityService;
 import Services.CommunityService;
-import com.alibaba.fastjson.JSON;
 import globalUtils.CommonResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +26,6 @@ public class CommunityController {
 	public CommonResult getCommunityByCity(String cityName) {
 		City city = cityService.selectByName(cityName);
 		List<Community> communities = communityService.selectHetMapDataByCity(city);
-		return new CommonResult(true, "success", JSON.toJSONString(communities));
+		return new CommonResult(true, "success", communities);
 	}
 }

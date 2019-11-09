@@ -67,7 +67,7 @@ function renderSubTabList(arg, node) {
 
 function renderTabList(arg, msg, reponseobj, node) {
     let res = JSON.parse(arg.responseText);
-    res = JSON.parse(res.result);
+    // res = JSON.parse(res.result);
     if (res.state) {
         const data = res.data;
         console.log(data);

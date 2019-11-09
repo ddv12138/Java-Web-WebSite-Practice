@@ -1,7 +1,7 @@
 window.onload = function () {
     let cityStr = "武汉";
     $.post("../getCityInfo", {cityName: cityStr}, function (cityData, status) {
-        cityData = JSON.parse(JSON.parse(cityData).data).results[0];
+        cityData = JSON.parse(cityData.data).results[0];
         var map = new AMap.Map("container", {
             resizeEnable: true,
             center: [cityData.location.lng, cityData.location.lat],

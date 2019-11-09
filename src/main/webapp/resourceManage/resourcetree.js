@@ -17,7 +17,6 @@ $(document).ready(function () {
 
 function renderNodeTree(arg) {
     arg = JSON.parse(arg.responseText);
-    arg = JSON.parse(arg.result);
     if (arg.state) {
         var zTreeObj;
         var setting = {

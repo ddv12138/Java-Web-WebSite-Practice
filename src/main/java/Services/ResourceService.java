@@ -2,7 +2,6 @@ package Services;
 
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
-import com.alibaba.fastjson.JSON;
 import globalUtils.CommonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,20 +53,20 @@ public class ResourceService {
         return mapper.updateByExample(res);
     }
 
-    public CommonResult getTabList(String pid, boolean ismanage) {
+    public CommonResult getTabList(String pid, boolean isManage) {
         CommonResult resp;
-        if ((com.mysql.cj.util.StringUtils.isNullOrEmpty(pid)) && !ismanage) {
+        if ((com.mysql.cj.util.StringUtils.isNullOrEmpty(pid)) && !isManage) {
             ResourceTable rt = new ResourceTable();
             rt.setIstop(1);
             ResourceTable[] res = mapper.selectByExample(rt);
-            resp = new CommonResult(true, "sucess", JSON.toJSONString(res));
-        } else if ((com.mysql.cj.util.StringUtils.isNullOrEmpty(pid)) && ismanage) {
+            resp = new CommonResult(true, "sucess", res);
+        } else if ((com.mysql.cj.util.StringUtils.isNullOrEmpty(pid)) && isManage) {
             ResourceTable res = mapper.selectByID(1);
-            resp = new CommonResult(true, "sucess", JSON.toJSONString(res));
+            resp = new CommonResult(true, "sucess", res);
         } else {
             ResourceTable pnode = mapper.selectByID(Integer.parseInt(pid));
             ResourceTable[] res = mapper.selectNextLevelNode(pnode);
-            resp = new CommonResult(true, "sucess", JSON.toJSONString(res));
+            resp = new CommonResult(true, "sucess", res);
         }
         return resp;
     }

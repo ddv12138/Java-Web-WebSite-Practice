@@ -3,10 +3,12 @@ package ORM.Mapper;
 import ORM.POJO.City;
 import ORM.POJO.Community;
 import ORM.POJO.District;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface CommunityMapper {
 
 
