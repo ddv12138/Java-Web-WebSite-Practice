@@ -4,16 +4,16 @@ import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
 import globalUtils.CommonResult;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class ResourceService {
-	@Autowired
+    @Resource
     private ResourceMapper mapper;
 
     public int insertNodeByParent(String pid, String name, String cnname, String istopstr, String orderstr, String urlpath, String haschildstr) {
@@ -66,7 +66,11 @@ public class ResourceService {
         } else {
             ResourceTable pnode = mapper.selectByID(Integer.parseInt(pid));
             ResourceTable[] res = mapper.selectNextLevelNode(pnode);
-            resp = new CommonResult(true, "sucess", res);
+            if (res.length > 0) {
+                resp = new CommonResult(true, "sucess", res);
+            } else {
+                resp = new CommonResult(true, "sucess", null);
+            }
         }
         return resp;
     }

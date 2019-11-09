@@ -9,7 +9,7 @@ window.onload = function () {
         });
         $.post("../getCommunitiesByCity", {cityName: cityStr}, function (commData, status) {
             let points = [];
-            commData = JSON.parse(JSON.parse(commData).data);
+            commData = commData.data;
             commData.forEach(function (loc) {
                 points.push({lng: loc.gaode_lng, lat: loc.gaode_lat, count: loc.unit_price});
             });

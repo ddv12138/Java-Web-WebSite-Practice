@@ -2,16 +2,17 @@ package Services;
 
 import ORM.Mapper.CityMapper;
 import ORM.POJO.City;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 @Service
 @Transactional
 @Component
 public class CityService {
-	@Autowired
+	@Resource
 	CityMapper mapper;
 
 	public City selectByName(String city_name) {

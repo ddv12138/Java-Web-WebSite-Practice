@@ -133,7 +133,7 @@ function removeHoverDom(treeId, treeNode) {
 }
 function treeValueFilter(treeid, pnode, res) {
     if (res.state) {
-        return JSON.parse(res.data);
+        return res.data;
     }
 }
 

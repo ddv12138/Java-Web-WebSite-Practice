@@ -3,10 +3,10 @@ package Services;
 import ORM.Mapper.EnterpriseMapper;
 import ORM.POJO.EnterpriseExample;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 @Transactional
 public class EnterpriseService {
-	@Autowired
+	@Resource
     EnterpriseMapper mapper;
 
     public Map<String, Object> listEnterprise(long offset, int limit, String nameLike) {

@@ -39,6 +39,7 @@ function renderSubTabList(arg, node) {
     var res = arg;
     if (res.state && !node.getAttribute("expanded")) {
         var data = res.data;
+        if (!data) return;
         for (var i = 0; i < data.length; i++) {
             var dd = document.createElement("dd");
             var a = document.createElement("a");
