@@ -10,9 +10,11 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan(basePackages = {"ORM.Mapper", "Services", "WebComponent"})
+@EnableWebMvc
+@ComponentScan(basePackages = {"WebComponent.Controller", "Services"})
 @PropertySource(value = "classpath:jdbc.properties")
 public class MainConfig {
 	@Autowired
@@ -49,4 +51,5 @@ public class MainConfig {
 		manager.setDataSource(dataSource);
 		return manager;
 	}
+
 }

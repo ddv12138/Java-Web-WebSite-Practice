@@ -7,6 +7,7 @@
         <fileset id="fileset" name="SpringMVC Servlet" removed="false">
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/springMVC-servlet.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/globalUtils/Config/MainConfig.java</file>
         </fileset>
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/springMVC-servlet.xml</file>
