@@ -44,9 +44,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="canvas-nest" level="application" />
     <orderEntry type="library" name="echarts" level="application" />
-    <orderEntry type="library" name="Maven: javax.servlet.jsp.jstl:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet.jsp.jstl:jstl-api:1.2" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet.jsp:jsp-api:2.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.web:jstl-impl:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-core:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-lang:1.4.1" level="project" />
