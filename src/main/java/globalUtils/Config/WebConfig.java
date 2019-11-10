@@ -2,19 +2,11 @@ package globalUtils.Config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import globalUtils.CommonUtils;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -27,12 +19,8 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"WebComponent.Controller", "Services"})
-@MapperScan("ORM.Mapper")
-@PropertySource(value = "classpath:jdbc.properties")
 public class WebConfig implements WebMvcConfigurer {
 
-	@Autowired
-	Environment env;
 
 	@Bean
 	public ViewResolver viewResolver() {
@@ -83,28 +71,4 @@ public class WebConfig implements WebMvcConfigurer {
 		converters.add(fastConverter);
 	}
 
-	@Bean
-	public DriverManagerDataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource(env.getProperty("db.jdbcUrl"), env.getProperty("db.user"), env.getProperty("db.password"));
-		dataSource.setDriverClassName(env.getProperty("db.driverClass"));
-		CommonUtils.Logger().info("------数据库连接正常-------");
-		return dataSource;
-	}
-
-	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource());
-		Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:ORM/*.xml");
-		sessionFactory.setMapperLocations(resources);
-		return sessionFactory.getObject();
-	}
-
-	@Bean
-	@DependsOn(value = "dataSource")
-	public DataSourceTransactionManager transactionManager(DriverManagerDataSource dataSource) {
-		DataSourceTransactionManager manager = new DataSourceTransactionManager();
-		manager.setDataSource(dataSource);
-		return manager;
-	}
 }
