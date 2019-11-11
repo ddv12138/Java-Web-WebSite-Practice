@@ -1,11 +1,26 @@
 package ORM.POJO;
 
+import com.sun.istack.internal.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ResourceTable {
-    Integer id, istop, leftvalue, rightvalue, level, order;
-    String name, cnname, urlpath;
+    @NotNull
+    Integer id;
+    @NotNull
+    Integer istop;
+    @NotNull
+    Integer leftvalue;
+    Integer level;
+    Integer order;
+    @NotNull
+    private Integer rightvalue;
+    @NotNull
+    private String name;
+    @NotNull
+    private String cnname;
+    @NotNull
+    private String urlpath;
     Boolean haschild;
 
     @Override
