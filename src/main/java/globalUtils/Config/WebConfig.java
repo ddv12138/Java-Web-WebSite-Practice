@@ -46,8 +46,8 @@ public class WebConfig implements WebMvcConfigurer {
 		com.alibaba.fastjson.support.config.FastJsonConfig config = new com.alibaba.fastjson.support.config.FastJsonConfig();
 		//返回内容的过滤
 		config.setSerializerFeatures(
-				SerializerFeature.DisableCircularReferenceDetect,
-				SerializerFeature.WriteMapNullValue
+				SerializerFeature.DisableCircularReferenceDetect
+//				SerializerFeature.WriteMapNullValue
 		);
 		List<MediaType> supportedMediaTypes = new ArrayList<>();
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
