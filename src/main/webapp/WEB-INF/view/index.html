@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><!-- 声明Thymeleaf的命名空间 -->
 <head>
     <meta charset="UTF-8">
     <meta content="webkit" name="renderer">
@@ -8,7 +8,13 @@
     <link href=" ./favicon.ico" rel="shortcut icon"/>
     <title>首页</title>
 </head>
+
 <body>
-HELLO
+<h6>Welcome to Thymeleaf</h6>
+<div>
+    <a th:href="@{/signup}">signup</a>
+    <a th:href="@{/login}">login</a>
+    <a th:href="@{/lastest}">lastest</a>
+</div>
 </body>
 </html>

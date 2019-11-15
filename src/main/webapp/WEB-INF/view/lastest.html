@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><!-- 声明Thymeleaf的命名空间 -->
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table border="1">
+    <!--<tr>
+        <th>用户名</th>
+        <th>邮箱</th>
+        <th>管理员</th>
+    </tr>-->
+    <!--/*@thymesVar id="spittrList" type="java.util.List"*/-->
+    <!--/*@thymesVar id="spittr" type="ORM.POJO.Spittr"*/-->
+    <tr th:each="spittr,userStat : ${spittrList}">
+        <td th:text="${spittr.username}">Onions</td>
+        <td th:text="${spittr.content}">test@test.com.cn</td>
+        <td th:text="${spittr.createtime}">yes</td>
+    </tr>
+</body>
+</html>
