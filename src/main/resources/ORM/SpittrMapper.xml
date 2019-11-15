@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ORM.Mapper.SpittrMapper">
+    <select id="selectLatest" parameterType="Integer" resultType="ORM.POJO.Spittr">
+        select username, content, DATE_FORMAT(createtime, '%Y-%m-%d %H:%m:%s') as createtime
+        from spittr
+        order by createtime desc
+        limit #{count};
+    </select>
+</mapper>

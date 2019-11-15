@@ -1,14 +1,11 @@
 package WebComponent.Controller;
 
-import ORM.POJO.City;
-import ORM.POJO.Community;
-import Services.CityService;
-import Services.CommunityService;
+import Services.SpittrService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.annotation.Resource;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -18,15 +15,12 @@ public class BaseController {
 		return "index";
 	}
 
-	@Resource
-	CommunityService communityService;
+	@Autowired
+	SpittrService spittrService;
 
-	@Resource
-	CityService cityService;
-
-	@RequestMapping("/index")
-	public List<Community> getCommunityByCity(String cityName) {
-		City city = cityService.selectByName(cityName);
-		return communityService.selectHetMapDataByCity(city);
+	@RequestMapping("/latest")
+	public String getCommunityByCity(@RequestParam(value = "count", defaultValue = "50") int count, Model model) {
+		model.addAttribute("spittrList", spittrService.selectLatest(count));
+		return "latest";
 	}
 }

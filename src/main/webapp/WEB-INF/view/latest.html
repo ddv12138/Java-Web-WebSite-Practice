@@ -5,18 +5,19 @@
     <title></title>
 </head>
 <body>
-<table border="1">
-    <!--<tr>
+<table border="1" style="word-break: break-all;">
+    <tr>
         <th>用户名</th>
-        <th>邮箱</th>
-        <th>管理员</th>
-    </tr>-->
+        <th>内容</th>
+        <th>时间</th>
+    </tr>
     <!--/*@thymesVar id="spittrList" type="java.util.List"*/-->
     <!--/*@thymesVar id="spittr" type="ORM.POJO.Spittr"*/-->
     <tr th:each="spittr,userStat : ${spittrList}">
         <td th:text="${spittr.username}">Onions</td>
-        <td th:text="${spittr.content}">test@test.com.cn</td>
-        <td th:text="${spittr.createtime}">yes</td>
+        <td style="max-width: 80rem;min-width: 40rem" th:text="${spittr.content}">test@test.com.cn</td>
+        <td th:text="${spittr.createtime.toLocaleString()}">yes</td>
     </tr>
+</table>
 </body>
 </html>
