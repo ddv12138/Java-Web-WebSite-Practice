@@ -1,13 +1,13 @@
 package ORM.POJO;
 
-import com.sun.istack.internal.NotNull;
 import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.NotNull;
 
 @Component
 public class ResourceTable {
     @NotNull
     Integer id;
-    @NotNull
     Integer istop;
     @NotNull
     Integer leftvalue;
@@ -21,6 +21,7 @@ public class ResourceTable {
     private String cnname;
     @NotNull
     private String urlpath;
+    @NotNull
     Boolean haschild;
 
     @Override
