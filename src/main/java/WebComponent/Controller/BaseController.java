@@ -19,7 +19,7 @@ public class BaseController {
 	SpittrService spittrService;
 
 	@RequestMapping("/latest")
-	public String getCommunityByCity(@RequestParam(value = "count", defaultValue = "50") int count, Model model) {
+	public String getLatestSpittrs(@RequestParam(value = "count", defaultValue = "50") int count, Model model) {
 		model.addAttribute("spittrList", spittrService.selectLatest(count));
 		return "latest";
 	}

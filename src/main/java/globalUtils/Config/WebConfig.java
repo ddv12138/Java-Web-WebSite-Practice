@@ -37,7 +37,9 @@ public class WebConfig implements WebMvcConfigurer {
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(webApplicationContext.getServletContext());
 		templateResolver.setPrefix("/WEB-INF/view/");
 		templateResolver.setSuffix(".html");
-		// templateResolver.setCharacterEncoding("UTF-8");
+		//这里配置成false,可以免重启刷新
+		templateResolver.setCacheable(false);
+		templateResolver.setCharacterEncoding("UTF-8");
 		// 设置模板模式,也可用字符串"HTML"代替,此处不建议使用HTML5,原因看下图源码
 		templateResolver.setTemplateMode(TemplateMode.HTML);
 		return templateResolver;
@@ -53,8 +55,11 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean // 生成视图解析器并未解析器注入模板引擎
 	public ViewResolver viewResolver(TemplateEngine templateEngine) {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-		viewResolver.setContentType("text/html; charset=utf-8");
+		viewResolver.setContentType("text/html");
 		viewResolver.setTemplateEngine(templateEngine);
+		viewResolver.setCache(false);
+		viewResolver.setCacheUnresolved(false);
+		viewResolver.setCharacterEncoding("UTF-8");
 		return viewResolver;
 	}
 

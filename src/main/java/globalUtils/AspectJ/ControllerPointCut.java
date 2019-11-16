@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ControllerPointCut {
 
-	@Around("execution(* WebComponent.Controller.*.*(..)) && args(Object)")
+	@Around("execution(* WebComponent.Controller.*.*(..))")
 	public Object controllerAnalysis(ProceedingJoinPoint joinPoint) throws Throwable {
 		long start = System.currentTimeMillis();
 		Object obj = joinPoint.proceed(joinPoint.getArgs());
@@ -21,4 +21,10 @@ public class ControllerPointCut {
 		CommonUtils.Logger().info(sb.toString());
 		return obj;
 	}
+//	@Before("execution(* WebComponent.Controller.*.*(..))")
+//	public void controllerAnalysis2(ProceedingJoinPoint joinPoint) throws Throwable {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("2调用控制器：" + joinPoint.getSignature().getName() + ",");
+//		CommonUtils.Logger().info(sb.toString());
+//	}
 }
