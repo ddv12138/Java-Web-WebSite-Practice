@@ -4,10 +4,7 @@ import Services.SpittrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Part;
 import java.io.IOException;
@@ -39,5 +36,17 @@ public class BaseController {
 	@RequestMapping(value = "/fileupload", method = RequestMethod.GET)
 	public String testFileUpload() {
 		return "spittrviews/fileupload";
+	}
+
+	@RequestMapping(value = "/spittr/{id}", method = RequestMethod.GET)
+	public String getSpittr(@PathVariable("id") int id, Model model) {
+		model.addAttribute("spittr", spittrService.selectOne(id));
+		model.addAttribute("view", true);
+		return "spittr";
+	}
+
+	@RequestMapping(value = "/spittr", method = RequestMethod.GET)
+	public String getSpittr(Model model) {
+		return "spittr";
 	}
 }

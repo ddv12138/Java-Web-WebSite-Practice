@@ -29,9 +29,9 @@ public class DataSourceConfig {
 	}
 
 	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
+	public SqlSessionFactory sqlSessionFactory(DriverManagerDataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource());
+		sessionFactory.setDataSource(dataSource);
 		Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:ORM/*.xml");
 		sessionFactory.setMapperLocations(resources);
 		return sessionFactory.getObject();

@@ -14,9 +14,10 @@
     <!--/*@thymesVar id="spittrList" type="java.util.List"*/-->
     <!--/*@thymesVar id="spittr" type="ORM.POJO.Spittr"*/-->
     <tr th:each="spittr,userStat : ${spittrList}">
-        <td th:text="${spittr.username}">Onions</td>
-        <td style="max-width: 40rem;min-width: 40rem" th:text="${spittr.content}">test@test.com.cn</td>
-        <td th:text="${spittr.createtime.toLocaleString()}">yes</td>
+        <td th:text="${spittr.username}"></td>
+        <td style="max-width: 40rem;min-width: 40rem"><a th:href="'spittr/'+${spittr.getId()}"
+                                                         th:text="${spittr.content}"></a></td>
+        <td th:text="${#dates.format(spittr.createtime,'yyyy-MM-dd HH:mm:ss')}"></td>
     </tr>
 </table>
 </body>

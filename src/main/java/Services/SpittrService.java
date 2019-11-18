@@ -17,4 +17,8 @@ public class SpittrService {
 	public List<Spittr> selectLatest(int count) {
 		return mapper.selectLatest(count);
 	}
+
+	public Spittr selectOne(int id) {
+		return mapper.selectOne(id);
+	}
 }

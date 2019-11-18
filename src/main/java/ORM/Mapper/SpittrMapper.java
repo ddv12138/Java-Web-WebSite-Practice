@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface SpittrMapper {
 	List<Spittr> selectLatest(int count);
+
+	Spittr selectOne(int id);
 }
