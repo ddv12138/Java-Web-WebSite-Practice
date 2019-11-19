@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Part;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -46,21 +47,21 @@ public class BaseController {
 	public String getSpittr(@PathVariable("id") int id, Model model) {
 		model.addAttribute("spittr", spittrService.selectOne(id));
 		model.addAttribute("view", true);
-		return "spittrviews/spittr";
+		return "spittrviews/spittrinfo";
 	}
 
 	@RequestMapping(value = "/spittr", method = RequestMethod.GET)
-	public String getSpittr(Model model) {
+	public String newSpittr(Model model) {
 		model.addAttribute(new Spittr());
-		return "spittrviews/spittr";
+		return "spittrviews/spittrinfo";
 	}
 
 	@RequestMapping(value = "/spittr", method = RequestMethod.POST)
 	public String addSpittr(@RequestPart("file") Part file, @Valid Spittr spittr, Errors errors, Model model) {
-		spittr.setCreatetime(new Date());
+		spittr.setCreatetime(new Timestamp(new Date().getTime()));
 		if (errors.hasErrors()) {
 			model.addAttribute("error", "输入有误，请检查并重试");
-			return "spittrviews/spittr";
+			return "spittrviews/spittrinfo";
 		}
 		spittrService.saveOne(spittr);
 		model.addAttribute("info", "提交成功");

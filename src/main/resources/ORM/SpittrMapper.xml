@@ -16,6 +16,6 @@
     </select>
     <insert id="saveOne" parameterType="ORM.POJO.Spittr" useGeneratedKeys="true" flushCache="true">
         INSERT INTO spittr (username, userid, content, createtime)
-        VALUES (#{Spittr.username}, #{Spittr.userid}, #{Spittr.content}, #{Spittr.createtime})
+        VALUES (#{Spittr.username}, #{Spittr.userid}, #{Spittr.content}, #{Spittr.createtime, jdbcType=TIMESTAMP})
     </insert>
 </mapper>
