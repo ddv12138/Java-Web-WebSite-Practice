@@ -10,6 +10,6 @@ public class ControllerTest {
 	public void baseControllerTest() throws Exception {
 		BaseController baseController = new BaseController();
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(baseController).build();
-		mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(MockMvcResultMatchers.view().name("index"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(MockMvcResultMatchers.view().name("spittrviews/index"));
 	}
 }
