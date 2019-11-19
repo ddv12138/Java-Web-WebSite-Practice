@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><!-- 声明Thymeleaf的命名空间 -->
+<head>
+    <meta charset="UTF-8">
+    <title>Spittr</title>
+    <style type="text/css">
+        .singleSpittr td {
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<form enctype="multipart/form-data" method="post" th:object="${spittr}">
+    <div><p th:if="${error}" th:value="${error}"></p></div>
+    <table border="1" class="singleSpittr">
+        <tr>
+            <td>用户名：</td>
+            <td><input th:field="${spittr.username}" th:readonly="${view}" type="text"/><br/></td>
+        </tr>
+        <tr>
+            <td>内容：</td>
+            <td><textarea style="width: 60rem;height: 5rem;" th:readonly="${view}"
+                          th:field="*{content}"></textarea><br/></td>
+        </tr>
+        <tr th:if="${view}">
+            <td>发布时间：</td>
+            <td>
+                <input style="width: auto" th:readonly="true"
+                       th:value="${spittr.createtime}?${#dates.format(spittr.createtime,'yyyy-MM-dd')+'T'+#dates.format(spittr.createtime,'HH:mm:ss')}"
+                       type="datetime-local"/>
+            </td>
+        </tr>
+        <tr>
+            <td>附件</td>
+            <td><input style="width: auto" th:readonly="${view}"
+                       th:name="file" th:value="选择文件"
+                       type="file"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;" th:if="not ${view}"><input type="submit" value="提交"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

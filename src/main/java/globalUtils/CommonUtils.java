@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 public class CommonUtils {
 
@@ -72,5 +73,9 @@ public class CommonUtils {
 			connection.disconnect();// 关闭远程连接
 		}
 		return result;
+	}
+
+	public static String getUUIDString() {
+		return UUID.randomUUID().toString().replaceAll("-", "").toLowerCase();
 	}
 }

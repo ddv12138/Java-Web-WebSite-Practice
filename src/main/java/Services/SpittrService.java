@@ -21,4 +21,8 @@ public class SpittrService {
 	public Spittr selectOne(int id) {
 		return mapper.selectOne(id);
 	}
+
+	public int saveOne(Spittr spittr) {
+		return mapper.saveOne(spittr);
+	}
 }

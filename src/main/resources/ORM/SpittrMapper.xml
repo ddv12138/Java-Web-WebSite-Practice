@@ -14,4 +14,8 @@
         from spittr
         where id = #{id}
     </select>
+    <insert id="saveOne" parameterType="ORM.POJO.Spittr" useGeneratedKeys="true" flushCache="true">
+        INSERT INTO spittr (username, userid, content, createtime)
+        VALUES (#{Spittr.username}, #{Spittr.userid}, #{Spittr.content}, #{Spittr.createtime})
+    </insert>
 </mapper>

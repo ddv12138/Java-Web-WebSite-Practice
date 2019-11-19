@@ -1,7 +1,6 @@
 package ORM.POJO;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -15,7 +14,6 @@ public class Spittr {
 	@Size(min = 1, max = 140)
 	String content;
 	@NotNull
-	@Past
 	Date createtime;
 
 	public int getId() {
