@@ -18,29 +18,18 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/")
 public class BaseController {
+	@Autowired
+	SpittrService spittrService;
+
 	@RequestMapping("/")
 	public String helloView() {
 		return "spittrviews/index";
 	}
 
-	@Autowired
-	SpittrService spittrService;
-
 	@RequestMapping("/latest")
 	public String getLatestSpittrs(@RequestParam(value = "count", defaultValue = "50") int count, Model model) {
 		model.addAttribute("spittrList", spittrService.selectLatest(count));
 		return "spittrviews/latest";
-	}
-
-	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
-	public String testFileUpload(@RequestPart("file") Part file) throws IOException {
-		file.write(UUID.randomUUID() + "-" + file.getSubmittedFileName());
-		return "spittrviews/fileupload";
-	}
-
-	@RequestMapping(value = "/fileupload", method = RequestMethod.GET)
-	public String testFileUpload() {
-		return "spittrviews/fileupload";
 	}
 
 	@RequestMapping(value = "/spittr/{id}", method = RequestMethod.GET)
@@ -66,5 +55,16 @@ public class BaseController {
 		spittrService.saveOne(spittr);
 		model.addAttribute("info", "提交成功");
 		return "redirect:latest";
+	}
+
+	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
+	public String testFileUpload(@RequestPart("file") Part file) throws IOException {
+		file.write(UUID.randomUUID() + "-" + file.getSubmittedFileName());
+		return "spittrviews/fileupload";
+	}
+
+	@RequestMapping(value = "/fileupload", method = RequestMethod.GET)
+	public String testFileUpload() {
+		return "spittrviews/fileupload";
 	}
 }

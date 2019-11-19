@@ -3,7 +3,6 @@ package ORM.POJO;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Spittr {
 	@NotNull
@@ -49,7 +48,7 @@ public class Spittr {
 		this.content = content;
 	}
 
-	public Date getCreatetime() {
+	public Timestamp getCreatetime() {
 		return createtime;
 	}
 

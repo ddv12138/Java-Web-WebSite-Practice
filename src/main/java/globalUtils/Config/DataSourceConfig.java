@@ -24,7 +24,7 @@ public class DataSourceConfig {
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(env.getProperty("db.jdbcUrl"), env.getProperty("db.user"), env.getProperty("db.password"));
 		dataSource.setDriverClassName(env.getProperty("db.driverClass"));
-		CommonUtils.Logger().info("------数据库连接正常-------");
+		CommonUtils.Logger().info("dataSource created");
 		return dataSource;
 	}
 

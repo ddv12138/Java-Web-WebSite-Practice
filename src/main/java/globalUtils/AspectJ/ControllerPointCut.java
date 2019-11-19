@@ -2,6 +2,7 @@ package globalUtils.AspectJ;
 
 import globalUtils.CommonUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
@@ -21,10 +22,9 @@ public class ControllerPointCut {
 		CommonUtils.Logger().info(sb.toString());
 		return obj;
 	}
-//	@Before("execution(* WebComponent.Controller.*.*(..))")
-//	public void controllerAnalysis2(ProceedingJoinPoint joinPoint) throws Throwable {
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("2调用控制器：" + joinPoint.getSignature().getName() + ",");
-//		CommonUtils.Logger().info(sb.toString());
-//	}
+
+	@AfterThrowing(value = "execution(* WebComponent.Controller.*.*(..))", throwing = "throwable")
+	public void controllerException(Throwable throwable) {
+		CommonUtils.Logger().error(throwable);
+	}
 }
