@@ -187,6 +187,17 @@
                     <target>${maven-compiler-plugin.CompileLevel}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <!-- jsp目录 -->
+                    <warSourceDirectory>src/main/webapp</warSourceDirectory>
+                    <warName>web</warName>
+                    <!-- 取消xml配置：web.xml -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
