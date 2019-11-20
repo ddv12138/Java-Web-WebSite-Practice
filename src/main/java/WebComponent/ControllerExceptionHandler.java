@@ -1,6 +1,7 @@
 package WebComponent;
 
 import Exceptions.UserAleadyExistsException;
+import Exceptions.WrongPasswordException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,7 +14,7 @@ public class ControllerExceptionHandler {
 		return "message";
 	}
 
-	@ExceptionHandler(UserAleadyExistsException.class)
+	@ExceptionHandler(WrongPasswordException.class)
 	public String handleWrongPassword(Model model) {
 		model.addAttribute("message", "密码错误");
 		return "message";
