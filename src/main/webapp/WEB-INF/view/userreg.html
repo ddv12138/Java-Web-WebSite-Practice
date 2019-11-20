@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><!-- 声明Thymeleaf的命名空间 -->
+<head>
+    <meta charset="UTF-8">
+    <title>用户</title>
+    <meta charset="UTF-8">
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link rel="shortcut icon" th:href="@{/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/sweetalert.css}" type="text/css"/>
+    <script th:src="@{javascript/sweetalert-dev.js}"></script>
+    <script th:src="@{layui/layui.all.js}"></script>
+    <script th:src="@{javascript/jquery_3.3.1.js}"></script>
+    <style type="text/css">
+        table td {
+            padding: 0.5rem;
+        }
+    </style>
+
+</head>
+<body>
+<form id="userinfo" method="post">
+    <table border="1">
+        <tr>
+            <td>用户名</td>
+            <td><input th:field="${user.name}" th:type="text"></td>
+        </tr>
+        <tr>
+            <td>密码</td>
+            <td><input id="passwd1" th:field="${user.password}" th:type="password"></td>
+        </tr>
+        <tr>
+            <td>确认密码</td>
+            <td><input id="passwd2" name="password2" th:type="password"></td>
+        </tr>
+        <tr style="text-align: center;">
+            <td colspan="2"><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+</body>
+<script type="text/javascript">
+    $("#userinfo").submit(function () {
+        console.log($("#passwd1").val());
+        console.log($("#passwd2").val());
+        if ($("#passwd1").val() != $("#passwd2").val()) {
+            alert("两次密码不符");
+            return false;
+        }
+    });
+</script>
+</html>

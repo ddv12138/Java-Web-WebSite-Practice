@@ -27,7 +27,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc // 相当于<mvc:annotation-driver/>，启用注解驱动的Spring MVC,使@RequestParam、@RequestMapping等注解可以被识别
 @EnableAspectJAutoProxy()
-@ComponentScan(basePackages = {"WebComponent.Controller", "Services"})
+@ComponentScan(basePackages = {"WebComponent", "Services"})
 public class WebConfig implements WebMvcConfigurer {
 
 	@Bean // 配置生成模板解析器

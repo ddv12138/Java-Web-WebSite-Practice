@@ -1,6 +1,6 @@
 package globalUtils.Config;
 
-import globalUtils.CommonUtils;
+import globalUtils.Global;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -24,7 +24,7 @@ public class DataSourceConfig {
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(env.getProperty("db.jdbcUrl"), env.getProperty("db.user"), env.getProperty("db.password"));
 		dataSource.setDriverClassName(env.getProperty("db.driverClass"));
-		CommonUtils.Logger().info("dataSource created");
+		Global.Logger().info("dataSource created");
 		return dataSource;
 	}
 

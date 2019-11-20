@@ -1,6 +1,6 @@
 package globalUtils.AspectJ;
 
-import globalUtils.CommonUtils;
+import globalUtils.Global;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -19,12 +19,12 @@ public class ControllerPointCut {
 		StringBuilder sb = new StringBuilder();
 		sb.append("调用控制器：" + joinPoint.getSignature().getName() + ",");
 		sb.append("耗时：" + (end - start) + "ms" + "");
-		CommonUtils.Logger().info(sb.toString());
+		Global.Logger().info(sb.toString());
 		return obj;
 	}
 
 	@AfterThrowing(value = "execution(* WebComponent.Controller.*.*(..))", throwing = "throwable")
 	public void controllerException(Throwable throwable) {
-		CommonUtils.Logger().error(throwable);
+		Global.Logger().error(throwable);
 	}
 }
