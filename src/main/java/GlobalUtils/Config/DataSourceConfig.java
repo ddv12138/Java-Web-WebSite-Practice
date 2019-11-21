@@ -1,7 +1,7 @@
-package globalUtils.Config;
+package GlobalUtils.Config;
 
+import GlobalUtils.Global;
 import com.alibaba.druid.pool.DruidDataSource;
-import globalUtils.Global;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;

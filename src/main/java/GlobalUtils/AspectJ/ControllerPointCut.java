@@ -1,6 +1,6 @@
-package globalUtils.AspectJ;
+package GlobalUtils.AspectJ;
 
-import globalUtils.Global;
+import GlobalUtils.Global;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;

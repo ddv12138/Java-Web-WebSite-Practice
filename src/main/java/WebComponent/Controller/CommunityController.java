@@ -1,10 +1,10 @@
 package WebComponent.Controller;
 
+import GlobalUtils.CommonResult;
 import ORM.POJO.City;
 import ORM.POJO.Community;
 import Services.CityService;
 import Services.CommunityService;
-import globalUtils.CommonResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

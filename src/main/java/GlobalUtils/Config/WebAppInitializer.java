@@ -1,4 +1,4 @@
-package globalUtils.Config;
+package GlobalUtils.Config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

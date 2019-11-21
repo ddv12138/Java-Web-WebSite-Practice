@@ -1,8 +1,8 @@
 package Services;
 
+import GlobalUtils.CommonResult;
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
-import globalUtils.CommonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

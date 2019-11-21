@@ -1,8 +1,8 @@
 package WebComponent.Controller;
 
+import GlobalUtils.CommonResult;
+import GlobalUtils.Global;
 import Services.CityService;
-import globalUtils.CommonResult;
-import globalUtils.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

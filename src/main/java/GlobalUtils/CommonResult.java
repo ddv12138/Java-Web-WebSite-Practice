@@ -1,4 +1,4 @@
-package globalUtils;
+package GlobalUtils;
 
 public class CommonResult {
     int state;

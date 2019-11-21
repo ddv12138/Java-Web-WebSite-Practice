@@ -1,4 +1,4 @@
-package globalUtils.Config;
+package GlobalUtils.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 @Configuration
-@ComponentScan(basePackages = {"globalUtils.AspectJ"})
+@ComponentScan(basePackages = {"GlobalUtils.AspectJ"})
 public class RootConfig {
 	@Bean
 	public MultipartResolver getMultipartResolver() {

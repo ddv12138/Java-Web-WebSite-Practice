@@ -1,9 +1,9 @@
 package Services;
 
 import Exceptions.UserAleadyExistsException;
+import GlobalUtils.Global;
 import ORM.Mapper.UserMapper;
 import ORM.POJO.User;
-import globalUtils.Global;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
