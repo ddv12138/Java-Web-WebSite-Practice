@@ -1,9 +1,9 @@
 package globalUtils.Config;
 
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.*;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 import java.io.File;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -33,18 +33,18 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 						5 * 1024 * 1024, 6 * 1024 * 1024, 0));
 	}
 
-	@Override
-	protected Filter[] getServletFilters() {
-		return new Filter[]{new CharacterEncodingFilter("UTF-8")};
-	}
+//	@Override
+//	protected Filter[] getServletFilters() {
+//		return new Filter[]{new CharacterEncodingFilter("UTF-8")};
+//	}
 
 	/*
 	 *添加自定义filter和servlet或者listener可以在这里注册，如果是注册到dispatherservlet的就不用在这里注册，直接重写 getServletFilters() 即可
 	 * */
-	@Override
-	public void onStartup(ServletContext context) throws ServletException {
-		super.onStartup(context);
-//		FilterRegistration.Dynamic filterRegistration = context.addFilter("encodeFilter",new EncodeFilter());
-//		filterRegistration.addMappingForUrlPatterns(null,false,"/**");
-	}
+//	@Override
+//	public void onStartup(ServletContext context) throws ServletException {
+//		super.onStartup(context);
+////		FilterRegistration.Dynamic filterRegistration = context.addFilter("encodeFilter",new EncodeFilter());
+////		filterRegistration.addMappingForUrlPatterns(null,false,"/**");
+//	}
 }
