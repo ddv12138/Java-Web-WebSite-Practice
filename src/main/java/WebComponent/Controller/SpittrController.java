@@ -27,7 +27,7 @@ public class SpittrController {
 		return "spittrviews/latest";
 	}
 
-	@RequestMapping(value = "/spittr/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getSpittr(@PathVariable("id") int id, Model model) {
 		model.addAttribute("spittr", spittrService.selectOne(id));
 		model.addAttribute("view", true);
