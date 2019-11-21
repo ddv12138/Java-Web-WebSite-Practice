@@ -29,7 +29,6 @@ import java.util.List;
 @EnableAspectJAutoProxy()
 @ComponentScan(basePackages = {"WebComponent", "Services"})
 public class WebConfig implements WebMvcConfigurer {
-
 	@Bean // 配置生成模板解析器
 	public ITemplateResolver templateResolver() {
 		WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();

@@ -1,6 +1,5 @@
 package globalUtils.Config;
 
-import com.alibaba.druid.filter.logging.Log4j2Filter;
 import com.alibaba.druid.pool.DruidDataSource;
 import globalUtils.Global;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -14,17 +13,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import java.sql.SQLException;
-import java.util.Arrays;
 
 @MapperScan("ORM.Mapper")
-@PropertySource(value = "classpath:application.properties")
+@PropertySource(value = "classpath:db.properties")
 public class DataSourceConfig {
 	@Autowired
 	Environment env;
 
 	@Bean(initMethod = "init", destroyMethod = "close")
-	public DruidDataSource druidDataSource(Log4j2Filter filter) throws SQLException {
+	public DruidDataSource dataSource() {
 		DruidDataSource dataSource = new DruidDataSource();
 		dataSource.setUrl(env.getProperty("db.jdbcUrl"));
 		dataSource.setUsername(env.getProperty("db.user"));
@@ -34,9 +31,7 @@ public class DataSourceConfig {
 		dataSource.setTestOnBorrow(false);
 		dataSource.setTestOnReturn(false);
 		dataSource.setInitialSize(1);
-		dataSource.setDriverClassName(env.getProperty("db.driverClass"));
-		dataSource.setFilters("stat");
-		dataSource.setProxyFilters(Arrays.asList(new Log4j2Filter[]{filter}));
+		dataSource.setDriverClassName(env.getProperty("db.driverclass"));
 		Global.Logger().info("druid dataSource pool created");
 		return dataSource;
 	}
@@ -55,15 +50,5 @@ public class DataSourceConfig {
 		DataSourceTransactionManager manager = new DataSourceTransactionManager();
 		manager.setDataSource(dataSource);
 		return manager;
-	}
-
-	@Bean
-	public Log4j2Filter log4j2Filter() {
-		Log4j2Filter filter = new Log4j2Filter();
-		filter.setConnectionLogEnabled(false);
-		filter.setStatementLogEnabled(false);
-		filter.setResultSetLogEnabled(true);
-		filter.setStatementExecutableSqlLogEnable(true);
-		return filter;
 	}
 }

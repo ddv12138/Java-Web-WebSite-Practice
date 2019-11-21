@@ -6,7 +6,7 @@
             <!--只接受程序中DEBUG级别的日志进行处理-->
             <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout
-                    pattern="%highlight{[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %l %m %n}{FATAL=Bright red,ERROR=red,WARN=yellow,INFO=Cyan,DEBUG=cyan,TRACE=blue}"/>
+                    pattern="%highlight{[%p] %-d{yyyy-MM-dd HH:mm:ss} %l %m%n}{FATAL=red, ERROR=red, WARN=yellow, INFO=Cyan, DEBUG=cyan,TRACE=blue}"/>
         </Console>
 
         <!--处理DEBUG级别的日志，并把该日志放到logs/debug.log文件中-->
