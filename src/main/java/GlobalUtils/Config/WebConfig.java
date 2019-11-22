@@ -1,11 +1,11 @@
 package GlobalUtils.Config;
 
+import GlobalUtils.AspectJ.ControllerPointCut;
+import GlobalUtils.CommonResult;
+import GlobalUtils.Global;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.context.ContextLoader;
@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -27,7 +28,17 @@ import java.util.List;
 @Configuration
 @EnableWebMvc // 相当于<mvc:annotation-driver/>，启用注解驱动的Spring MVC,使@RequestParam、@RequestMapping等注解可以被识别
 @EnableAspectJAutoProxy()
-@ComponentScan(basePackages = {"WebComponent", "Services"})
+@ComponentScan(basePackages = {"WebComponent", "Services", "GlobalUtils"}, excludeFilters = {
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = DataSourceConfig.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = RootConfig.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecurityConfig.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecurityWebApplicationInitializer.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebAppInitializer.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebConfig.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CommonResult.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = Global.class),
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ControllerPointCut.class)
+})
 public class WebConfig implements WebMvcConfigurer {
 	@Bean // 配置生成模板解析器
 	public ITemplateResolver templateResolver() {
@@ -45,9 +56,10 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean // 生成模板引擎并为模板引擎注入模板解析器
-	public TemplateEngine templateEngine(ITemplateResolver templateResolver) {
+	public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver);
+		templateEngine.addDialect(new SpringSecurityDialect());
 		return templateEngine;
 	}
 

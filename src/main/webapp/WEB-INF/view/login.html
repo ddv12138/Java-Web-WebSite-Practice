@@ -25,11 +25,11 @@
     <table border="1">
         <tr>
             <td>用户名</td>
-            <td><input th:field="${user.name}" th:type="text"></td>
+            <td><input th:name="username" th:type="text"></td>
         </tr>
         <tr>
             <td>密码</td>
-            <td><input id="passwd1" th:field="${user.password}" th:type="password"></td>
+            <td><input id="passwd1" th:name="password" th:type="password"></td>
         </tr>
         <tr style="text-align: center;">
             <td colspan="2"><input type="submit" value="提交"></td>
