@@ -23,7 +23,7 @@
 		<li><a th:href="@{/spittr}">latest</a></li>
 		<li><a th:href="@{/spittr/fileupload}">fileupload</a></li>
 		<li><a th:href="@{/spittr/new}">new spittr</a></li>
-		<li><a th:href="@{/user/logout}">logout</a></li>
+		<li sec:authorize="isAuthenticated()"><a th:href="@{/user/logout}">logout</a></li>
 	</ul>
 </div>
 </body>
