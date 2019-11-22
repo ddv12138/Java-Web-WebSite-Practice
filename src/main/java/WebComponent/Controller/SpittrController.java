@@ -63,8 +63,4 @@ public class SpittrController {
 		return "spittrviews/fileupload";
 	}
 
-	@RequestMapping("/message")
-	public String showMessage(Model model) {
-		return "message";
-	}
 }

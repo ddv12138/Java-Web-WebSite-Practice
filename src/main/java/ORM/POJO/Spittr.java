@@ -13,7 +13,6 @@ public class Spittr {
 	String username;
 	@Size(min = 1, max = 140)
 	String content;
-	@NotNull
 	Timestamp createtime;
 
 	public int getId() {

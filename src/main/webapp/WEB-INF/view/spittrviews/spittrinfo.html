@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"><!-- 声明Thymeleaf的命名空间 -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Spittr</title>
@@ -11,11 +12,14 @@
 </head>
 <body>
 <form enctype="multipart/form-data" method="post" th:object="${spittr}">
-    <div><p th:if="${error}" th:value="${error}"></p></div>
     <table border="1" class="singleSpittr">
+        <tr th:if="${error}">
+            <td colspan="2"><p th:text="${error}"></p></td>
+        </tr>
         <tr>
             <td>用户名：</td>
-            <td><input th:field="${spittr.username}" th:readonly="${view}" type="text"/><br/></td>
+            <td><input th:name="username" th:readonly="readonly" th:value="${#authentication.name}" type="text"><br/>
+            </td>
         </tr>
         <tr>
             <td>内容：</td>
