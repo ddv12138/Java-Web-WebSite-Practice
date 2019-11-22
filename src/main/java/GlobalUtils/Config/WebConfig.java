@@ -1,6 +1,5 @@
 package GlobalUtils.Config;
 
-import GlobalUtils.AspectJ.ControllerPointCut;
 import GlobalUtils.CommonResult;
 import GlobalUtils.Global;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -37,8 +36,7 @@ import java.util.List;
 		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebAppInitializer.class),
 		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebConfig.class),
 		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CommonResult.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = Global.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ControllerPointCut.class)
+		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = Global.class)
 })
 public class WebConfig implements WebMvcConfigurer {
 	@Bean // 配置生成模板解析器
