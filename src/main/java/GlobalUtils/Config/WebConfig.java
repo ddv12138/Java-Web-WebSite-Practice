@@ -16,8 +16,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.spring5.ISpringTemplateEngine;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -67,7 +68,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public ViewResolver viewResolver(TemplateEngine templateEngine) {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setContentType("text/html");
-		viewResolver.setTemplateEngine(templateEngine);
+		viewResolver.setTemplateEngine((ISpringTemplateEngine) templateEngine);
 		viewResolver.setCache(false);
 		viewResolver.setCacheUnresolved(false);
 		viewResolver.setCharacterEncoding("UTF-8");
