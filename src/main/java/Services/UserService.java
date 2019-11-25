@@ -36,6 +36,8 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = mapper.selectByName(username);
+		if (null == user)
+			throw new UsernameNotFoundException("用户不存在");
 		org.springframework.security.core.userdetails.User securityUser = new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
 		return securityUser;
 	}
