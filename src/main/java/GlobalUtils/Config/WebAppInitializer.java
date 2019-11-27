@@ -1,6 +1,9 @@
 package GlobalUtils.Config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
@@ -33,6 +36,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		registration.setMultipartConfig(
 				new MultipartConfigElement(tmp.getAbsolutePath(),
 						5 * 1024 * 1024, 6 * 1024 * 1024, 0));
+	}
+
+	@Bean
+	public MultipartResolver getMultipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 	@Override

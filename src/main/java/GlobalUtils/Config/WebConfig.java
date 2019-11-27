@@ -1,10 +1,11 @@
 package GlobalUtils.Config;
 
-import GlobalUtils.CommonResult;
-import GlobalUtils.Global;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.context.ContextLoader;
@@ -28,15 +29,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc // 相当于<mvc:annotation-driver/>，启用注解驱动的Spring MVC,使@RequestParam、@RequestMapping等注解可以被识别
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"WebComponent", "GlobalUtils"}, excludeFilters = {
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = DataSourceConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = RootConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecurityConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebAppInitializer.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CommonResult.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = Global.class)
-})
+@ComponentScan(basePackages = {"WebComponent"})
 public class WebConfig implements WebMvcConfigurer {
 	@Bean // 配置生成模板解析器
 	public ITemplateResolver templateResolver() {
