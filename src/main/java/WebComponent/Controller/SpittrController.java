@@ -1,7 +1,7 @@
 package WebComponent.Controller;
 
 import ORM.POJO.Spittr;
-import Service.Services.SpittrService;
+import WebComponent.Service.Services.SpittrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

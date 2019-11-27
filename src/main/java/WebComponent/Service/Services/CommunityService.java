@@ -1,4 +1,4 @@
-package Service.Services;
+package WebComponent.Service.Services;
 
 import ORM.POJO.City;
 import ORM.POJO.Community;

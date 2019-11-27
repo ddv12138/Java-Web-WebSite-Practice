@@ -1,8 +1,8 @@
-package Service.ServicesImpl;
+package WebComponent.Service.ServicesImpl;
 
 import ORM.Mapper.EnterpriseMapper;
 import ORM.POJO.EnterpriseExample;
-import Service.Services.EnterpriseService;
+import WebComponent.Service.Services.EnterpriseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

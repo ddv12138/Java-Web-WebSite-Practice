@@ -1,8 +1,8 @@
-package Service.ServicesImpl;
+package WebComponent.Service.ServicesImpl;
 
 import ORM.Mapper.CityMapper;
 import ORM.POJO.City;
-import Service.Services.CityService;
+import WebComponent.Service.Services.CityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

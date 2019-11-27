@@ -1,9 +1,9 @@
-package Service.ServicesImpl;
+package WebComponent.Service.ServicesImpl;
 
 import GlobalUtils.CommonResult;
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.ResourceTable;
-import Service.Services.ResourceService;
+import WebComponent.Service.Services.ResourceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

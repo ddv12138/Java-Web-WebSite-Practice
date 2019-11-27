@@ -1,4 +1,4 @@
-package Service.Services;
+package WebComponent.Service.Services;
 
 import Exceptions.UserAleadyExistsException;
 import ORM.POJO.User;

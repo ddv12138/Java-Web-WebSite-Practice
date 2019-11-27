@@ -1,4 +1,4 @@
-package Service.Services;
+package WebComponent.Service.Services;
 
 import GlobalUtils.CommonResult;
 import ORM.POJO.ResourceTable;

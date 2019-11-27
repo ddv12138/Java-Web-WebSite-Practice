@@ -1,6 +1,6 @@
 package WebComponent.Controller;
 
-import Service.Services.HouseService;
+import WebComponent.Service.Services.HouseService;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;

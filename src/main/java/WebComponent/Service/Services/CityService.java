@@ -1,4 +1,4 @@
-package Service.Services;
+package WebComponent.Service.Services;
 
 import ORM.POJO.City;
 import org.springframework.stereotype.Service;

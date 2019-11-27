@@ -1,8 +1,8 @@
-package Service.ServicesImpl;
+package WebComponent.Service.ServicesImpl;
 
 import ORM.Mapper.SpittrMapper;
 import ORM.POJO.Spittr;
-import Service.Services.SpittrService;
+import WebComponent.Service.Services.SpittrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,10 +1,10 @@
-package Service.ServicesImpl;
+package WebComponent.Service.ServicesImpl;
 
 import ORM.Mapper.CommunityMapper;
 import ORM.POJO.City;
 import ORM.POJO.Community;
 import ORM.POJO.District;
-import Service.Services.CommunityService;
+import WebComponent.Service.Services.CommunityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

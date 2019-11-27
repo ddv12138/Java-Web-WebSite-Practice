@@ -1,4 +1,4 @@
-package Service.Services;
+package WebComponent.Service.Services;
 
 import ORM.POJO.Spittr;
 import org.springframework.stereotype.Service;
