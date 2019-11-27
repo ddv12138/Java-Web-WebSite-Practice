@@ -3,8 +3,8 @@ package WebComponent.Controller;
 import GlobalUtils.CommonResult;
 import ORM.POJO.City;
 import ORM.POJO.Community;
-import Services.CityService;
-import Services.CommunityService;
+import Service.Services.CommunityService;
+import Service.ServicesImpl.CityServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +19,7 @@ public class CommunityController {
 	CommunityService communityService;
 
 	@Resource
-	CityService cityService;
+	CityServiceImpl cityService;
 
 	@RequestMapping("/getCommunitiesByCity")
 	@ResponseBody

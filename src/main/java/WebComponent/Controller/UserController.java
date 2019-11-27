@@ -4,7 +4,7 @@ import Exceptions.UserAleadyExistsException;
 import Exceptions.WrongPasswordException;
 import GlobalUtils.Global;
 import ORM.POJO.User;
-import Services.UserService;
+import Service.Services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

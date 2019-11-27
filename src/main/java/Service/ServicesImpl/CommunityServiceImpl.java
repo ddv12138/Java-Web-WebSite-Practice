@@ -1,18 +1,19 @@
-package Services;
+package Service.ServicesImpl;
 
 import ORM.Mapper.CommunityMapper;
 import ORM.POJO.City;
 import ORM.POJO.Community;
 import ORM.POJO.District;
+import Service.Services.CommunityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+@Service("CommunityService")
 @Transactional
-public class CommunityService {
+public class CommunityServiceImpl implements CommunityService {
 	@Resource
 	CommunityMapper mapper;
 

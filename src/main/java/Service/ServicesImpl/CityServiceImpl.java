@@ -1,15 +1,16 @@
-package Services;
+package Service.ServicesImpl;
 
 import ORM.Mapper.CityMapper;
 import ORM.POJO.City;
+import Service.Services.CityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
-@Service
+@Service("CityService")
 @Transactional
-public class CityService {
+public class CityServiceImpl implements CityService {
 	@Resource
 	CityMapper mapper;
 

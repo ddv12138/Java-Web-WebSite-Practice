@@ -1,16 +1,17 @@
-package Services;
+package Service.ServicesImpl;
 
 import ORM.Mapper.SpittrMapper;
 import ORM.POJO.Spittr;
+import Service.Services.SpittrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+@Service("SpittrService")
 @Transactional
-public class SpittrService {
+public class SpittrServiceImpl implements SpittrService {
 	@Resource
 	SpittrMapper mapper;
 

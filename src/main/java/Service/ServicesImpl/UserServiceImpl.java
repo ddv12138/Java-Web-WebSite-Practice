@@ -1,4 +1,4 @@
-package Services;
+package Service.ServicesImpl;
 
 import Exceptions.UserAleadyExistsException;
 import GlobalUtils.Global;
@@ -9,11 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
-@Service
-public class UserService implements UserDetailsService {
+@Service("UserService")
+@Transactional
+public class UserServiceImpl implements UserDetailsService {
 	@Resource
 	UserMapper mapper;
 
