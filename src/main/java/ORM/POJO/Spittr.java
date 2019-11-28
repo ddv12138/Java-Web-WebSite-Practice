@@ -2,9 +2,10 @@ package ORM.POJO;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Spittr {
+public class Spittr implements Serializable {
 	@NotNull
 	int id;
 	@NotNull
