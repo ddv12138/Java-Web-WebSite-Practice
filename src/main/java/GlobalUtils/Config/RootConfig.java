@@ -38,10 +38,10 @@ public class RootConfig {
 		RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
 		//序列化方式1
 		//设置CacheManager的值序列化方式为JdkSerializationRedisSerializer,但其实RedisCacheConfiguration默认就是使用StringRedisSerializer序列化key，JdkSerializationRedisSerializer序列化value,所以以下(4行)注释代码为默认实现
-//        ClassLoader loader = this.getClass().getClassLoader();
-//        JdkSerializationRedisSerializer jdkSerializer = new JdkSerializationRedisSerializer(loader);
-//        RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(jdkSerializer);
-//        RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
+//      ClassLoader loader = this.getClass().getClassLoader();
+//      JdkSerializationRedisSerializer jdkSerializer = new JdkSerializationRedisSerializer(loader);
+//      RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(jdkSerializer);
+//      RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
 		//序列化方式1---另一种实现方式
 		//RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();//该语句相当于序列化方式1
 
