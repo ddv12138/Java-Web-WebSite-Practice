@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	@Resource
 	UserService userService;
+
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String showUser(Map model) {

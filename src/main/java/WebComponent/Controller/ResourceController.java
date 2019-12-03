@@ -8,23 +8,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.LinkedHashMap;
 
 @Controller
 public class ResourceController {
-    @Resource
-    ResourceService service;
+	ResourceService service;
 
-    @RequestMapping("/getTabList")
-    @ResponseBody
-    public CommonResult getTabList(@RequestBody LinkedHashMap<String, Object> par) {
-        String pid = String.valueOf(par.get("parentid"));
-        if (null == par.get("parentid")) {
-            pid = null;
-        }
+	public ResourceController(ResourceService service) {
+		this.service = service;
+	}
+
+	@RequestMapping("/getTabList")
+	@ResponseBody
+	public CommonResult getTabList(@RequestBody LinkedHashMap<String, Object> par) {
+		String pid = String.valueOf(par.get("parentid"));
+		if (null == par.get("parentid")) {
+			pid = null;
+		}
 		Boolean isManage = (Boolean) par.get("ismanage");
-		if (null == par.get("ismanage")) isManage = false;
+		if (null == par.get("ismanage"))
+			isManage = false;
 		return service.getTabList(pid, isManage);
     }
 

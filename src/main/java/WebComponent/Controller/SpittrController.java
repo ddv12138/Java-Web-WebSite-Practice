@@ -2,7 +2,6 @@ package WebComponent.Controller;
 
 import ORM.POJO.Spittr;
 import WebComponent.Service.Services.SpittrService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,8 +17,11 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/spittr")
 public class SpittrController {
-	@Autowired
 	SpittrService spittrService;
+
+	public SpittrController(SpittrService spittrService) {
+		this.spittrService = spittrService;
+	}
 
 	@RequestMapping
 	public String getLatestSpittrs(@RequestParam(value = "count", defaultValue = "50") int count, Model model) {

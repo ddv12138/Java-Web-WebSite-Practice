@@ -3,6 +3,7 @@ package WebComponent.Service.ServicesImpl;
 import ORM.Mapper.SpittrMapper;
 import ORM.POJO.Spittr;
 import WebComponent.Service.Services.SpittrService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class SpittrServiceImpl implements SpittrService {
 		return mapper.selectLatest(count);
 	}
 
+	@Cacheable(value = "spittrCahe")
 	public Spittr selectOne(int id) {
 		return mapper.selectOne(id);
 	}

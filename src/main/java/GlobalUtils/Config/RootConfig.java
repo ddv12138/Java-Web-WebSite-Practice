@@ -1,7 +1,5 @@
 package GlobalUtils.Config;
 
-import GlobalUtils.CommonResult;
-import GlobalUtils.Global;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -17,20 +15,11 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-
-import java.time.Duration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableCaching
-@ComponentScan(basePackages = {"WebComponent", "GlobalUtils"}, excludeFilters = {
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = DataSourceConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = RootConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecurityConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebAppInitializer.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebConfig.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CommonResult.class),
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = Global.class)
-})
+@ComponentScan(basePackages = {"WebComponent", "GlobalUtils"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)})
 public class RootConfig {
 	@Bean
 	public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
@@ -43,19 +32,19 @@ public class RootConfig {
 //      RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(jdkSerializer);
 //      RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
 		//序列化方式1---另一种实现方式
-		//RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();//该语句相当于序列化方式1
+//		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();//该语句相当于序列化方式1
 
 		//序列化方式2
-		//Jackson2JsonRedisSerializer serializer=new Jackson2JsonRedisSerializer(Object.class);
-		//RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
-		//RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
+//		Jackson2JsonRedisSerializer serializer=new Jackson2JsonRedisSerializer(Object.class);
+//		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
+//		RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
 
 		//序列化方式3  JSONObject
 		FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
 		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer);
 		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
-		//设置过期时间 30天
-		defaultCacheConfig = defaultCacheConfig.entryTtl(Duration.ofDays(30));
+//		设置过期时间 30天
+//		defaultCacheConfig = defaultCacheConfig.entryTtl(Duration.ofDays(30));
 		//初始化RedisCacheManager
 		RedisCacheManager cacheManager = new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
 		//设置白名单---非常重要********

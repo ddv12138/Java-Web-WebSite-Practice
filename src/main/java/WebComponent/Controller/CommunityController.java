@@ -9,17 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
 public class CommunityController {
 
-	@Resource
 	CommunityService communityService;
 
-	@Resource
 	CityServiceImpl cityService;
+
+	public CommunityController(CommunityService communityService, CityServiceImpl cityService) {
+		this.communityService = communityService;
+		this.cityService = cityService;
+	}
 
 	@RequestMapping("/getCommunitiesByCity")
 	@ResponseBody

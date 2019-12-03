@@ -3,10 +3,8 @@ package WebComponent.Service.Services;
 import ORM.POJO.City;
 import ORM.POJO.Community;
 import ORM.POJO.District;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
 public interface CommunityService {
 
 	Community selectByName(String name);
