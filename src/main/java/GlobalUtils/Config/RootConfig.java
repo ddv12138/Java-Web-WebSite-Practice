@@ -2,7 +2,6 @@ package GlobalUtils.Config;
 
 import GlobalUtils.CommonResult;
 import GlobalUtils.Global;
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,7 +14,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.time.Duration;
@@ -38,22 +37,22 @@ public class RootConfig {
 		RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
 		//序列化方式1
 		//设置CacheManager的值序列化方式为JdkSerializationRedisSerializer,但其实RedisCacheConfiguration默认就是使用StringRedisSerializer序列化key，JdkSerializationRedisSerializer序列化value,所以以下(4行)注释代码为默认实现
-//      ClassLoader loader = this.getClass().getClassLoader();
-//      JdkSerializationRedisSerializer jdkSerializer = new JdkSerializationRedisSerializer(loader);
-//      RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(jdkSerializer);
-//      RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
+//		ClassLoader loader = this.getClass().getClassLoader();
+//		JdkSerializationRedisSerializer jdkSerializer = new JdkSerializationRedisSerializer(loader);
+//		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(jdkSerializer);
+//		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
 		//序列化方式1---另一种实现方式
-		//RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();//该语句相当于序列化方式1
+//		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();//该语句相当于序列化方式1
 
 		//序列化方式2
-		//Jackson2JsonRedisSerializer serializer=new Jackson2JsonRedisSerializer(Object.class);
-		//RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
-		//RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
+		Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
+		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
 
 		//序列化方式3  JSONObject
-		FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
-		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer);
-		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
+//		FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+//		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer);
+//		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
 		//设置过期时间 30天
 		defaultCacheConfig = defaultCacheConfig.entryTtl(Duration.ofDays(30));
 		//初始化RedisCacheManager
@@ -77,21 +76,6 @@ public class RootConfig {
 		JedisConnectionFactory factory = new JedisConnectionFactory(configuration);
 		factory.afterPropertiesSet();
 		return factory;
-	}
-
-	@Bean
-	public RedisTemplate<String, String> redisTemplate(JedisConnectionFactory factory) {
-		RedisTemplate<String, String> template = new RedisTemplate<>();
-		//使用fastjson序列化
-		FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
-		// value值的序列化采用fastJsonRedisSerializer
-		template.setValueSerializer(fastJsonRedisSerializer);
-		template.setHashValueSerializer(fastJsonRedisSerializer);
-		// key的序列化采用StringRedisSerializer
-		template.setKeySerializer(fastJsonRedisSerializer);
-		template.setHashKeySerializer(fastJsonRedisSerializer);
-		template.setConnectionFactory(factory);
-		return template;
 	}
 
 }
