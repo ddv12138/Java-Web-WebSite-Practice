@@ -1,8 +1,11 @@
 package WebComponent.Controller;
 
+import GlobalUtils.Global;
 import ORM.POJO.Spittr;
 import WebComponent.Service.Services.SpittrService;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -20,6 +23,8 @@ import java.util.UUID;
 public class SpittrController {
 	@Autowired
 	SpittrService spittrService;
+	@Autowired
+	RedisTemplate<String, String> template;
 
 	@RequestMapping
 	public String getLatestSpittrs(@RequestParam(value = "count", defaultValue = "50") int count, Model model) {
@@ -29,6 +34,9 @@ public class SpittrController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getSpittr(@PathVariable("id") int id, Model model) {
+		String json = "{\"content\":\"pkqlnYU7QdomwW20wXEd7O8ZRoL0Q7qwaL6Dx1D33WkHGHYQYjmKp1nblRU8NdrTw2LkayD5TLkkn1SJP4brUgGiifcfgEpZpRUN5x0kfr0eRDxt9KsSBA9PwnC4WhYPfK4WgEOcE1LmpmQersgVVXXoSFbSv5N8Tl8GIbM46QNKzWjKWiNoBC3HxQDbm5rJnMTEnJVPflZFJNz5fR5Mrj7Qs0T2XvRAjEgmDfgNM7IZnx7kaI6VAebEPCWw0c1\",\"createtime\":1420068210000,\"id\":0,\"userid\":0,\"username\":\"Nate Shaw\"}";
+		Spittr spittr = (Spittr) JSON.parse(json);
+		Global.Logger().info(json);
 		model.addAttribute("spittr", spittrService.selectOne(id));
 		model.addAttribute("view", true);
 		return "spittrviews/spittrinfo";
