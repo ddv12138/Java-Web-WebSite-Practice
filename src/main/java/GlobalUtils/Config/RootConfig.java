@@ -1,7 +1,8 @@
 package GlobalUtils.Config;
 
+import GlobalUtils.FastJsonRedisSerializer;
 import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,6 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 
@@ -45,19 +45,13 @@ class RootConfig {
 	}
 
 	@Bean(name = "redisTemplate")
-	@SuppressWarnings("unchecked")
-	public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-		RedisTemplate<Object, Object> template = new RedisTemplate<>();
+	public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+		RedisTemplate redisTemplate = new RedisTemplate();
+		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		//使用fastjson序列化
-		FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
-		// value值的序列化采用fastJsonRedisSerializer
-		template.setValueSerializer(fastJsonRedisSerializer);
-		template.setHashValueSerializer(fastJsonRedisSerializer);
-		// key的序列化采用StringRedisSerializer
-		template.setKeySerializer(new StringRedisSerializer());
-		template.setHashKeySerializer(new StringRedisSerializer());
-		template.setConnectionFactory(redisConnectionFactory);
-		return template;
+		GenericFastJsonRedisSerializer fastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
+		redisTemplate.setDefaultSerializer(fastJsonRedisSerializer);
+		return redisTemplate;
 	}
 
 	@Bean
