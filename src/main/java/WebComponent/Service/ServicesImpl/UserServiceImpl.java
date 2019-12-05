@@ -11,13 +11,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-
 @Service(value = "UserService")
 @Transactional
 public class UserServiceImpl implements UserService {
-	@Resource
 	UserMapper mapper;
+
+	public UserServiceImpl(UserMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	public int saveOne(User user) throws UserAleadyExistsException {
 		if (null != mapper.selectByName(user.getName())) {
