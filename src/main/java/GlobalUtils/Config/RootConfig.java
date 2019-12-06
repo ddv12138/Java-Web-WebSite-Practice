@@ -1,7 +1,9 @@
 package GlobalUtils.Config;
 
-import GlobalUtils.FastJsonRedisSerializer;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -60,6 +62,12 @@ class RootConfig {
 //		RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
 		//FastJson方式
 		FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+
+		//重要的地方在于，pojo存到redis时要附加类名，以便反序列化的时候指定到特定的pojo，无论是自己写序列化器还是使用fastjson自带的
+		//只要满足这一点，其实都可以，csdn上的解答全都说要自己实现序列化器那都是知其然不知其所以然
+		FastJsonConfig fastJsonConfig = new FastJsonConfig();
+		fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteClassName);
+		fastJsonRedisSerializer.setFastJsonConfig(fastJsonConfig);
 		RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
 		configuration = configuration.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer)).entryTtl(Duration.ofDays(1));
 		//设置白名单---非常重要********
