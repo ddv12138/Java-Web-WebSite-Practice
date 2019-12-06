@@ -10,6 +10,7 @@ import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	@Override
@@ -19,7 +20,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{WebConfig.class, SecurityConfig.class};
+		return new Class[]{WebConfig.class, SecurityConfig.class, MethodSecurityConfig.class};
 	}
 
 	@Override
@@ -31,7 +32,13 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
 		File tmp = new File("C:/springupload/");
 		if (!tmp.exists()) {
-			tmp.mkdirs();
+			if (!tmp.mkdirs()) {
+				try {
+					throw new FileNotFoundException("文件夹未找到或创建失败");
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		registration.setMultipartConfig(
 				new MultipartConfigElement(tmp.getAbsolutePath(),

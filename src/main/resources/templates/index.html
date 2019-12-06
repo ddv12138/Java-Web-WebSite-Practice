@@ -16,6 +16,11 @@
 <div sec:authorize="isAuthenticated()">
 	Hello <span sec:authentication="name">someone</span>
 </div>
+<div sec:authorize="isAuthenticated()">
+	<ul th:each="obj,state:${#authentication.getAuthorities()}">
+		<li><span th:text="${obj.getAuthority()}"></span></li>
+	</ul>
+</div>
 <div>
 	<ul>
 		<li sec:authorize="not isAuthenticated()"><a th:href="@{/user/signup}">signup</a></li>

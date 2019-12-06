@@ -40,14 +40,12 @@ public class CommonResult {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"state\":")
-                .append(state);
-        sb.append(",\"msg\":\"")
-                .append(msg).append('\"');
-        sb.append(",\"data\":")
-                .append(data);
-        sb.append('}');
-        return sb.toString();
-    }
+		return "{" + "\"state\":" +
+				state +
+				",\"msg\":\"" +
+				msg + '\"' +
+				",\"data\":" +
+				data +
+				'}';
+	}
 }

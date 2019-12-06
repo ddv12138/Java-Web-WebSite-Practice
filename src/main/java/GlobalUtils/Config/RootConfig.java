@@ -47,8 +47,8 @@ class RootConfig {
 	}
 
 	@Bean(name = "redisTemplate")
-	public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-		RedisTemplate redisTemplate = new RedisTemplate();
+	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		//使用fastjson序列化
 		GenericFastJsonRedisSerializer fastJsonRedisSerializer = new GenericFastJsonRedisSerializer();

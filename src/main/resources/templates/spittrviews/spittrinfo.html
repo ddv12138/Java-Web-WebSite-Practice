@@ -18,7 +18,9 @@
         </tr>
         <tr>
             <td>用户名：</td>
-            <td><input th:name="username" th:readonly="readonly" th:value="${#authentication.name}" type="text"><br/>
+            <td><input th:if="${view}" th:name="username" th:readonly="readonly" th:value="*{username}" type="text">
+                <input th:if="not ${view}" th:name="username" th:readonly="readonly" th:value="${#authentication.name}"
+                       type="text"><br/>
             </td>
         </tr>
         <tr>

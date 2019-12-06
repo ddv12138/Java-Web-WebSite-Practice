@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 
 public class Global {
 
@@ -45,8 +44,8 @@ public class Global {
 				// 封装输入流is，并指定字符集
 				br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 				// 存放数据
-				StringBuffer sbf = new StringBuffer();
-				String temp = null;
+				StringBuilder sbf = new StringBuilder();
+				String temp;
 				while ((temp = br.readLine()) != null) {
 					sbf.append(temp);
 				}
@@ -72,13 +71,10 @@ public class Global {
 				}
 			}
 
+			assert connection != null;
 			connection.disconnect();// 关闭远程连接
 		}
 		return result;
-	}
-
-	public static String getUUIDString() {
-		return UUID.randomUUID().toString().replaceAll("-", "").toLowerCase();
 	}
 
 	public static String passwdEncrypt(String passwd) {
