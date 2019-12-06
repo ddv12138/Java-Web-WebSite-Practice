@@ -14,12 +14,12 @@ import java.io.File;
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[]{RootConfig.class, DataSourceConfig.class, SecurityConfig.class};
+		return new Class[]{RootConfig.class, DataSourceConfig.class};
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{WebConfig.class};
+		return new Class[]{WebConfig.class, SecurityConfig.class};
 	}
 
 	@Override

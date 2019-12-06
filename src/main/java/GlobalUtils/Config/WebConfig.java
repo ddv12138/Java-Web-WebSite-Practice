@@ -25,24 +25,13 @@ import java.util.List;
 
 @SpringBootConfiguration
 @Configuration
-@EnableWebMvc // 相当于<mvc:annotation-driver/>，启用注解驱动的Spring MVC,使@RequestParam、@RequestMapping等注解可以被识别
+@EnableWebMvc
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = {"WebComponent"})
 public class WebConfig implements WebMvcConfigurer {
 	@Bean // 配置生成模板解析器
 	@Primary
 	public ITemplateResolver templateResolver(ApplicationContext applicationContext) {
-//		WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
-//		// ServletContextTemplateResolver需要一个ServletContext作为构造参数，可通过WebApplicationContext 的方法获得
-//		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(webApplicationContext.getServletContext());
-//		templateResolver.setPrefix("/WEB-INF/view/");
-//		templateResolver.setSuffix(".html");
-//		//这里配置成false,可以免重启刷新
-//		templateResolver.setCacheable(false);
-//		templateResolver.setCharacterEncoding("UTF-8");
-//		// 设置模板模式,也可用字符串"HTML"代替,此处不建议使用HTML5,原因看下图源码
-//		templateResolver.setTemplateMode(TemplateMode.HTML);
-//		return templateResolver;
 		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
 		resolver.setApplicationContext(applicationContext);
 		resolver.setPrefix("classpath:/templates/");
