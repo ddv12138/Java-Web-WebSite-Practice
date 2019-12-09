@@ -1,30 +1,46 @@
-import GlobalUtils.Global;
+import GlobalUtils.Application;
+import ORM.POJO.User;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import java.util.regex.Pattern;
-
+@SpringBootTest(classes = Application.class)
+@RunWith(SpringRunner.class)
 public class ControllerTest {
-	@Test
-	public void baseControllerTest() throws Exception {
-//		SpittrController spittrController = new SpittrController();
-//		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(spittrController).build();
-//		mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(MockMvcResultMatchers.view().name("spittrviews/index"));
+	@Autowired
+	private WebApplicationContext wac;
+
+	private MockMvc mvc;
+	private MockHttpSession session;
+
+	@Before
+	public void setupMockMvc() {
+		mvc = MockMvcBuilders.webAppContextSetup(wac).build(); //初始化MockMvc对象
+		session = new MockHttpSession();
+		User user = new User();
+		user.setName("admin");
+		user.setPassword("admin");
+		session.setAttribute("user", user); //拦截器那边会判断用户是否登录，所以这里注入一个用户
 	}
 
 	@Test
-	public void regxTest() {
-		String content = "/layui/css/modules/laydate/default/laydate.css?v=5.0.9\\";
-		String content2 = "/layui/css/modules/laydate/default/laydate.css";
-		String content3 = "/layui/css/modules/laydate/default/laydate.js";
-		String content4 = "/layui/css/modules/laydate/default/laydate.ico";
-		String content5 = "/layui/css/modules/laydate/default/laydate.png";
-		String content6 = "/layui/css/modules/laydate/default/laydate.zip";
-		String pattern = ".*(css|js|ico|png)\\??[^/\\\\]*";
-		Global.Logger().info(Pattern.matches(pattern, content));
-		Global.Logger().info(Pattern.matches(pattern, content2));
-		Global.Logger().info(Pattern.matches(pattern, content3));
-		Global.Logger().info(Pattern.matches(pattern, content4));
-		Global.Logger().info(Pattern.matches(pattern, content5));
-		Global.Logger().info(Pattern.matches(pattern, content6));
+	public void addLearn() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/resource?pid=-1")
+				.accept(MediaType.APPLICATION_JSON)
+				.session(session)
+		)
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
 	}
 }

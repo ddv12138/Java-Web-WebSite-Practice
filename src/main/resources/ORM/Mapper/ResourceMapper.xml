@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ORM.Mapper.ResourceMapper">
+    <resultMap id="resourceModel" type="ORM.POJO.Resource">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="cnname" property="cnname"/>
+        <result column="url" property="url"/>
+        <result column="pid" property="pid"/>
+    </resultMap>
+    <resultMap id="subResourceModel" type="ORM.POJO.Resource" extends="resourceModel">
+        <collection property="childList" javaType="java.util.ArrayList" column="id" select="selectResourceList"
+                    ofType="ORM.POJO.Resource">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="cnname" property="cnname"/>
+            <result column="url" property="url"/>
+            <result column="pid" property="pid"/>
+        </collection>
+    </resultMap>
+    <select id="selectResourceList" resultMap="subResourceModel">
+        select *
+        From resource
+        where pid = #{pid}
+    </select>
+</mapper>

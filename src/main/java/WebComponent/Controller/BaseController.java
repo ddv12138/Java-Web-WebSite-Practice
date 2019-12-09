@@ -1,19 +1,13 @@
 package WebComponent.Controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/base")
 public class BaseController {
 	@RequestMapping
 	public String helloView() {
 		return "index";
-	}
-
-	@RequestMapping("/message")
-	public String showMessage(Model model) {
-		return "message";
 	}
 }

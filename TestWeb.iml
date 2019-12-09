@@ -30,6 +30,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="canvas-nest" level="application" />
     <orderEntry type="library" name="echarts" level="application" />
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="index" level="application" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-log4j2:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.12.1" level="project" />
@@ -91,12 +93,6 @@
     <orderEntry type="library" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis-spring:2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:2.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf:3.0.11.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.attoparser:attoparser:2.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.58" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test:2.2.1.RELEASE" level="project" />

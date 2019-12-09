@@ -3,22 +3,14 @@ package GlobalUtils.Config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring5.ISpringTemplateEngine;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,38 +21,38 @@ import java.util.List;
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = {"WebComponent"})
 public class WebConfig implements WebMvcConfigurer {
-	@Bean // 配置生成模板解析器
-	@Primary
-	public ITemplateResolver templateResolver(ApplicationContext applicationContext) {
-		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-		resolver.setApplicationContext(applicationContext);
-		resolver.setPrefix("classpath:/templates/");
-		resolver.setSuffix(".html");
-		resolver.setTemplateMode(TemplateMode.HTML);
-		resolver.setCharacterEncoding("UTF-8");
-		resolver.setCacheable(false);
-		resolver.setCheckExistence(true);
-		return resolver;
-	}
+//	@Bean // 配置生成模板解析器
+//	@Primary
+//	public ITemplateResolver templateResolver(ApplicationContext applicationContext) {
+//		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+//		resolver.setApplicationContext(applicationContext);
+//		resolver.setPrefix("classpath:/templates/");
+//		resolver.setSuffix(".html");
+//		resolver.setTemplateMode(TemplateMode.HTML);
+//		resolver.setCharacterEncoding("UTF-8");
+//		resolver.setCacheable(false);
+//		resolver.setCheckExistence(true);
+//		return resolver;
+//	}
+//
+//	@Bean // 生成模板引擎并为模板引擎注入模板解析器
+//	public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
+//		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//		templateEngine.setTemplateResolver(templateResolver);
+//		templateEngine.addDialect(new SpringSecurityDialect());
+//		return templateEngine;
+//	}
 
-	@Bean // 生成模板引擎并为模板引擎注入模板解析器
-	public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
-		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-		templateEngine.setTemplateResolver(templateResolver);
-		templateEngine.addDialect(new SpringSecurityDialect());
-		return templateEngine;
-	}
-
-	@Bean // 生成视图解析器并未解析器注入模板引擎
-	public ViewResolver viewResolver(TemplateEngine templateEngine) {
-		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-		viewResolver.setContentType("text/html");
-		viewResolver.setTemplateEngine((ISpringTemplateEngine) templateEngine);
-		viewResolver.setCache(false);
-		viewResolver.setCacheUnresolved(false);
-		viewResolver.setCharacterEncoding("UTF-8");
-		return viewResolver;
-	}
+	//	@Bean // 生成视图解析器并未解析器注入模板引擎
+//	public ViewResolver viewResolver(TemplateEngine templateEngine) {
+//		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+//		viewResolver.setContentType("text/html");
+//		viewResolver.setTemplateEngine((ISpringTemplateEngine) templateEngine);
+//		viewResolver.setCache(false);
+//		viewResolver.setCacheUnresolved(false);
+//		viewResolver.setCharacterEncoding("UTF-8");
+//		return viewResolver;
+//	}
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link class="admin-icon" rel="shortcut icon" type="image/x-icon">
+	<meta content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+	      name="viewport"/>
+	<link href="https://unpkg.com/element-ui@2.8.2/lib/theme-chalk/index.css" rel="stylesheet">
+	<link href="https://unpkg.com/swiper@4.5.0/dist/css/swiper.min.css" rel="stylesheet">
+	<link href="sa-resources/index.css" rel="stylesheet">
+	<link href="sa-resources/theme.css" rel="stylesheet">
+
+</head>
+<body>
+<!-- style="display: none;" 防止 初始花屏 -->
+<div :class="['theme-0', 'theme-' + themeV, (is_fold ? 'fold' : ''), (themeToggling ? 'themeToggling' : '')]"
+     :style="'display: block;'" class="app" style="display: none;">
+	<!-- 左 -->
+	<div class="nav-left">
+		<!-- 左上 -->
+		<div :title="title" @click="showPage(homePage)" class="nav-left-top">
+			<img :src="logo_url" class="admin-logo" v-if="logo_url != null && logo_url != ''">
+			<span style="margin-right: 25px;" title="无logo时的占位" v-else>&emsp;</span>
+			<span class="nav-title" style="font-size: 1.05em;">{{title}}</span>
+		</div>
+
+		<!-- 左下 -->
+		<div class="nav-left-bottom">
+			<div class="menu-box-1">
+				<div class="menu-box-2">
+
+					<!-- 菜单 -->
+					<el-menu :collapse="is_fold"
+					         :default-active="default_active"
+					         :default-openeds="default_openeds"
+					         :unique-opened="unique_opened"
+					         @select="selectMenu"
+					         class="el-menu-style-1"
+					         default-active="2"
+					>
+
+						<div :key="index" v-for="(menu, index) in menuList">
+
+							<!-- 1 子菜单 -->
+							<el-menu-item :index="menu.id + '' " v-if="menu.childList == null">
+								<i :class="menu.icon" :title="menu.name"></i>
+								<span class="menu-name">{{menu.name}}</span>
+							</el-menu-item>
+
+							<!-- 1 父菜单 -->
+							<el-submenu :index="menu.id + '' " v-else>
+								<template slot="title">
+									<i :class="menu.icon" :title="menu.name"></i>
+									<span class="menu-name">{{menu.name}}</span>
+								</template>
+
+								<!-- 遍历其子项 -->
+								<div :key="index" v-for="(menu2, index) in menu.childList">
+									<!-- 2 如果是子菜单 -->
+									<el-menu-item :index="menu2.id + '' " v-if="menu2.childList == null">
+										{{menu2.name}}
+									</el-menu-item>
+
+									<!-- 2 如果是父菜单 -->
+									<el-submenu :index="menu2.id + '' " v-else>
+										<template slot="title">
+											{{menu2.name}}
+										</template>
+										<el-menu-item :index="menu3.id + '' " :key="index3"
+										              v-for="(menu3, index3) in menu2.childList">
+											{{menu3.name}}
+										</el-menu-item>
+									</el-submenu>
+
+								</div>
+
+							</el-submenu>
+
+						</div>
+
+					</el-menu>
+
+
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<!-- 右边 -->
+	<div :class="(is_fold_right ? 'is_fold_right' : '')" class="nav-right">
+
+		<!-- 右边，第一行 -->
+		<div class="nav-right-1">
+			<div class="tools-left">
+						<span @click="fold_start()" class="tool-fox" title="折叠菜单" v-if="is_fold == false">
+							<i class="el-icon-s-fold"></i>
+						</span>
+				<span @click="fold_end()" class="tool-fox" title="展开菜单" v-if="is_fold == true">
+							<i class="el-icon-s-unfold"></i>
+						</span>
+				<span @click="rightPage = nativePage; right_f5();" class="tool-fox" title="刷新">
+							<i class="el-icon-refresh-right" style="font-weight: bold;"></i>
+						</span>
+				<span class="tool-fox" title="当前时间">
+							<span style="font-size: 0.90em;">{{now_time}}</span>
+						</span>
+			</div>
+			<div class="tools-right">
+						<span class="tool-fox" onclick="location.href='login.html'" title="点击登录" v-if="user == null">
+							<span style="font-size: 0.8em; font-weight: bold; position: relative; top: -2px;">未登录</span>
+						</span>
+				<span class="tool-fox" class="user-info" style="padding: 0;" title="我的信息" v-if="user != null">
+							<el-dropdown @command="handleCommand" size="medium" trigger="click">
+								<span class="el-dropdown-link user-name"
+								      style="height: 100%; padding: 0 1em; display: inline-block;">
+									<img :src="user.avatar" class="user-avatar">
+									{{user.username}}
+									<i class="el-icon-arrow-down el-icon--right"></i>
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item :command="drop.name" :key="drop.name" v-for="drop in dropList">{{drop.name}}</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
+						</span>
+				<span class="tool-fox" style="padding: 0;" title="切换效果">
+							<el-dropdown @command="toggleSwitch" size="medium" trigger="click">
+								<span class="el-dropdown-link"
+								      style="height: 100%; padding: 0 1em; display: inline-block;">
+									<i class="el-icon-sort" style="font-weight: bold; transform: rotate(90deg)"></i> 
+									<span style="font-size: 0.9em;">切换</span>
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item :command="s.value" :key="s.name" v-for="s in switchList">
+										<span :style=" switchV == s.value ? 'color: #44f' : '' ">{{s.name}} </span>
+									</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
+						</span>
+				<span class="tool-fox" style="padding: 0;" title="主题">
+							<el-dropdown @command="toggleTheme" size="medium" trigger="click">
+								<span class="el-dropdown-link"
+								      style="height: 100%; padding: 0 1em; display: inline-block;">
+									<i class="el-icon-price-tag" style="font-weight: bold;"></i>
+									<span style="font-size: 0.9em;">主题</span>
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item :command="t.value" :key="t.name" v-for="t in themeList">
+										<span :style=" themeV == t.value ? 'color: #44f' : '' ">{{t.name}} </span>
+									</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
+						</span>
+				<span @click="is_full_screen = true" class="tool-fox" title="全屏" v-if="is_full_screen == false">
+							<i class="el-icon-rank" style="font-weight: bold; transform: rotate(45deg)"></i>
+						</span>
+				<span @click="is_full_screen = false" class="tool-fox" title="退出全屏" v-if="is_full_screen == true">
+							<i class="el-icon-bottom-left" style="font-weight: bold; "></i>
+						</span>
+			</div>
+		</div>
+
+		<!-- 右边，第二行 -->
+		<div class="nav-right-2">
+			<div @click="scrollToLeft" class="towards-left" title="向左滑">
+				<i class="el-icon-arrow-left"></i>
+			</div>
+			<div class="towards-middle">
+
+				<div :style="{left: scrollX + 'px'}" class="page-title-box">
+					<div :class=" (page == nativePage ? 'page-native' : '') " @click="showPage(page)"
+					     @contextmenu.prevent="right_click(page, $event)"
+					     class="page-title"
+					     v-for="page in pageList"
+					>
+						<i class="el-icon-caret-right"></i>
+						<span>{{page.name}}</span>
+						<i @click.stop="closePage(page)" class="el-icon-close" v-if="!page.hide_close"></i>
+					</div>
+				</div>
+
+
+			</div>
+			<div @click="scrollToRight" class="towards-right" title="向右滑">
+				<i class="el-icon-arrow-right"></i>
+			</div>
+		</div>
+
+		<!-- 右边，第三行 -->
+		<!-- <div class="nav-right-3">
+			<span v-for="page in pageList" :key="page.id">
+				<iframe :src="page.url" :id=" 'iframe' + page.id " class="iframe" :class="page == nativePage ? 'iframe-native' : null"></iframe>
+			</span>
+		</div> -->
+
+		<!-- 右边，第三行 -->
+		<!-- swiper滑动 用v-for卡一半 -->
+		<div class="nav-right-3">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<iframe class="iframe" id="iframe-1" src="main.html"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<!-- 鼠标右键弹出的盒子 -->
+	<div :style="{left: rightZB.x + 'px', top: rightZB.y + 'px'}" @blur="rightShow = false" class="right-box"
+	     tabindex="-1" v-if="rightShow">
+		<div @click="rightShow = false; right_f5()">刷新</div>
+		<div @click="rightShow = false; right_close()">关闭</div>
+		<div @click="rightShow = false; right_close_other()">关闭其它</div>
+		<div @click="rightShow = false; right_close_all()">关闭所有</div>
+		<div @click="rightShow = false; right_xf()">悬浮打开</div>
+		<div @click="rightShow = false; right_window_open()">新窗口打开</div>
+		<div @click="rightShow = false">取消</div>
+	</div>
+
+
+</div>
+
+<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+</script>
+<script src="https://unpkg.com/element-ui@2.8.2/lib/index.js"></script>
+<script src="https://unpkg.com/swiper@4.5.0/dist/js/swiper.min.js"></script>
+<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+
+<script src="sa-resources/admin-util.js"></script>
+<script src="sa-resources/menu-list.js"></script>
+<script src="sa-resources/index.js"></script>
+<script src="sa-resources/my-code.js"></script>
+
+
+</body>
+</html>
