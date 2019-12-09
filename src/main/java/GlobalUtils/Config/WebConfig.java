@@ -3,6 +3,7 @@ package GlobalUtils.Config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -10,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,30 @@ public class WebConfig implements WebMvcConfigurer {
 //		return viewResolver;
 //	}
 
+	/**
+	 * 这里有个坑，SpringBoot2 必须重写该方法，否则静态资源无法访问
+	 * 参照 https://blog.csdn.net/zhang_Red/article/details/81739005
+	 *
+	 * @param registry
+	 */
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**")
+				.addResourceLocations("classpath:/META-INF/resources/")
+				.addResourceLocations("classpath:/resources/")
+				.addResourceLocations("classpath:/static/")
+				.addResourceLocations("classpath:/public/");
+		WebMvcConfigurer.super.addResourceHandlers(registry);
+	}
+
+	@Bean
+	public InternalResourceViewResolver viewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setPrefix("/");
+		viewResolver.setSuffix(".html");
+		return viewResolver;
+	}
+
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
@@ -68,7 +95,8 @@ public class WebConfig implements WebMvcConfigurer {
 		//返回内容的过滤
 		config.setSerializerFeatures(
 				SerializerFeature.DisableCircularReferenceDetect,
-				SerializerFeature.WriteMapNullValue
+				SerializerFeature.WriteMapNullValue,
+				SerializerFeature.WriteNullListAsEmpty
 		);
 		List<MediaType> supportedMediaTypes = new ArrayList<>();
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON);

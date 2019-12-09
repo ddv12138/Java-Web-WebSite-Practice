@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//默认都会产生一个hiden标签 里面有安全相关的验证 防止请求伪造 这边我们暂时不需要 可禁用掉
 		http.csrf().disable();
 		http.authorizeRequests().anyRequest().permitAll();
+		http.headers().frameOptions().disable();
 	}
 
 	@Override

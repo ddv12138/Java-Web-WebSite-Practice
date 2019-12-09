@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/base")
+@RequestMapping("/")
 public class BaseController {
 	@RequestMapping
 	public String helloView() {

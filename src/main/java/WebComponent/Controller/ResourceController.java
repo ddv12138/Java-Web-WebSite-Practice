@@ -18,6 +18,8 @@ public class ResourceController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Resource> selectResourceList(Integer pid) {
+		if (null == pid)
+			pid = -1;
 		return resourceService.selectResourceList(pid);
 	}
 }

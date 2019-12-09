@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Resource {
 	Integer id, pid;
-	String name, cnname, url;
+	String name, url;
 	List<Resource> childList;
 
 	public List<Resource> getChildList() {
@@ -37,14 +37,6 @@ public class Resource {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getCnname() {
-		return cnname;
-	}
-
-	public void setCnname(String cnname) {
-		this.cnname = cnname;
 	}
 
 	public String getUrl() {

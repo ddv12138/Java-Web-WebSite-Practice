@@ -6,7 +6,6 @@
     <resultMap id="resourceModel" type="ORM.POJO.Resource">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
-        <result column="cnname" property="cnname"/>
         <result column="url" property="url"/>
         <result column="pid" property="pid"/>
     </resultMap>
@@ -15,7 +14,6 @@
                     ofType="ORM.POJO.Resource">
             <id column="id" property="id"/>
             <result column="name" property="name"/>
-            <result column="cnname" property="cnname"/>
             <result column="url" property="url"/>
             <result column="pid" property="pid"/>
         </collection>

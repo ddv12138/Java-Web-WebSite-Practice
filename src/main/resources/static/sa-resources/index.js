@@ -111,6 +111,7 @@ var sa_admin = new Vue({
 				var menu = menu_list[i];
 				// 添加到其指定的父菜单的childList
 				if (menu.parent_id) {
+					console.log(menu);
 					var parent_menu = this.getMenuById(menu_list, menu.parent_id);
 					if (parent_menu) {
 						parent_menu.childList = parent_menu.childList || [];
@@ -138,7 +139,7 @@ var sa_admin = new Vue({
 					i--;
 					continue;
 				}
-				// 有子项的递归处理 
+				// 有子项的递归处理
 				if (menu.childList && menu.childList.length > 0) {
 					this.refMenuList(menu.childList, show_list);	// 递归处理 
 				}
@@ -525,7 +526,6 @@ var sa_admin = new Vue({
 		setTimeout(function () {
 			if (this.is_log) {
 				console.log('欢迎使用sa-admin，当前版本：' + this.version + "，GitHub地址：" + this.github_url);
-				console.log('如在使用中发现任何bug或者疑问，请加入QQ群交流：782974737，点击加入：' + 'https://jq.qq.com/?_wv=1027&k=5DHN5Ib');
 			}
 		}.bind(this), 2000)
 
