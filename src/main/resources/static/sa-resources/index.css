@@ -193,9 +193,9 @@ html, body {
 
 .page-title {
     padding: 0 8px;
-    margin: 0 3px;
-    margin-top: 1px;
+    margin: 1px 3px 0;
     height: 30px;
+    line-height: 30px;
     background-color: #FFF;
     font-size: 0.8em;
     border: 1px #DDD solid;
@@ -204,6 +204,8 @@ html, body {
     /* display: inline-block; */
     float: left;
     transition: all 0.0s;
+    min-width: 3rem;
+    text-align: center;
 }
 
 .page-title span {

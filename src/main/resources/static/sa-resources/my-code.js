@@ -57,7 +57,7 @@ sp.dropList = [		// 头像点击处可操作的选项
 				shadeClose: true,
 				shade: 0.8,
 				area: ['70%', '80%'],
-				resize: false,
+				resize: true,
 				content: 'login.html'
 			});
 		}

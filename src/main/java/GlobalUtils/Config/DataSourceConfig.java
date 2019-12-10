@@ -42,7 +42,7 @@ public class DataSourceConfig {
 	public SqlSessionFactory sqlSessionFactory(DruidDataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
-		Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:ORM/*.xml");
+		Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:ORM/Mapper/*.xml");
 		sessionFactory.setMapperLocations(resources);
 		return sessionFactory.getObject();
 	}

@@ -3,7 +3,8 @@ $.get("/resource", function (arg) {
 		id: '11',
 		name: '文档说明',
 		icon: 'el-icon-document-remove',
-		url: 'sa-html/sa-doc.html'
+		url: 'sa-html/sa-doc.html',
+		order: 3
 	};
 	arg.push(docu);
 	for (let i = 0; i < arg.length; i++) {

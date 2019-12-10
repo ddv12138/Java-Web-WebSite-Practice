@@ -22,5 +22,6 @@
         select *
         From resource
         where pid = #{pid}
+        order by `order` desc
     </select>
 </mapper>
