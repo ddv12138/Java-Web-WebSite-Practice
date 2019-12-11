@@ -4,3 +4,7 @@
 /RemoteSystemsTempFiles
 /out/
 /logs/
+.vscode/settings.json
+.factorypath
+.classpath
+.project

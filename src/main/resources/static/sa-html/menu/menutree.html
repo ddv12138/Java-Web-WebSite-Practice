@@ -48,53 +48,49 @@
                     delete arg[i].childList;
                     continue;
                 }
-                parseDataTooTree(arg[i].childList);
-                arg[i].children = arg[i].childList;
-            }
-        };
-        let Main = {
-            data() {
-                $.ajaxSettings.async = false;
-                let data = null;
-                $.get("/resource", function (arg) {
-                    let docu = {
-                        id: '11',
-                        name: '文档说明',
-                        icon: 'el-icon-document-remove',
-                        url: 'sa-html/sa-doc.html',
-                        order: 3
-                    };
-                    console.log(arg);
-                    arg.push(docu);
-                    parseDataTooTree(arg);
-                    data = arg;
-                });
-                $.ajaxSettings.async = true;
-                console.log(data);
-                return {
-                    data: JSON.parse(JSON.stringify(data)),
+                if (arg[i].childList) {
+                    parseDataTooTree(arg[i].childList);
+                    arg[i].children = arg[i].childList;
                 }
-            },
-
-            methods: {
-                append(data) {
-                    const newChild = {id: id++, label: 'testtest', children: []};
-                    if (!data.children) {
-                        this.$set(data, 'children', []);
-                    }
-                    data.children.push(newChild);
-                },
-
-                remove(node, data) {
-                    const parent = node.parent;
-                    const children = parent.data.children || parent.data;
-                    const index = children.findIndex(d => d.id === data.id);
-                    children.splice(index, 1);
-                },
             }
         };
-        let Ctor = Vue.extend(Main);
-        new Ctor().$mount('#menutree');
+        $.get("/resource", function (arg) {
+            let docu = {
+                id: '11',
+                name: '文档说明',
+                icon: 'el-icon-document-remove',
+                url: 'sa-html/sa-doc.html',
+                order: 3
+            };
+            arg.push(docu);
+            console.log(arg);
+            parseDataTooTree(arg);
+            let data = arg;
+            let Main = {
+                data() {
+                    return {
+                        data: JSON.parse(JSON.stringify(data)),
+                    }
+                },
+                methods: {
+                    append(data) {
+                        const newChild = {id: id++, label: 'testtest', children: []};
+                        if (!data.children) {
+                            this.$set(data, 'children', []);
+                        }
+                        data.children.push(newChild);
+                    },
+                    remove(node, data) {
+                        const parent = node.parent;
+                        const children = parent.data.children || parent.data;
+                        const index = children.findIndex(d => d.id === data.id);
+                        children.splice(index, 1);
+                    },
+                }
+            };
+            let Ctor = Vue.extend(Main);
+            new Ctor().$mount('#menutree');
+        });
 	</script>
 	<style>
 		.custom-tree-node {
