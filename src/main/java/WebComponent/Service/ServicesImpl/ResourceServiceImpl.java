@@ -17,4 +17,13 @@ public class ResourceServiceImpl implements ResourceService {
 	public List<Resource> selectResourceList(Integer pid) {
 		return resourceMapper.selectResourceList(pid);
 	}
+
+	public int addOne(Resource resource) {
+		return resourceMapper.addOne(resource);
+	}
+
+	@Override
+	public int selectMaxOrder() {
+		return resourceMapper.selectMaxOrder();
+	}
 }

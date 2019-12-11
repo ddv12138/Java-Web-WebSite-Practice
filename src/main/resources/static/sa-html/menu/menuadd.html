@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>添加菜单项</title>
+		<link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+	</head>
+	<body>
+		<el-card class="box-card">
+			<el-form :label-position="labelPosition" :model="resource" :rules="rules" class="demo-ruleForm" id="form"
+			         label-width="100px"
+			         ref="resource">
+				<el-form-item label="菜单项父级id" prop="pid">
+					<el-input v-model="resource.pid"></el-input>
+				</el-form-item>
+				<el-form-item label="菜单项名称" prop="name">
+					<el-input v-model="resource.name"></el-input>
+				</el-form-item>
+				<el-form-item label="菜单项URL(填写相对路径)" prop="url">
+					<el-input v-model="resource.url"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-button @click="submitForm('resource')" type="primary">立即创建</el-button>
+					<el-button @click="resetForm('resource')">重置</el-button>
+				</el-form-item>
+			</el-form>
+		</el-card>
+	</body>
+	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+	<script type="text/javascript">
+        let resource = new Vue({
+            el: "#form",
+            data: {
+                labelPosition: "top",
+                resource: {
+                    name: '',
+                    url: '',
+                    pid: ''
+                },
+                rules: {
+                    name: [
+                        {required: true, message: '请输入菜单项名称', trigger: 'blur'},
+                        {min: 0, max: 10, message: '长度不超过 10 个字符', trigger: 'blur'}
+                    ],
+                    url: [
+                        {required: true, message: '请输入菜单项URL(填写相对路径)', trigger: 'change'}
+                    ],
+                    pid: [
+                        {required: true, message: '出现错误请重试', trigger: 'submit'}
+                    ],
+                }
+            },
+            methods: {
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            let data = JSON.stringify(this.$refs[formName].model);
+                            $.post("/resource", this.$refs[formName].model, function (data, status, xhr) {
+                                console.log(data);
+                            }, "json");
+                        } else {
+                            alert('出现错误!');
+                            return false;
+                        }
+                    });
+                },
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                }
+            }
+        })
+	</script>
+</html>

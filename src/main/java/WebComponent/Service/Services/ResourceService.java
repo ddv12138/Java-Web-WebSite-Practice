@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ResourceService {
 	List<Resource> selectResourceList(Integer pid);
+
+	int addOne(Resource resource);
+
+	int selectMaxOrder();
 }

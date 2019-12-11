@@ -15,11 +15,20 @@ public class ResourceController {
 	@javax.annotation.Resource
 	ResourceService resourceService;
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Resource> selectResourceList(Integer pid) {
 		if (null == pid)
 			pid = -1;
 		return resourceService.selectResourceList(pid);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
+	public boolean selectResourceList(Resource menu) {
+		if (null == menu.getOrder()) {
+			menu.setOrder(resourceService.selectMaxOrder() + 1);
+		}
+		return resourceService.addOne(menu) > 0;
 	}
 }

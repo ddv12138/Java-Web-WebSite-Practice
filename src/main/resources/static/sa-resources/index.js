@@ -24,7 +24,7 @@ var sa_admin = new Vue({
 		nativePage: homePage,	// 当前正显示的Page 
 		pageList: [homePage],	// 页面集合
 		scrollX: 0,// 滚动条位置
-		rightShow: false,	// 右键菜单是否显示 
+		rightShow: false,	// 右键菜单是否显示
 		rightPage: null,	// 右键正在操作的page
 		rightZB: {x: 0, y: 0},// 右键菜单坐标
 		is_fold: false,			// 菜单是否折叠

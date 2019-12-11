@@ -24,4 +24,12 @@
         where pid = #{pid}
         order by `order` desc
     </select>
+    <insert id="addOne" parameterType="ORM.POJO.Resource" useGeneratedKeys="true">
+        insert into resource(name, url, pid, `order`)
+        values (#{name}, #{url}, #{pid}, #{order})
+    </insert>
+    <select id="selectMaxOrder" resultType="Integer">
+        select max(`order`)
+        from resource;
+    </select>
 </mapper>

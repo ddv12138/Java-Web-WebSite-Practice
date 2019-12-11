@@ -13,8 +13,7 @@
 			         default-expand-all
 			         highlight-current=true
 			         id="menutree"
-			         node-key="id"
-			         show-checkbox>
+			         node-key="id">
 				<span class="custom-tree-node" slot-scope="{ node, data }">
 					<span>{{ node.label }}</span>
 					<span>
@@ -38,6 +37,7 @@
 	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script type="module">
         let id = 1000;
         let parseDataTooTree = function (arg) {
@@ -63,10 +63,9 @@
                 order: 3
             };
             arg.push(docu);
-            console.log(arg);
             parseDataTooTree(arg);
             let data = arg;
-            let Main = {
+            let Tree = {
                 data() {
                     return {
                         data: JSON.parse(JSON.stringify(data)),
@@ -74,11 +73,30 @@
                 },
                 methods: {
                     append(data) {
-                        const newChild = {id: id++, label: 'testtest', children: []};
-                        if (!data.children) {
-                            this.$set(data, 'children', []);
-                        }
-                        data.children.push(newChild);
+                        layer.open({
+                            type: 2,
+                            title: "新增菜单",
+                            moveOut: true, // 是否可拖动到外面
+                            maxmin: true, // 显示最大化按钮
+                            shadeClose: false,
+                            shade: 0,
+                            area: ['80%', '80%'],
+                            content: "/sa-html/menu/menuadd.html",
+                            // 解决拉伸或者最大化的时候，iframe高度不能自适应的问题
+                            resizing: function (layero) {
+                                //console.log($('.layui-layer.layui-layer-iframe').length);
+                                $('.layui-layer-iframe').each(function () {
+                                    let height = $(this).height();
+                                    let title_height = $(this).find('.layui-layer-title').height();
+                                    $(this).find('iframe').css('height', (height - title_height) + 'px');
+                                })
+                            }
+                        });
+                        // const newChild = {id: id++, label: 'testtest', children: []};
+                        // if (!data.children) {
+                        //     this.$set(data, 'children', []);
+                        // }
+                        // data.children.push(newChild);
                     },
                     remove(node, data) {
                         const parent = node.parent;
@@ -88,7 +106,7 @@
                     },
                 }
             };
-            let Ctor = Vue.extend(Main);
+            let Ctor = Vue.extend(Tree);
             new Ctor().$mount('#menutree');
         });
 	</script>
@@ -100,6 +118,12 @@
 			justify-content: space-between;
 			font-size: 14px;
 			padding-right: 8px;
+			color: #2d8cf0;
+		}
+
+		.el-button--text, .el-button--text:focus, .el-button--text:hover {
+			border: 1px #409EFF solid;
+			padding: 4px;
 		}
 
 		body, .el-tree {
