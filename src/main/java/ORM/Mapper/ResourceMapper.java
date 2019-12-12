@@ -15,4 +15,8 @@ public interface ResourceMapper {
 	int addOne(Resource resource);
 
 	int selectMaxOrder();
+
+	int deleteOne(Resource resource);
+
+	Resource selectById(int id);
 }

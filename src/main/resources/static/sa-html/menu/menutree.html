@@ -90,17 +90,10 @@
                             },
                             success: function (layero, index) {
                                 let body = layer.getChildFrame('body', index);
-                                console.log(body);
                                 let iframeWin = window[layero.find('iframe')[0]['name']];
                                 iframeWin.setData(data);
-                                console.log(iframeWin)
                             }
                         });
-                        // const newChild = {id: id++, label: 'testtest', children: []};
-                        // if (!data.children) {
-                        //     this.$set(data, 'children', []);
-                        // }
-                        // data.children.push(newChild);
                     },
                     remove(node, data) {
                         const parent = node.parent;

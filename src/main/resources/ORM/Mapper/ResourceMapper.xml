@@ -3,11 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ORM.Mapper.ResourceMapper">
+    <parameterMap id="noIdParMap" type="ORM.POJO.Resource">
+
+    </parameterMap>
     <resultMap id="resourceModel" type="ORM.POJO.Resource">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="url" property="url"/>
         <result column="pid" property="pid"/>
+        <result column="order" property="order"/>
+        <result column="level" property="level"/>
+        <result column="level_id" property="levelid"/>
     </resultMap>
     <resultMap id="subResourceModel" type="ORM.POJO.Resource" extends="resourceModel">
         <collection property="childList" javaType="java.util.ArrayList" column="id" select="selectResourceList"
@@ -16,6 +22,9 @@
             <result column="name" property="name"/>
             <result column="url" property="url"/>
             <result column="pid" property="pid"/>
+            <result column="order" property="order"/>
+            <result column="level" property="level"/>
+            <result column="level_id" property="levelid"/>
         </collection>
     </resultMap>
     <select id="selectResourceList" resultMap="subResourceModel">
@@ -28,11 +37,22 @@
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into resource(name, url, pid, `order`)
-        values (#{name}, #{url}, #{pid}, #{order})
+        insert into resource (id, name, url, pid, `order`, level, level_id)
+        values (#{name}, #{url}, #{pid}, #{order},#{level},#{level_id})
     </insert>
     <select id="selectMaxOrder" resultType="Integer">
         select max(`order`)
         from resource;
+    </select>
+    <delete id="deleteOne" parameterType="ORM.POJO.Resource">
+        delete
+        from resource
+        where id = #{id}
+           or pid = #{id}
+    </delete>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="resourceModel">
+        select *
+        from resource
+        where id = #{id}
     </select>
 </mapper>

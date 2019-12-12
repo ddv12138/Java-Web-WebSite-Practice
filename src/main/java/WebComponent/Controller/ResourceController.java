@@ -1,21 +1,24 @@
 package WebComponent.Controller;
 
+import Exceptions.ResourceNotFoundException;
 import ORM.POJO.Resource;
 import WebComponent.Service.Services.ResourceService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Controller
 @RequestMapping("/resource")
 public class ResourceController {
-	@javax.annotation.Resource
 	ResourceService resourceService;
 
-	@RequestMapping(method = RequestMethod.GET)
+	public ResourceController(ResourceService resourceService) {
+		this.resourceService = resourceService;
+	}
+
+	@GetMapping
 	@ResponseBody
 	public List<Resource> selectResourceList(Integer pid) {
 		if (null == pid)
@@ -23,13 +26,21 @@ public class ResourceController {
 		return resourceService.selectResourceList(pid);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	@ResponseBody
-	public Resource selectResourceList(Resource menu) {
-		if (null == menu.getOrder()) {
-			menu.setOrder(resourceService.selectMaxOrder() + 1);
-		}
+	public Resource addResource(Resource menu) {
 		menu.setId(resourceService.addOne(menu));
 		return menu;
+	}
+
+	@DeleteMapping("/{id}")
+	@ResponseBody
+	public Resource deleteOne(@PathVariable @NotNull int id) throws ResourceNotFoundException {
+		Resource resource = resourceService.selectById(id);
+		if (resourceService.deleteOne(resource) > 0) {
+			return resource;
+		} else {
+			throw new ResourceNotFoundException("节点不存在");
+		}
 	}
 }

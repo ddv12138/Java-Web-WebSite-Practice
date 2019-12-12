@@ -3,9 +3,25 @@ package ORM.POJO;
 import java.util.List;
 
 public class Resource {
-	Integer id, pid, order;
-	String name, url;
+	Integer id, pid, order, level;
+	String name, url, levelid;
 	List<Resource> childList;
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public String getLevelid() {
+		return levelid;
+	}
+
+	public void setLevelid(String levelid) {
+		this.levelid = levelid;
+	}
 
 	public Integer getOrder() {
 		return order;

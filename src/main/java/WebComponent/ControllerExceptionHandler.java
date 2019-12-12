@@ -1,5 +1,6 @@
 package WebComponent;
 
+import Exceptions.ResourceNotFoundException;
 import Exceptions.UserAleadyExistsException;
 import Exceptions.WrongPasswordException;
 import org.springframework.ui.Model;
@@ -17,6 +18,12 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(WrongPasswordException.class)
 	public String handleWrongPassword(Model model) {
 		model.addAttribute("message", "密码错误");
+		return "message";
+	}
+
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public String handleResourceNotFound(Model model) {
+		model.addAttribute("message", "节点未找到");
 		return "message";
 	}
 }

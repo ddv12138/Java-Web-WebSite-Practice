@@ -10,4 +10,8 @@ public interface ResourceService {
 	int addOne(Resource resource);
 
 	int selectMaxOrder();
+
+	Resource selectById(Integer id);
+
+	int deleteOne(Resource resource);
 }
