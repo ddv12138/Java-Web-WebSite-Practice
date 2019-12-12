@@ -4,11 +4,13 @@ import ORM.POJO.ResourceTable;
 import ORM.Provider.ResourceSqlProvider;
 import ORM.Utils.Condition;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
+@Repository
 public interface ResourceTableMapper {
 	@SelectProvider(type = ResourceSqlProvider.class, method = "selectByExample")
 	ResourceTable[] selectByExample(ResourceTable res);

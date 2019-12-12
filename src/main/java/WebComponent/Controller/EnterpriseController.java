@@ -29,8 +29,8 @@ public class EnterpriseController {
 		String nameLike = (String) Optional.ofNullable(pars.get("name")).orElse("");
 		Map result = service.listEnterprise(offset, limit, nameLike);
 		HashMap res = new LinkedHashMap();
-        res.put("count", result.get("count"));
-        res.put("data", result.get("data"));
-        return new CommonResult(true, "sucess", res);
-    }
+		res.put("count", result.get("count"));
+		res.put("data", result.get("data"));
+		return new CommonResult(true, "sucess", res);
+	}
 }

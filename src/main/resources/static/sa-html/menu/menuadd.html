@@ -10,8 +10,11 @@
 			<el-form :label-position="labelPosition" :model="resource" :rules="rules" class="demo-ruleForm" id="form"
 			         label-width="100px"
 			         ref="resource">
-				<el-form-item label="菜单项父级id" prop="pid">
-					<el-input v-model="resource.pid"></el-input>
+				<el-form-item label="菜单项父级名称" prop="pid">
+					<el-input :disabled="true" v-model="resource.pname"></el-input>
+				</el-form-item>
+				<el-form-item label="菜单项父级id" prop="pid" style="display: none;">
+					<el-input :disabled="true" v-model="resource.pid"></el-input>
 				</el-form-item>
 				<el-form-item label="菜单项名称" prop="name">
 					<el-input v-model="resource.name"></el-input>
@@ -30,46 +33,53 @@
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
 	<script type="text/javascript">
-        let resource = new Vue({
-            el: "#form",
-            data: {
-                labelPosition: "top",
-                resource: {
-                    name: '',
-                    url: '',
-                    pid: ''
+        window.setData = function (data) {
+            if (!data) return;
+            let resource = new Vue({
+                el: "#form",
+                data: {
+                    labelPosition: "top",
+                    resource: {
+                        name: '',
+                        url: '',
+                        pid: data.id,
+                        pname: data.name
+                    },
+                    rules: {
+                        name: [
+                            {required: true, message: '请输入菜单项名称', trigger: 'blur'},
+                            {min: 0, max: 10, message: '长度不超过 10 个字符', trigger: 'blur'}
+                        ],
+                        url: [
+                            {required: true, message: '请输入菜单项URL(填写相对路径)', trigger: 'blur'}
+                        ],
+                        pid: [
+                            {required: true, message: '出现错误请重试', trigger: 'submit'}
+                        ],
+                        pname: [
+                            {required: true, message: '出现错误请重试', trigger: 'submit'}
+                        ]
+                    }
                 },
-                rules: {
-                    name: [
-                        {required: true, message: '请输入菜单项名称', trigger: 'blur'},
-                        {min: 0, max: 10, message: '长度不超过 10 个字符', trigger: 'blur'}
-                    ],
-                    url: [
-                        {required: true, message: '请输入菜单项URL(填写相对路径)', trigger: 'change'}
-                    ],
-                    pid: [
-                        {required: true, message: '出现错误请重试', trigger: 'submit'}
-                    ],
+                methods: {
+                    submitForm(formName) {
+                        this.$refs[formName].validate((valid) => {
+                            if (valid) {
+                                let data = JSON.stringify(this.$refs[formName].model);
+                                $.post("/resource", this.$refs[formName].model, function (data, status, xhr) {
+                                    console.log(data);
+                                }, "json");
+                            } else {
+                                alert('出现错误!');
+                                return false;
+                            }
+                        });
+                    },
+                    resetForm(formName) {
+                        this.$refs[formName].resetFields();
+                    }
                 }
-            },
-            methods: {
-                submitForm(formName) {
-                    this.$refs[formName].validate((valid) => {
-                        if (valid) {
-                            let data = JSON.stringify(this.$refs[formName].model);
-                            $.post("/resource", this.$refs[formName].model, function (data, status, xhr) {
-                                console.log(data);
-                            }, "json");
-                        } else {
-                            alert('出现错误!');
-                            return false;
-                        }
-                    });
-                },
-                resetForm(formName) {
-                    this.$refs[formName].resetFields();
-                }
-            }
-        })
+            })
+        }
 	</script>
 </html>

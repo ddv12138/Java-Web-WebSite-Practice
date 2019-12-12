@@ -7,14 +7,16 @@ import WebComponent.Service.Services.DistrictService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service("DistrictService")
 @Transactional
 public class DistrictServiceImpl implements DistrictService {
-	@Resource
 	DistrictMapper mapper;
+
+	public DistrictServiceImpl(DistrictMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	public District selectByName(String name) {
 		return mapper.selectByName(name);

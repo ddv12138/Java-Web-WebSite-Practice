@@ -11,8 +11,11 @@ import java.util.List;
 @Service("ResourceService")
 @Transactional
 public class ResourceServiceImpl implements ResourceService {
-	@javax.annotation.Resource
 	ResourceMapper resourceMapper;
+
+	public ResourceServiceImpl(ResourceMapper resourceMapper) {
+		this.resourceMapper = resourceMapper;
+	}
 
 	public List<Resource> selectResourceList(Integer pid) {
 		return resourceMapper.selectResourceList(pid);

@@ -11,7 +11,6 @@
 			<el-tree :data="data"
 			         :expand-on-click-node="false"
 			         default-expand-all
-			         highlight-current=true
 			         id="menutree"
 			         node-key="id">
 				<span class="custom-tree-node" slot-scope="{ node, data }">
@@ -55,14 +54,11 @@
             }
         };
         $.get("/resource", function (arg) {
-            let docu = {
-                id: '11',
-                name: '文档说明',
-                icon: 'el-icon-document-remove',
-                url: 'sa-html/sa-doc.html',
-                order: 3
-            };
-            arg.push(docu);
+            if (!arg || !arg.state) {
+                return;
+            } else {
+                arg = arg.data;
+            }
             parseDataTooTree(arg);
             let data = arg;
             let Tree = {
@@ -73,6 +69,7 @@
                 },
                 methods: {
                     append(data) {
+                        console.log(data);
                         layer.open({
                             type: 2,
                             title: "新增菜单",
@@ -90,6 +87,13 @@
                                     let title_height = $(this).find('.layui-layer-title').height();
                                     $(this).find('iframe').css('height', (height - title_height) + 'px');
                                 })
+                            },
+                            success: function (layero, index) {
+                                let body = layer.getChildFrame('body', index);
+                                console.log(body);
+                                let iframeWin = window[layero.find('iframe')[0]['name']];
+                                iframeWin.setData(data);
+                                console.log(iframeWin)
                             }
                         });
                         // const newChild = {id: id++, label: 'testtest', children: []};

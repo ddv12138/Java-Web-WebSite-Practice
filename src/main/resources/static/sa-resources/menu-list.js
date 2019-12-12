@@ -1,4 +1,9 @@
 $.get("/resource", function (arg) {
+	if (!arg || !arg.state) {
+		return;
+	} else {
+		arg = arg.data;
+	}
 	let parseDataTooTree = function (arg) {
 		for (let i = 0; i < arg.length; i++) {
 			arg[i].icon = 'el-icon-document-remove';
@@ -13,14 +18,6 @@ $.get("/resource", function (arg) {
 			}
 		}
 	};
-	let docu = {
-		id: '11',
-		name: '文档说明',
-		icon: 'el-icon-document-remove',
-		url: 'sa-html/sa-doc.html',
-		order: 3
-	};
-	arg.push(docu);
 	parseDataTooTree(arg);
 	console.log(arg);
 	window.menuList = arg;

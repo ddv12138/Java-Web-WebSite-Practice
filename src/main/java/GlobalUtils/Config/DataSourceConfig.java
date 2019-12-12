@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
@@ -14,6 +15,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 
 @MapperScan("ORM.Mapper")
+@ComponentScan("ORM.Mapper")
 @Configuration
 public class DataSourceConfig {
 	Environment env;

@@ -60,8 +60,6 @@ public class WebConfig implements WebMvcConfigurer {
 	/**
 	 * 这里有个坑，SpringBoot2 必须重写该方法，否则静态资源无法访问
 	 * 参照 https://blog.csdn.net/zhang_Red/article/details/81739005
-	 *
-	 * @param registry
 	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

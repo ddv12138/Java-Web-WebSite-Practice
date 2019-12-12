@@ -11,13 +11,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-
 @Service(value = "UserService")
 @Transactional
 public class UserServiceImpl implements UserService {
-	@Resource
 	UserMapper mapper;
+
+	public UserServiceImpl(UserMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	public int saveOne(User user) throws UserAleadyExistsException {
 		if (null != mapper.selectByName(user.getName())) {
@@ -40,9 +41,8 @@ public class UserServiceImpl implements UserService {
 		User user = mapper.selectByName(username);
 		if (null == user)
 			throw new UsernameNotFoundException("用户不存在");
-		org.springframework.security.core.userdetails.User securityUser = new org.springframework.security.core.userdetails.User
+		return new org.springframework.security.core.userdetails.User
 				(user.getName(), user.getPassword(),
 						AuthorityUtils.createAuthorityList("spittr"));
-		return securityUser;
 	}
 }

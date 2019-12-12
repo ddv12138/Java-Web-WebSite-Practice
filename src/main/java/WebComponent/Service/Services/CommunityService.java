@@ -5,6 +5,7 @@ import ORM.POJO.Community;
 import ORM.POJO.District;
 
 import java.util.List;
+
 public interface CommunityService {
 
 	Community selectByName(String name);

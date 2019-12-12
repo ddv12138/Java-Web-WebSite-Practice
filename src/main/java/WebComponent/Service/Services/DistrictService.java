@@ -4,6 +4,7 @@ import ORM.POJO.City;
 import ORM.POJO.District;
 
 import java.util.List;
+
 public interface DistrictService {
 
 	District selectByName(String name);

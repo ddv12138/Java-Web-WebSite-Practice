@@ -3,10 +3,12 @@ package ORM.Mapper;
 import ORM.POJO.Spittr;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface SpittrMapper {
 	List<Spittr> selectLatest(int count);
 

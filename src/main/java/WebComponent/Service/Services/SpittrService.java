@@ -3,6 +3,7 @@ package WebComponent.Service.Services;
 import ORM.POJO.Spittr;
 
 import java.util.List;
+
 public interface SpittrService {
 
 	List<Spittr> selectLatest(int count);

@@ -8,14 +8,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Optional;
 
 @Service("ResourceTableService")
 @Transactional
 public class ResourceTableServiceImpl implements ResourceTableService {
-	@Resource
-	private ResourceTableMapper mapper;
+	ResourceTableMapper mapper;
+
+	public ResourceTableServiceImpl(ResourceTableMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	public int insertNodeByParent(String pid, String name, String cnname, String istopstr, String orderstr, String urlpath, String haschildstr) {
 		Optional<Integer> pnodeid = Optional.ofNullable(pid).map(id -> Integer.parseInt(pid));

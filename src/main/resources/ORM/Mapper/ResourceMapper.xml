@@ -25,6 +25,9 @@
         order by `order` desc
     </select>
     <insert id="addOne" parameterType="ORM.POJO.Resource" useGeneratedKeys="true">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into resource(name, url, pid, `order`)
         values (#{name}, #{url}, #{pid}, #{order})
     </insert>

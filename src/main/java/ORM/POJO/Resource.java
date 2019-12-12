@@ -7,14 +7,6 @@ public class Resource {
 	String name, url;
 	List<Resource> childList;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
-
 	public Integer getOrder() {
 		return order;
 	}
@@ -35,12 +27,20 @@ public class Resource {
 		return id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	public int getPid() {
 		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
 	}
 
 	public void setPid(int pid) {

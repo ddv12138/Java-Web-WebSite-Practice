@@ -4,10 +4,12 @@ import ORM.POJO.Enterprise;
 import ORM.POJO.EnterpriseExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface EnterpriseMapper {
 	long countByExample(EnterpriseExample example);
 

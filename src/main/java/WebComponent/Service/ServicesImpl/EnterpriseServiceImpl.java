@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +14,11 @@ import java.util.Map;
 @Service("EnterpriseService")
 @Transactional
 public class EnterpriseServiceImpl implements EnterpriseService {
-	@Resource
 	EnterpriseMapper mapper;
+
+	public EnterpriseServiceImpl(EnterpriseMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	public Map<String, Object> listEnterprise(long offset, int limit, String nameLike) {
 		EnterpriseExample example = new EnterpriseExample();

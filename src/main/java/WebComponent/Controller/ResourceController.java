@@ -25,10 +25,11 @@ public class ResourceController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public boolean selectResourceList(Resource menu) {
+	public Resource selectResourceList(Resource menu) {
 		if (null == menu.getOrder()) {
 			menu.setOrder(resourceService.selectMaxOrder() + 1);
 		}
-		return resourceService.addOne(menu) > 0;
+		menu.setId(resourceService.addOne(menu));
+		return menu;
 	}
 }

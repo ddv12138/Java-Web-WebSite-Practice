@@ -8,14 +8,16 @@ import WebComponent.Service.Services.CommunityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service("CommunityService")
 @Transactional
 public class CommunityServiceImpl implements CommunityService {
-	@Resource
 	CommunityMapper mapper;
+
+	public CommunityServiceImpl(CommunityMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	public Community selectByName(String name) {
 		return mapper.selectByName(name);
