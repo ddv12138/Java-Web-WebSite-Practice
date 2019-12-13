@@ -1,7 +1,6 @@
 import GlobalUtils.Application;
 import ORM.POJO.Resource;
 import ORM.POJO.User;
-import com.alibaba.fastjson.JSON;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +49,7 @@ public class ControllerTest {
 
 	@Test
 	public void deleteResource() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.delete("/resource/8")
+		mvc.perform(MockMvcRequestBuilders.delete("/resource/32")
 				.accept(MediaType.APPLICATION_JSON)
 				.session(session)
 		)
@@ -63,10 +62,14 @@ public class ControllerTest {
 		Resource resource = new Resource();
 		resource.setName("test");
 		resource.setUrl("url");
-		resource.setPid(5);
+		resource.setPid(2);
 		mvc.perform(MockMvcRequestBuilders.post("/resource")
 				.accept(MediaType.APPLICATION_JSON)
-				.session(session).content(JSON.toJSONString(resource))
+				.session(session)
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("name", "test")
+				.param("url", "url")
+				.param("pid", "2")
 		)
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());

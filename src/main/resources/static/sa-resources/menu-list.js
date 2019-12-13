@@ -1,4 +1,4 @@
-$.get("/resource", function (arg) {
+$.get("/resource?pid=0", function (arg) {
 	if (!arg || !arg.state) {
 		return;
 	} else {

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Resource {
 	Integer id, pid, order, level;
-	String name, url, levelid;
+	String name, url, levelId;
 	List<Resource> childList;
 
 	public Integer getLevel() {
@@ -15,12 +15,12 @@ public class Resource {
 		this.level = level;
 	}
 
-	public String getLevelid() {
-		return levelid;
+	public String getLevelId() {
+		return levelId;
 	}
 
-	public void setLevelid(String levelid) {
-		this.levelid = levelid;
+	public void setLevelId(String levelId) {
+		this.levelId = levelId;
 	}
 
 	public Integer getOrder() {
@@ -39,7 +39,7 @@ public class Resource {
 		this.childList = childList;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -47,19 +47,11 @@ public class Resource {
 		this.id = id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getPid() {
+	public Integer getPid() {
 		return pid;
 	}
 
 	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
-
-	public void setPid(int pid) {
 		this.pid = pid;
 	}
 

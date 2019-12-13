@@ -7,7 +7,6 @@
 	</head>
 	<body>
 		<div class="block">
-			<p>菜单树</p>
 			<el-tree :data="data"
 			         :expand-on-click-node="false"
 			         default-expand-all
@@ -38,7 +37,6 @@
 	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script type="module">
-        let id = 1000;
         let parseDataTooTree = function (arg) {
             for (let i = 0; i < arg.length; i++) {
                 arg[i].icon = 'el-icon-document-remove';
@@ -53,59 +51,71 @@
                 }
             }
         };
-        $.get("/resource", function (arg) {
-            if (!arg || !arg.state) {
-                return;
-            } else {
-                arg = arg.data;
-            }
-            parseDataTooTree(arg);
-            let data = arg;
-            let Tree = {
-                data() {
-                    return {
-                        data: JSON.parse(JSON.stringify(data)),
-                    }
-                },
-                methods: {
-                    append(data) {
-                        console.log(data);
-                        layer.open({
-                            type: 2,
-                            title: "新增菜单",
-                            moveOut: true, // 是否可拖动到外面
-                            maxmin: true, // 显示最大化按钮
-                            shadeClose: false,
-                            shade: 0,
-                            area: ['80%', '80%'],
-                            content: "/sa-html/menu/menuadd.html",
-                            // 解决拉伸或者最大化的时候，iframe高度不能自适应的问题
-                            resizing: function (layero) {
-                                //console.log($('.layui-layer.layui-layer-iframe').length);
-                                $('.layui-layer-iframe').each(function () {
-                                    let height = $(this).height();
-                                    let title_height = $(this).find('.layui-layer-title').height();
-                                    $(this).find('iframe').css('height', (height - title_height) + 'px');
-                                })
-                            },
-                            success: function (layero, index) {
-                                let body = layer.getChildFrame('body', index);
-                                let iframeWin = window[layero.find('iframe')[0]['name']];
-                                iframeWin.setData(data);
-                            }
-                        });
-                    },
-                    remove(node, data) {
-                        const parent = node.parent;
-                        const children = parent.data.children || parent.data;
-                        const index = children.findIndex(d => d.id === data.id);
-                        children.splice(index, 1);
-                    },
+        window.refreshTreeData = function () {
+            $.get("/resource", function (arg) {
+                if (!arg || !arg.state) {
+                    return;
+                } else {
+                    arg = arg.data;
                 }
-            };
-            let Ctor = Vue.extend(Tree);
-            new Ctor().$mount('#menutree');
-        });
+                parseDataTooTree(arg);
+                let data = arg;
+                window.treeData = data;
+                window.treeData = JSON.parse(JSON.stringify(window.treeData));
+            });
+        };
+        window.loadTreeData = function () {
+            $.get("/resource", function (arg) {
+                if (!arg || !arg.state) {
+                    return;
+                } else {
+                    arg = arg.data;
+                }
+                parseDataTooTree(arg);
+                let data = arg;
+                window.treeData = data;
+                const treevm = new Vue({
+                    el: '#menutree',
+                    data: {
+                        data: JSON.parse(JSON.stringify(window.treeData))
+                    },
+                    methods: {
+                        append(data) {
+                            layer.open({
+                                type: 2,
+                                title: "新增菜单",
+                                moveOut: true, // 是否可拖动到外面
+                                maxmin: true, // 显示最大化按钮
+                                shadeClose: false,
+                                shade: 0,
+                                area: ['80%', '80%'],
+                                content: "/sa-html/menu/menuadd.html",
+                                // 解决拉伸或者最大化的时候，iframe高度不能自适应的问题
+                                resizing: function (layero) {
+                                    //console.log($('.layui-layer.layui-layer-iframe').length);
+                                    $('.layui-layer-iframe').each(function () {
+                                        let height = $(this).height();
+                                        let title_height = $(this).find('.layui-layer-title').height();
+                                        $(this).find('iframe').css('height', (height - title_height) + 'px');
+                                    })
+                                },
+                                success: function (layero, index) {
+                                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                                    iframeWin.setData(data);
+                                }
+                            });
+                        },
+                        remove(node, data) {
+                            // const parent = node.parent;
+                            // const children = parent.data.children || parent.data;
+                            // const index = children.findIndex(d => d.id === data.id);
+                            // children.splice(index, 1);
+                        },
+                    }
+                });
+            });
+        };
+        window.loadTreeData();
 	</script>
 	<style>
 		.custom-tree-node {
