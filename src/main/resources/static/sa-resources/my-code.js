@@ -58,7 +58,7 @@ sp.dropList = [		// 头像点击处可操作的选项
 				shade: 0.8,
 				area: ['70%', '80%'],
 				resize: true,
-				content: 'login.html'
+				content: '/user/login'
 			});
 		}
 	},
@@ -69,7 +69,7 @@ sp.dropList = [		// 头像点击处可操作的选项
 			// location="login.html";
 			layer.confirm('退出登录？', function (res) {
 				layer.alert('注销成功', function () {
-					location.href = "login.html";
+					location.href = "/user/logout";
 				})
 			});
 		}
@@ -78,12 +78,12 @@ sp.dropList = [		// 头像点击处可操作的选项
 
 
 // ================================= 示例：初始化模板(必须调用)  =================================
-sa_admin.init();
+// sa_admin.init();
 // 或者以下方式，增加配置项
-// sa_admin.init({
-// 	themeDefault: '1',	// 默认的主题，可选值：1、2、3、4
-// 	switchDefault: '1',	// 默认的切换动画，可选值：fade、slide、cube、coverflow、flip
-// });
+sa_admin.init({
+	themeDefault: '1',	// 默认的主题，可选值：1、2、3、4
+	switchDefault: '4',	// 默认的切换动画，可选值：fade、slide、cube、coverflow、flip
+});
 
 
 

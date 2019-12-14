@@ -3,7 +3,7 @@
 <head>
 	<title></title>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-	<link href="sa-resources/login.css" rel="stylesheet">
+	<link href="/sa-resources/login.css" rel="stylesheet">
 </head>
 <body>
 <div style="height: 80px;"></div>
@@ -28,7 +28,7 @@
 						<div class="uinArea" id="uinArea">
 							<label class="input-tips" for="u">帐号：</label>
 							<div class="inputOuter" id="uArea">
-								<input class="inputstyle" id="u" name="key" type="text"/>
+								<input class="inputstyle" id="u" name="username" type="text"/>
 							</div>
 						</div>
 						<div class="pwdArea" id="pwdArea">
@@ -38,7 +38,7 @@
 							</div>
 						</div>
 						<div style="padding-left:50px;margin-top:20px;">
-							<input class="button_blue login-btn" style="width: 208px;" type="button" value="登 录"/>
+							<input class="button_blue login-btn" style="width: 208px;" type="submit" value="登 录"/>
 						</div>
 					</form>
 				</div>
@@ -61,36 +61,13 @@
 
     // 你所有要改的代码全在这里   ↓↓↓↓↓
 
-    var page_title = 'SA-后台模板-登录';		// 页面标题
+    var page_title = 'ddvudo-登录';		// 页面标题
     var two_title = '操作帮助';			// 第二个卡片的标题(最好四个字)
-    var key = 'admin';	// 默认的key
+    var username = 'admin';	// 默认的key
     var password = 'admin';	// 默认的password
     // 第二个模板的内容
-    // var tow_content = '输入账号和密码，点击按钮登录即可';
-    var tow_content = '本页面参考于此模板：<br/> <a href="http://www.jq22.com/demo/jQuery-dl20160111/" target="_blank">http://www.jq22.com/yanshi5518</a>';
-
-    $('.login-btn').click(function () {
-        var p = {
-            key: $('[name=key]').val(),
-            password: $('[name=password]').val()
-        };
-
-        if (p.key == '' || p.password == '') {
-            return layer.msg('请输入任意内容即可');
-        }
-
-        layer.msg("欢迎你，" + p.key);
-        layer.msg("欢迎你，" + p.key);
-        setTimeout(function () {
-            if (parent == window) {
-                location.href = "index.html";
-            } else {
-                parent.layer.closeAll('iframe');
-                parent.location.reload();
-            }
-        }, 500);
-
-    });
+    var tow_content = '输入账号和密码，点击按钮登录即可';
+    // var tow_content = '本页面参考于此模板：<br/> <a href="http://www.jq22.com/demo/jQuery-dl20160111/" target="_blank">http://www.jq22.com/yanshi5518</a>';
 
     // 你所有要改的代码全在这里   ↑↑↑↑↑
 
@@ -98,7 +75,7 @@
     // 替换属性
     $('.page-title').html(page_title);
     $('title').html(page_title);
-    $('[name=key]').val(key);
+    $('[name=username]').val(username);
     $('[name=password]').val(password);
     $('.two-title').html(two_title);
     $('.tow-content').html(tow_content);

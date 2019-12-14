@@ -45,16 +45,11 @@
         from resource;
     </select>
     <delete id="deleteOne" parameterType="ORM.POJO.Resource">
-        select 1
-        #         delete
-#         from resource
-#         where id = #{id}
-#            or pid = #{id};
-#
-#         delete
-#         from resource
-#         where not EXISTS(select id From (select id from resource) b where b.id = resource.pid)
-#           and resource.pid != -1;
+        delete
+        From resource
+        where (level_id like CONCAT(SUBSTR((select level_id from (select level_id from resource where id = #{id}) a), 1,
+                                           (select level * 2 from (select level from resource where id = #{id}) b)),
+                                    '%'))
     </delete>
     <select id="selectById" parameterType="java.lang.Integer" resultMap="resourceModel">
         select *
