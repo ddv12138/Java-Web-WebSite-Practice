@@ -1,5 +1,4 @@
 import GlobalUtils.Application;
-import ORM.POJO.Resource;
 import ORM.POJO.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,10 +58,6 @@ public class ControllerTest {
 
 	@Test
 	public void addResource() throws Exception {
-		Resource resource = new Resource();
-		resource.setName("test");
-		resource.setUrl("url");
-		resource.setPid(2);
 		mvc.perform(MockMvcRequestBuilders.post("/resource")
 				.accept(MediaType.APPLICATION_JSON)
 				.session(session)

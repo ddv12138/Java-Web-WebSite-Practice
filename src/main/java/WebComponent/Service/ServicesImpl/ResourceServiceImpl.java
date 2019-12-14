@@ -31,7 +31,7 @@ public class ResourceServiceImpl implements ResourceService {
 		Resource parent = resourceMapper.selectById(resource.getPid());
 		Assert.notNull(parent, "父节点不存在");
 		resource.setLevel(parent.getLevel() + 1);
-		String plevel = parent.getLevelId();
+		String plevel = resourceMapper.selectMaxLastLevel(parent);
 		char[] plevelarr = plevel.toCharArray();
 		int low = plevelarr[parent.getLevel() * 2 + 1] - '0';
 		if (low < 9) {
@@ -47,6 +47,7 @@ public class ResourceServiceImpl implements ResourceService {
 			}
 		}
 		plevel = new String(plevelarr);
+		resource.setLevelId(plevel);
 		return resourceMapper.addOne(resource);
 	}
 

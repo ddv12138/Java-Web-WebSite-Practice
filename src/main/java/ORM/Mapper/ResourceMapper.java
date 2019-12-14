@@ -19,4 +19,6 @@ public interface ResourceMapper {
 	int deleteOne(Resource resource);
 
 	Resource selectById(int id);
+
+	String selectMaxLastLevel(Resource resource);
 }
