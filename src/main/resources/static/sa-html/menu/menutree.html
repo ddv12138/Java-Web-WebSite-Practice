@@ -9,8 +9,8 @@
 		<div class="block">
 			<el-tree :data="data"
 			         :expand-on-click-node="false"
-			         default-expand-all
 			         id="menutree"
+			         default-expand-all
 			         node-key="id">
 				<span class="custom-tree-node" slot-scope="{ node, data }">
 					<span>{{ node.label }}</span>
@@ -59,9 +59,8 @@
                     arg = arg.data;
                 }
                 parseDataTooTree(arg);
-                let data = arg;
-                window.treeData = data;
-                window.treeData = JSON.parse(JSON.stringify(window.treeData));
+                window.treeData = arg;
+                Vue.set(window.treevm, "data", arg);
             });
         };
         window.loadTreeData = function () {
@@ -72,12 +71,12 @@
                     arg = arg.data;
                 }
                 parseDataTooTree(arg);
-                let data = arg;
-                window.treeData = data;
-                const treevm = new Vue({
+                window.treeData = arg;
+                console.log(window.treeData);
+                window.treevm = new Vue({
                     el: '#menutree',
                     data: {
-                        data: JSON.parse(JSON.stringify(window.treeData))
+                        data: window.treeData
                     },
                     methods: {
                         append(data) {
@@ -106,14 +105,18 @@
                             });
                         },
                         remove(node, data) {
-                            $.ajax({
-                                url: '/resource/' + data.id,
-                                type: 'DELETE',
-                                success: function (result) {
-                                    console.log(result);
-                                    refreshTreeData();
+                            layer.confirm("该操作将会删除该节点及其所有子节点，确认要删除吗？", function (arg) {
+                                if (arg === 1) {
+                                    $.ajax({
+                                        url: '/resource/' + data.id,
+                                        type: 'DELETE',
+                                        success: function (result) {
+                                            layer.alert("删除成功");
+                                            refreshTreeData();
+                                        }
+                                    });
                                 }
-                            });
+                            })
                         },
                     }
                 });

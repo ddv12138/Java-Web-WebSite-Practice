@@ -19,7 +19,6 @@ $.get("/resource?pid=0", function (arg) {
 		}
 	};
 	parseDataTooTree(arg);
-	console.log(arg);
 	window.menuList = arg;
 	sp.setMenuList(arg);
 });
