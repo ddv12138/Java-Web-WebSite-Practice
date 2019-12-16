@@ -31,17 +31,17 @@
         select *
         From resource
         where pid = #{pid}
-        order by `order`
+        order by "order"
     </select>
     <insert id="addOne" parameterType="ORM.POJO.Resource" useGeneratedKeys="true">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into resource ( name, url, pid,`order`,level,level_id)
+        insert into resource ( name, url, pid,"order",level,level_id)
         values (#{name}, #{url}, #{pid}, #{order},#{level},#{levelId})
     </insert>
     <select id="selectMaxOrder" resultType="Integer">
-        select max(`order`)
+        select max("order")
         from resource;
     </select>
     <delete id="deleteOne" parameterType="ORM.POJO.Resource">
