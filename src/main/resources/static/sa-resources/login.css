@@ -10,6 +10,7 @@ body {
     font-size: 12px;
     margin: 0;
     background-image: url(admin-login-bg.jpg);
+    background-image: url(https://api.dujin.org/bing/1920.php);
     /* background-size: 100% 100%; */
     background-repeat: no-repeat;
     background-position: center top;

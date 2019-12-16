@@ -5,9 +5,13 @@ import Exceptions.WrongPasswordException;
 import GlobalUtils.Global;
 import ORM.POJO.User;
 import WebComponent.Service.Services.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
@@ -21,26 +25,26 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	@GetMapping("/signup")
 	public String showUser(Map model) {
 		model.put("user", new User());
 		return "userreg";
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@PostMapping("/signup")
 	public String addUser(User user, RedirectAttributes model) throws UserAleadyExistsException {
 		model.addFlashAttribute("user", user);
 		userService.saveOne(user);
 		return "redirect:/user/login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@GetMapping("/login")
 	public String showLogin(Map model) {
 		model.put("user", new User());
 		return "login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping("/login")
 	public String login(User user, RedirectAttributes model) throws WrongPasswordException {
 		String currPassword = user.getPassword();
 		user = userService.selectByName(user.getName());
@@ -49,5 +53,11 @@ public class UserController {
 		} else {
 			throw new WrongPasswordException();
 		}
+	}
+
+	@GetMapping("/details")
+	@ResponseBody
+	public UserDetails getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+		return userDetails;
 	}
 }

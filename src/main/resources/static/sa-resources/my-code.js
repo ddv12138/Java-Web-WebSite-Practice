@@ -38,30 +38,42 @@ sp.user = {
 	username: 'root',	// 昵称 
 	avatar: 'sa-resources/admin-logo.png'	// 头像地址  
 };
+$.get("/user/details", function (res) {
+	console.log(res);
+	if (res.state) {
+		let data = res.data;
+		if (data.accountNonExpired && data.accountNonLocked && data.credentialsNonExpired && data.enabled) {
+			sp.user = {
+				username: data.username,	// 昵称
+				avatar: 'sa-resources/admin-logo.png'	// 头像地址
+			};
+		}
+	}
+});
 
 
 // ================================= 示例：设置登录后的头像处，下拉可以出现的选项  =================================
 sp.dropList = [		// 头像点击处可操作的选项
-	{
-		name: '我的资料',
-		click: function () {
-			sp.$message('点击了我的资料，你可以参照文档重写此函数');
-		}
-	},
-	{
-		name: '切换账号',
-		click: function () {
-			layer.open({
-				type: 2,
-				title: '登录',
-				shadeClose: true,
-				shade: 0.8,
-				area: ['70%', '80%'],
-				resize: true,
-				content: '/user/login'
-			});
-		}
-	},
+	// {
+	// 	name: '我的资料',
+	// 	click: function () {
+	// 		sp.$message('点击了我的资料，你可以参照文档重写此函数');
+	// 	}
+	// },
+	// {
+	// 	name: '切换账号',
+	// 	click: function () {
+	// 		layer.open({
+	// 			type: 2,
+	// 			title: '登录',
+	// 			shadeClose: true,
+	// 			shade: 0.8,
+	// 			area: ['70%', '80%'],
+	// 			resize: true,
+	// 			content: '/user/login'
+	// 		});
+	// 	}
+	// },
 	{
 		name: '退出登录',
 		click: function () {
