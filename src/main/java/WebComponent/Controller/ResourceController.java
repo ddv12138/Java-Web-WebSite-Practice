@@ -22,7 +22,7 @@ public class ResourceController {
 	@ResponseBody
 	public List<Resource> selectResourceList(Integer pid) {
 		if (null == pid)
-			pid = 1;
+			pid = 0;
 		return resourceService.selectResourceList(pid);
 	}
 
