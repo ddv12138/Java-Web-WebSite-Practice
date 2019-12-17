@@ -34,10 +34,6 @@ sp.icon_url = 'sa-resources/admin-logo.png';    // 设置icon图标地址   默�
 
 // ================================= 示例：设置user信息 =================================
 // 用户登录后，右上角可直接显示用户的头像和昵称
-sp.user = {
-	username: 'root',	// 昵称 
-	avatar: 'sa-resources/admin-logo.png'	// 头像地址  
-};
 $.get("/user/details", function (res) {
 	console.log(res);
 	if (res.state) {

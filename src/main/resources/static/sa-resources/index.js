@@ -1,6 +1,6 @@
 // 首页 
 var homePage = {
-	id: '2',	// 唯一标识
+	id: '3',	// 唯一标识
 	name: '首页',
 	url: 'main.html',	// 页面地址 
 	hide_close: true	// 隐藏关闭键
@@ -16,7 +16,7 @@ var sa_admin = new Vue({
 		icon_url: '',	// icon地址 
 		is_log: true,				// 是否打印日志 
 		github_url: 'https://github.com/click33/sa-admin',	// github地址 
-		default_active: '0',	// 默认的高亮菜单id
+		default_active: '3',	// 默认的高亮菜单id
 		default_openeds: [],	// 默认的打开数组 
 		unique_opened: true,		// 是否保持只打开一个
 		menuList: [],		// 菜单集合 
@@ -429,7 +429,7 @@ var sa_admin = new Vue({
 
 
 			this.nativePage = page;
-			this.default_active = page.id + '';	// 左边自动关联, 如果左边没有，则无效果 
+			this.default_active = page.id + '';	// 左边自动关联, 如果左边没有，则无效果
 
 
 			// 归位一下
