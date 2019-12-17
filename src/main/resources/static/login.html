@@ -22,7 +22,8 @@
 		<div class="web_login" id="web_login">
 			<div class="login-box">
 				<div class="login_form">
-					<form accept-charset="utf-8" class="loginForm" id="login_form" method="post" name="loginform">
+					<form accept-charset="utf-8" action="/user/login" class="loginForm" id="login_form" method="post"
+					      name="loginform">
 						<input name="did" type="hidden" value="0"/>
 						<input name="to" type="hidden" value="log"/>
 						<div class="uinArea" id="uinArea">
@@ -70,7 +71,20 @@
     // var tow_content = '本页面参考于此模板：<br/> <a href="http://www.jq22.com/demo/jQuery-dl20160111/" target="_blank">http://www.jq22.com/yanshi5518</a>';
 
     // 你所有要改的代码全在这里   ↑↑↑↑↑
+    // $('.login-btn').click(function () {
+    //     $.post("/user/login",$("#login_form").serialize(),function(arg){
+    //         console.log(arg);
+    //     })
+    // setTimeout(function () {
+    //     if (parent == window) {
+    //         location.href = "index.html";
+    //     } else {
+    //         parent.layer.closeAll('iframe');
+    //         parent.location.reload();
+    //     }
+    // }, 500);
 
+    // });
 
     // 替换属性
     $('.page-title').html(page_title);

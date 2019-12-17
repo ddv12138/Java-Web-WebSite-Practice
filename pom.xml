@@ -16,10 +16,6 @@
         <fastjson.version>1.2.58</fastjson.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>org.thymeleaf.extras</groupId>-->
         <!--            <artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
@@ -28,12 +24,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

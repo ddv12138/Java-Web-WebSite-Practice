@@ -30,17 +30,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.formLogin()
 				//指定登录页的路径
-				.loginPage("/user/login")
+				.loginPage("/login.html")
 				.usernameParameter("username")
 				.passwordParameter("password")
 				//指定自定义form表单请求的路径
 				.loginProcessingUrl("/user/login")
-//				.failureUrl("/spittr/message?message=")
-				.defaultSuccessUrl("/")
+				.failureUrl("/sa-html/cfg/500.html")
+				.defaultSuccessUrl("/index.html")
 				//必须允许所有用户访问我们的登录页（例如未验证的用户，否则验证流程就会进入死循环）
 				//这个formLogin().permitAll()方法允许所有用户基于表单登录访问/login这个page。
 				.and().logout().logoutUrl("/user/logout")
-				.logoutSuccessUrl("/user/login")
+				.logoutSuccessUrl("/login.html")
 				.permitAll();
 		//默认都会产生一个hiden标签 里面有安全相关的验证 防止请求伪造 这边我们暂时不需要 可禁用掉
 		http.csrf().disable();
