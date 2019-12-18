@@ -10,11 +10,14 @@
 			<el-form :label-position="labelPosition" :model="resource" :rules="rules" class="demo-ruleForm" id="form"
 			         label-width="100px"
 			         ref="resource">
-				<el-form-item label="菜单项父级名称" prop="pid">
+				<el-form-item label="菜单项父级名称" prop="pid" v-if="!isModify">
 					<el-input :disabled="true" v-model="resource.pname"></el-input>
 				</el-form-item>
-				<el-form-item label="菜单项父级id" prop="pid" style="display: none;">
+				<el-form-item label="菜单项父级id" prop="pid" style="display: none;" v-if="!isModify">
 					<el-input :disabled="true" v-model="resource.pid"></el-input>
+				</el-form-item>
+				<el-form-item label="菜单项id" prop="id" style="display: none;" v-if="isModify">
+					<el-input :disabled="true" v-model="resource.id"></el-input>
 				</el-form-item>
 				<el-form-item label="菜单项名称" prop="name">
 					<el-input v-model="resource.name"></el-input>
@@ -34,18 +37,25 @@
 	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script type="text/javascript">
-        window.setData = function (data) {
+        window.setData = function (data, modify) {
+            let formdata = {
+                name: data.name,
+                url: data.url,
+                id: data.id
+            };
             if (!data) return;
+            if (!modify) {
+                formdata = {
+                    pid: data.id,
+                    pname: data.name,
+                };
+            }
             let resource = new Vue({
                 el: "#form",
                 data: {
+                    isModify: modify,
                     labelPosition: "top",
-                    resource: {
-                        name: '',
-                        url: '',
-                        pid: data.id,
-                        pname: data.name
-                    },
+                    resource: formdata,
                     rules: {
                         name: [
                             {required: true, message: '请输入菜单项名称', trigger: 'blur'},
@@ -67,17 +77,28 @@
                         this.$refs[formName].validate((valid) => {
                             if (valid) {
                                 let data = JSON.stringify(this.$refs[formName].model);
-                                $.post("/resource", this.$refs[formName].model, function (data, status, xhr) {
-                                    if (data && data.state) {
-                                        layer.alert('添加成功', {icon: 1}, function (index) {
-                                            layer.close(index);
-                                            let curr_index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                                            parent.layer.close(curr_index); //再执行关闭
-                                            console.log(parent);
-                                            parent.refreshTreeData();
-                                        });
-                                    }
-                                }, "json");
+                                if (!this.isModify) {
+                                    $.post("/resource", this.$refs[formName].model, function (data, status, xhr) {
+                                        if (data && data.state) {
+                                            layer.alert('添加成功', {icon: 1}, function (index) {
+                                                layer.close(index);
+                                                let curr_index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                                parent.layer.close(curr_index); //再执行关闭
+                                                console.log(parent);
+                                                parent.refreshTreeData();
+                                            });
+                                        }
+                                    }, "json");
+                                } else {
+                                    $.ajax({
+                                        url: '/resource',
+                                        type: 'PUT',
+                                        data: this.$refs[formName].model,
+                                        complete: function (response) {
+                                            console.log(response);
+                                        }
+                                    });
+                                }
                             } else {
                                 alert('出现错误!');
                                 return false;

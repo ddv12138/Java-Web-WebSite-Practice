@@ -21,4 +21,6 @@ public interface ResourceMapper {
 	Resource selectById(int id);
 
 	String selectMaxLastLevel(Resource resource);
+
+	int updateOne(Resource resource);
 }

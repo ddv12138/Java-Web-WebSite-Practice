@@ -14,4 +14,6 @@ public interface ResourceService {
 	Resource selectById(Integer id);
 
 	int deleteOne(Resource resource);
+
+	int updateOne(Resource resource);
 }

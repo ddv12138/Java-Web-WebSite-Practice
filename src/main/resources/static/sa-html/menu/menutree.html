@@ -16,6 +16,12 @@
 					<span>{{ node.label }}</span>
 					<span>
 						<el-button
+								@click="() => modify(node, data)"
+								size="mini"
+								type="text">
+							<i class="el-icon-delete">修改</i>
+						</el-button>
+						<el-button
 								@click="() => append(data)"
 								size="mini"
 								type="text">
@@ -117,6 +123,31 @@
                                     });
                                 }
                             })
+                        },
+                        modify(node, data) {
+                            layer.open({
+                                type: 2,
+                                title: "修改菜单",
+                                moveOut: true, // 是否可拖动到外面
+                                maxmin: true, // 显示最大化按钮
+                                shadeClose: false,
+                                shade: 0,
+                                area: ['80%', '80%'],
+                                content: "/sa-html/menu/menuadd.html",
+                                // 解决拉伸或者最大化的时候，iframe高度不能自适应的问题
+                                resizing: function (layero) {
+                                    //console.log($('.layui-layer.layui-layer-iframe').length);
+                                    $('.layui-layer-iframe').each(function () {
+                                        let height = $(this).height();
+                                        let title_height = $(this).find('.layui-layer-title').height();
+                                        $(this).find('iframe').css('height', (height - title_height) + 'px');
+                                    })
+                                },
+                                success: function (layero, index) {
+                                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                                    iframeWin.setData(data, true);
+                                }
+                            });
                         },
                     }
                 });

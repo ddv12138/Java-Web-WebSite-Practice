@@ -65,4 +65,9 @@ public class ResourceServiceImpl implements ResourceService {
 	public int deleteOne(Resource resource) {
 		return resourceMapper.deleteOne(resource);
 	}
+
+	@Override
+	public int updateOne(Resource resource) {
+		return resourceMapper.updateOne(resource);
+	}
 }

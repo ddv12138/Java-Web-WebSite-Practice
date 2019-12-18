@@ -64,4 +64,15 @@ public class ResourceControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
+
+	@Test
+	public void updateOne() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.put("/resource")
+				.accept(MediaType.APPLICATION_JSON)
+				.param("name", "what-if-2")
+				.param("id", "36")
+		)
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
 }
