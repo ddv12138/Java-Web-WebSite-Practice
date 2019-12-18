@@ -34,8 +34,8 @@
         order by "order"
     </select>
     <insert id="addOne" parameterType="ORM.POJO.Resource" useGeneratedKeys="true">
-        insert into resource ( name, url, pid,"order",level,level_id)
-        values (#{name}, #{url}, #{pid}, #{order},#{level},#{levelId})
+        insert into resource (name, url, pid, "order", level, level_id)
+        values (#{name}, #{url}, #{pid}, #{order}, #{level}, #{levelId})
     </insert>
     <select id="selectMaxOrder" resultType="Integer">
         select max("order")
@@ -57,7 +57,8 @@
         select max(level_id) as level
         from resource
         where level_id like CONCAT(
-                SUBSTR((select level_id from resource where id = #{id}), (select level from resource where id = 2), 2),
+                SUBSTR((select level_id from resource where id = #{id}), 0,
+                       (select level * 2 + 1 from resource where id = #{id})),
                 '%')
     </select>
 </mapper>
