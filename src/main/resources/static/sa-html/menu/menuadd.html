@@ -78,6 +78,7 @@
                             if (valid) {
                                 let data = JSON.stringify(this.$refs[formName].model);
                                 if (!this.isModify) {
+                                    //新增时
                                     $.post("/resource", this.$refs[formName].model, function (data, status, xhr) {
                                         if (data && data.state) {
                                             layer.alert('添加成功', {icon: 1}, function (index) {
@@ -90,10 +91,12 @@
                                         }
                                     }, "json");
                                 } else {
+                                    //修改时
+                                    console.log(this.$refs[formName].model);
                                     $.ajax({
                                         url: '/resource',
                                         type: 'PUT',
-                                        data: this.$refs[formName].model,
+                                        data: JSON.stringify(this.$refs[formName].model),
                                         complete: function (response) {
                                             console.log(response);
                                         }

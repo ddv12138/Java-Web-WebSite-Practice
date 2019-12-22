@@ -23,4 +23,9 @@ public class ControllerExceptionHandler {
 	public CommonResult handleResourceNotFound(ResourceNotFoundException e) {
 		return new CommonResult(false, e.getMessage(), null);
 	}
+
+	@ExceptionHandler(Exception.class)
+	public CommonResult handleOtherException(Exception e) {
+		return new CommonResult(false, "服务器出现错误", null);
+	}
 }

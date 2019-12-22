@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class ControllerPointCut {
+public class PointCut {
 
 	@Around("execution(* WebComponent.Controller.*.*(..))")
 	public Object controllerAnalysis(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -23,8 +23,9 @@ public class ControllerPointCut {
 		return obj;
 	}
 
-	@AfterThrowing(value = "execution(* WebComponent.Controller.*.*(..))", throwing = "throwable")
-	public void controllerException(Throwable throwable) {
+	@AfterThrowing(value = "execution(* ORM.Mapper.*.*(..))", throwing = "throwable")
+	public void controllerException(Throwable throwable) throws Throwable {
 		Global.Logger().error(throwable);
+		throw throwable;
 	}
 }

@@ -42,7 +42,7 @@ public class ResourceController {
 	}
 
 	@PutMapping
-	public int updateOne(Resource menu) {
+	public int updateOne(@RequestBody Resource menu) {
 		Assert.notNull(menu.getId(), "进行更新操作时，主键字段不允许为null");
 		int check;
 		if ((check = resourceService.updateOne(menu)) > 0) {
