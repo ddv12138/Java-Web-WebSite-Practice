@@ -65,7 +65,7 @@
         update resource
         <trim prefix="set" suffixOverrides=",">
             <if test="null!=name">name=#{name},</if>
-            <if test="null!=url">name=#{url},</if>
+            <if test="null!=url">url=#{url},</if>
         </trim>
         where id=#{id}
     </update>
