@@ -36,7 +36,7 @@ public class DataSourceConfig {
 		dataSource.setTestOnReturn(false);
 		dataSource.setInitialSize(1);
 		dataSource.setDriverClassName(env.getProperty("db.driverclass"));
-		Global.Logger().info("druid dataSource pool created");
+		Global.Logger(this).info("druid dataSource pool created");
 		return dataSource;
 	}
 

@@ -16,8 +16,8 @@ import java.nio.charset.StandardCharsets;
 public class Global {
 
 
-	public static Logger Logger() {
-		return LogManager.getRootLogger();
+	public static Logger Logger(Object obj) {
+		return LogManager.getLogger(obj);
 	}
 
 	public static String doGetHttpRequest(String httpUrl) {

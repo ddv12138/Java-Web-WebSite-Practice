@@ -16,16 +16,16 @@
 					<span>{{ node.label }}</span>
 					<span>
 						<el-button
-								@click="() => modify(node, data)"
-								size="mini"
-								type="text">
-							<i class="el-icon-delete">修改</i>
-						</el-button>
-						<el-button
 								@click="() => append(data)"
 								size="mini"
 								type="text">
 							<i class="el-icon-circle-plus-outline">新增</i>
+						</el-button>
+						<el-button
+								@click="() => modify(node, data)"
+								size="mini"
+								type="text">
+							<i class="el-icon-delete">修改</i>
 						</el-button>
 						<el-button
 								@click="() => remove(node, data)"

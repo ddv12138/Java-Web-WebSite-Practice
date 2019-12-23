@@ -366,7 +366,8 @@ var sa_admin = new Vue({
 		// 参数: 点击菜单index标识（不是下标）, 所有已经打开的菜单 index 
 		selectMenu: function (index, indexArray) {
 			var menu = this.getMenuById(this.menuList, index);
-			this.showPage(menu);
+			if (menu.url)
+				this.showPage(menu);
 		},
 		// 
 		// 返回指定 index 的menu

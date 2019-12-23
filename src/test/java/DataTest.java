@@ -19,6 +19,6 @@ public class DataTest {
 	@Test
 	public void resourceTest() {
 		List<ORM.POJO.Resource> res = resourceMapper.selectResourceList(-1);
-		Global.Logger().info(JSON.toJSONString(res));
+		Global.Logger(this).info(JSON.toJSONString(res));
 	}
 }

@@ -19,13 +19,13 @@ public class PointCut {
 		StringBuilder sb = new StringBuilder();
 		sb.append("调用Controller：" + joinPoint.getSignature().getName() + ",");
 		sb.append("耗时：" + (end - start) + "ms" + "");
-		Global.Logger().info(sb.toString());
+		Global.Logger(this).info(sb.toString());
 		return obj;
 	}
 
 	@AfterThrowing(value = "execution(* ORM.Mapper.*.*(..))", throwing = "throwable")
 	public void controllerException(Throwable throwable) throws Throwable {
-		Global.Logger().error(throwable);
+		Global.Logger(this).error(throwable);
 		throw throwable;
 	}
 }
