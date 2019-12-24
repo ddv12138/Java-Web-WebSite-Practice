@@ -1,13 +1,13 @@
 window.onload = function () {
     let cityStr = "武汉";
-    $.post("/getCityInfo", {cityName: cityStr}, function (cityData, status) {
+    $.post("/city/getCityInfo", {cityName: cityStr}, function (cityData, status) {
         cityData = JSON.parse(cityData.data).results[0];
         var map = new AMap.Map("container", {
             resizeEnable: true,
             center: [cityData.location.lng, cityData.location.lat],
             zoom: 11
         });
-        $.post("/getCommunitiesByCity", {cityName: cityStr}, function (commData, status) {
+        $.post("/community/getCommunitiesByCity", {cityName: cityStr}, function (commData, status) {
             let points = [];
             commData = commData.data;
             commData.forEach(function (loc) {

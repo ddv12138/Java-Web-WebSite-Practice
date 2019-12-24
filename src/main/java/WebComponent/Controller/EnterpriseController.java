@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("enterprise")
 public class EnterpriseController {
 	EnterpriseService service;
 
