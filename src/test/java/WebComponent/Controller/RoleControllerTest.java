@@ -40,7 +40,7 @@ public class RoleControllerTest {
 
 	@Test
 	public void listrole() throws Exception {
-		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/role/list")
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/role")
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
