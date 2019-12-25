@@ -20,5 +20,7 @@ $.get("/resource?pid=1", function (arg) {
 	};
 	parseDataTooTree(arg);
 	window.menuList = arg;
-	sp.setMenuList(arg);
+	if (sp) {
+		sp.setMenuList(arg);
+	}
 });

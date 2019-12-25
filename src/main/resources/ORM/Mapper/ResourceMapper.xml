@@ -33,6 +33,13 @@
         where pid = #{pid}
         order by "order"
     </select>
+    <select id="selectResourceListByRole" parameterType="ORM.POJO.Role" resultMap="resourceModel">
+        select res.*
+        From resource res
+                 INNER JOIN role_res_map m on m.resid = res.id
+        where m.roleid = #{role.id}
+        ORDER BY "order"
+    </select>
     <insert id="addOne" parameterType="ORM.POJO.Resource" useGeneratedKeys="true">
         insert into resource (name, url, pid, "order", level, level_id)
         values (#{name}, #{url}, #{pid}, #{order}, #{level}, #{levelId})

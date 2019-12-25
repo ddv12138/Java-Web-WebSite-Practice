@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -36,43 +37,57 @@ public class ResourceControllerTest {
 
 	@Test
 	public void selectResourceList() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/resource?pid=1")
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/resource?pid=1")
 				.accept(MediaType.APPLICATION_JSON)
-		)
-				.andExpect(MockMvcResultMatchers.status().isOk())
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
 	public void addResource() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.post("/resource")
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/resource")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("name", "菜单管理")
 				.param("url", "sa-html/menu/menutree.html")
 				.param("pid", "1")
-		)
-				.andExpect(MockMvcResultMatchers.status().isOk())
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
 	public void deleteOne() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.delete("/resource/2")
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.delete("/resource/2")
 				.accept(MediaType.APPLICATION_JSON)
-		)
-				.andExpect(MockMvcResultMatchers.status().isOk())
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
 	public void updateOne() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.put("/resource")
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/resource")
 				.accept(MediaType.APPLICATION_JSON)
 				.param("name", "what-if-2")
 				.param("id", "36")
-		)
-				.andExpect(MockMvcResultMatchers.status().isOk())
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void selectResourceListByRole() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/resource/byrole/1")
+				.accept(MediaType.APPLICATION_JSON)
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
 }

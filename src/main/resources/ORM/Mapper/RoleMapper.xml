@@ -3,9 +3,36 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ORM.Mapper.RoleMapper">
+    <resultMap id="roleResult" type="ORM.POJO.Role">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="desc" column="desc"/>
+        <result property="lock" column="lock"/>
+    </resultMap>
     <select id="listRole" resultType="ORM.POJO.Role">
         select id, name, "desc", "lock"
         From roletable
         order by id
     </select>
+    <select id="selectById" resultType="ORM.POJO.Role">
+        select id, name, "desc", "lock"
+        From roletable
+        where id = #{id}
+        order by id
+    </select>
+    <insert id="updateRoleResource">
+        insert into role_res_map (roleid, resid) values
+        <foreach collection="resids" item="resid" separator=",">
+            (#{role.id},#{resid})
+        </foreach>
+    </insert>
+    <insert id="insertOne" parameterType="ORM.POJO.Role">
+        insert into roletable (name, "desc", "lock")
+        VALUES (#{name}, #{desc}, #{lock})
+    </insert>
+    <delete id="clearResourceByRole">
+        delete
+        from role_res_map
+        where roleid = #{id}
+    </delete>
 </mapper>

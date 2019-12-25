@@ -2,6 +2,7 @@ package WebComponent.Service.ServicesImpl;
 
 import ORM.Mapper.ResourceMapper;
 import ORM.POJO.Resource;
+import ORM.POJO.Role;
 import WebComponent.Service.Services.ResourceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,11 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public List<Resource> selectResourceList(Integer pid) {
 		return resourceMapper.selectResourceList(pid);
+	}
+
+	@Override
+	public List<Resource> selectResourceListByRole(Role role) {
+		return resourceMapper.selectResourceListByRole(role);
 	}
 
 	@Override

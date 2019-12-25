@@ -51,7 +51,8 @@ sa.ajax2 = function (url, data, success200, cfg) {
 	// 默认配置
 	var defaultCfg = {
 		msg: '努力加载中...',	// 提示语
-		baseUrl: (url.indexOf('/') == 0 ? sa.cfg.api_url : ''),// 父url，拼接在url前面
+		// baseUrl: (url.indexOf('/') == 0 ? sa.cfg.api_url : ''),// 父url，拼接在url前面
+		baseUrl: url,// 父url，拼接在url前面
 		// 
 		// 回调函数处理
 		// code=500, 代表成功
@@ -95,7 +96,7 @@ sa.ajax2 = function (url, data, success200, cfg) {
 
 
 	// 日志
-	console.log("请求地址：" + cfg.baseUrl + url);
+	console.log("请求地址：" + url);
 	console.log("请求参数：" + JSON.stringify(data));
 
 	// 
@@ -106,8 +107,8 @@ sa.ajax2 = function (url, data, success200, cfg) {
 	}
 
 	return $.ajax({
-		url: cfg.baseUrl + url,
-		type: "post",
+		url: url,
+		type: cfg.type ? cfg.type : "post",
 		data: data,
 		dataType: 'json',
 		xhrFields: {
@@ -121,13 +122,13 @@ sa.ajax2 = function (url, data, success200, cfg) {
 			layer.close(load);
 
 			// 业务成功的函数 
-			if (res.code == 200) {
+			if (res.state == 1) {
 				return success200(res);
 			}
 
 			// 如果相应的处理函数存在
-			if (cfg['success' + res.code] != undefined) {
-				return cfg['success' + res.code](res);
+			if (cfg['success' + res.state] != undefined) {
+				return cfg['success' + res.state](res);
 			}
 
 			layer.alert('未知状态码：' + JSON.stringify(res));
@@ -151,25 +152,25 @@ sa.ajax2 = function (url, data, success200, cfg) {
  * @param {Object} success200
  * @param {Object} cfg
  */
-sa.ajax2 = function (url, data, success200, cfg) {
-
-	// 如果是简写模式
-	if (typeof data === 'function') {
-		cfg = success200;
-		success200 = data;
-		data = {};
-	}
-
-	// 爱的魔力转圈圈
-	var load = layer.msg('正在努力加载...', {icon: 16, shade: 0.01, time: 1000 * 20, skin: 'ajax-layer-load'});
-
-	// 模拟ajax的延时 
-	setTimeout(function () {
-		layer.close(load);	// 隐藏掉转圈圈 
-		success200();
-	}, 400)
-
-};
+// sa.ajax2 = function (url, data, success200, cfg) {
+//
+// 	// 如果是简写模式
+// 	if (typeof data === 'function') {
+// 		cfg = success200;
+// 		success200 = data;
+// 		data = {};
+// 	}
+//
+// 	// 爱的魔力转圈圈
+// 	var load = layer.msg('正在努力加载...', {icon: 16, shade: 0.01, time: 1000 * 20, skin: 'ajax-layer-load'});
+//
+// 	// 模拟ajax的延时
+// 	setTimeout(function () {
+// 		layer.close(load);	// 隐藏掉转圈圈
+// 		success200();
+// 	}, 400)
+//
+// };
 
 
 // ===========================  弹窗相关   =======================================

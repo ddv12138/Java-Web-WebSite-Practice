@@ -1,6 +1,7 @@
 package WebComponent.Controller;
 
 import GlobalUtils.Application;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -28,7 +30,8 @@ public class RoleControllerTest {
 
 	@Before
 	public void setUp() {
-		mvc = MockMvcBuilders.webAppContextSetup(wac).build(); //初始化MockMvc对象
+		//初始化MockMvc对象
+		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 
 	@After
@@ -37,10 +40,39 @@ public class RoleControllerTest {
 
 	@Test
 	public void listrole() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/role/list")
-				.accept(MediaType.APPLICATION_JSON)
-		)
-				.andExpect(MockMvcResultMatchers.status().isOk())
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/role/list")
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void updateresource() throws Exception {
+		JSONObject object = new JSONObject();
+		object.put("roleid", "1");
+		Integer[] resids = new Integer[]{1, 2, 3, 4, 5, 6};
+		object.put("resids", resids);
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/role/updateresource")
+				.content(object.toJSONString())
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void insertNewOne() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/role")
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+				.param("name", "test")
+				.param("desc", "testdesc")
+				.param("lock", "1")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
 }

@@ -2,7 +2,9 @@ package WebComponent.Controller;
 
 import Exceptions.ResourceNotFoundException;
 import ORM.POJO.Resource;
+import ORM.POJO.Role;
 import WebComponent.Service.Services.ResourceService;
+import WebComponent.Service.Services.RoleService;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,11 @@ import java.util.List;
 @RequestMapping("/resource")
 public class ResourceController {
 	ResourceService resourceService;
+	RoleService roleService;
 
-	public ResourceController(ResourceService resourceService) {
+	public ResourceController(ResourceService resourceService, RoleService roleService) {
 		this.resourceService = resourceService;
+		this.roleService = roleService;
 	}
 
 	@GetMapping
@@ -23,6 +27,13 @@ public class ResourceController {
 		if (null == pid)
 			pid = 0;
 		return resourceService.selectResourceList(pid);
+	}
+
+	@GetMapping("/byrole/{roleid}")
+	public List<Resource> selectResourceListByRole(@PathVariable Integer roleid) {
+		Role role = roleService.selectById(roleid);
+		Assert.notNull(role, "该角色不存在");
+		return resourceService.selectResourceListByRole(role);
 	}
 
 	@PostMapping

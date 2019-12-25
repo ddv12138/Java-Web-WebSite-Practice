@@ -1,6 +1,7 @@
 package ORM.Mapper;
 
 import ORM.POJO.Resource;
+import ORM.POJO.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,8 @@ import java.util.List;
 @Repository
 public interface ResourceMapper {
 	List<Resource> selectResourceList(@Param("pid") Integer pid);
+
+	List<Resource> selectResourceListByRole(@Param("role") Role role);
 
 	int addOne(Resource resource);
 
@@ -23,4 +26,5 @@ public interface ResourceMapper {
 	String selectMaxLastLevel(Resource resource);
 
 	int updateOne(Resource resource);
+
 }

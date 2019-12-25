@@ -4,6 +4,7 @@ import Exceptions.ResourceNotFoundException;
 import Exceptions.UserAleadyExistsException;
 import Exceptions.WrongPasswordException;
 import GlobalUtils.CommonResult;
+import GlobalUtils.Global;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,6 +27,7 @@ public class ControllerExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public CommonResult handleOtherException(Exception e) {
+		Global.Logger(this).error(e);
 		return new CommonResult(false, "服务器出现错误", null);
 	}
 }
