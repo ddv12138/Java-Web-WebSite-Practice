@@ -26,10 +26,10 @@
 <div class="vue-box">
 
 	<!-- 参数栏 -->
-	<div class="c-panel" style="display: none;">
+	<div class="c-panel">
 		<div class="c-title">检索参数</div>
 		<el-form ref="form">
-			<div class="c-item">
+			<div class="c-item" style="display: none;">
 				<label class="c-label">名称：</label>
 				<el-input @keyup.enter="f5" placeholder="模糊搜索" size="mini" v-model="p.name"></el-input>
 			</div>
