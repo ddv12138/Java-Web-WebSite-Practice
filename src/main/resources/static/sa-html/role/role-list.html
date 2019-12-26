@@ -26,7 +26,7 @@
 <div class="vue-box">
 
 	<!-- 参数栏 -->
-	<div class="c-panel">
+	<div class="c-panel" style="display: none;">
 		<div class="c-title">检索参数</div>
 		<el-form ref="form">
 			<div class="c-item">
@@ -90,7 +90,7 @@
 
 		<el-table :data="[{}]" class="data-table" size="mini" style="width: 100%">
 
-			<el-table-column label="名称">
+			<el-table-column label="角色名称">
 				<template slot-scope="scope">
 					<el-input size="mini" v-model="addData.name"></el-input>
 				</template>
@@ -138,46 +138,57 @@
             // 刷新
             f5: function () {
                 sa.ajax2('/role', {}, function (res) {
-                    this.dataList = sa.$util.listAU(res.data);	// 数据
+                    if (res && res.state) {
+                        this.dataList = sa.$util.listAU(res.data);
+                    }
                 }.bind(this), {
                     type: "get"
                 });
             },
             // 修改
             update: function (data) {
-                // var data2 = sa.$util.copyJSON(data);
-                // data2.create_time = undefined;
-                // sa.ajax2('/role/update', data2, function (res) {
-                //     layer.msg('修改成功');
-                //     data.is_update = false;
-                // })
+                sa.ajax2('/role', JSON.stringify(data), function (res) {
+                    if (res && res.state && res.state) {
+                        layer.alert('修改成功', {}, function () {
+                            this.f5();
+                            layer.closeAll();
+                        }.bind(this));
+                    }
+                }.bind(this), {
+                    type: "PUT"
+                })
             },
             // 删除
             del: function (data) {
-                // if (data.is_lock == 1) {
-                //     return layer.alert('此角色是维持系统正常运行的重要角色，已被锁定，不可删除');
-                // }
-                // layer.confirm('是否删除，此操作不可撤销', {}, function () {
-                //     sa.ajax2('/role/delete', {id: data.id}, function (res) {
-                //         sa.$util.arrayDelete(app.dataList, data);
-                //         layer.msg('删除成功');
-                //     })
-                // })
+                if (data.lock) {
+                    return layer.alert('此角色是维持系统正常运行的重要角色，已被锁定，不可删除');
+                }
+                layer.confirm('是否删除，此操作不可撤销', {}, function () {
+                    sa.ajax2('/role', JSON.stringify(data), function (res) {
+                        if (res && res.state && res.state) {
+                            layer.alert('删除成功', {}, function () {
+                                this.f5();
+                                layer.closeAll();
+                            }.bind(this));
+                        }
+                    }.bind(this), {
+                        type: "delete"
+                    })
+                }.bind(this))
             },
             // 添加
             add: function (arg) {
                 let data = sa.$util.copyJSON(this.addData);
-                console.log(data);
                 sa.ajax2('/role', data, function (res) {
                     if (res && res.state && res.data) {
                         layer.alert('添加成功', {}, function () {
+                            this.f5();
                             layer.closeAll();
-                            app.dataList.push(data);
-                        });
+                        }.bind(this));
                     } else {
                         layer.alert('添加失败');
                     }
-                })
+                }.bind(this))
             },
             // 修改菜单
             menu_setup: function (data) {

@@ -3,6 +3,7 @@ package WebComponent.Controller;
 import ORM.POJO.Role;
 import WebComponent.Service.Services.RoleService;
 import com.alibaba.fastjson.JSON;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,16 @@ public class RoleController {
 	@PostMapping
 	public Boolean insertNewOne(Role role) {
 		return roleService.insertOne(role);
+	}
+
+	@DeleteMapping
+	public Boolean deleteOne(@RequestBody Role role) {
+		return roleService.deleteOne(role);
+	}
+
+	@PutMapping
+	public Boolean updateOne(@RequestBody Role role) {
+		Assert.notNull(role.getId(), "角色主键更新时不允许为空");
+		return roleService.updateOne(role);
 	}
 }

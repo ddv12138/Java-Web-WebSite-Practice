@@ -53,7 +53,6 @@ sa.ajax2 = function (url, data, success200, cfg) {
 		msg: '努力加载中...',	// 提示语
 		// baseUrl: (url.indexOf('/') == 0 ? sa.cfg.api_url : ''),// 父url，拼接在url前面
 		baseUrl: url,// 父url，拼接在url前面
-		// 
 		// 回调函数处理
 		// code=500, 代表成功
 		success500: function (res) {
@@ -94,10 +93,10 @@ sa.ajax2 = function (url, data, success200, cfg) {
 	// 加载用户配置
 	cfg = sa.$util.extendJson(cfg, defaultCfg);
 
-
 	// 日志
 	console.log("请求地址：" + url);
-	console.log("请求参数：" + JSON.stringify(data));
+	console.log("请求参数：" + data);
+	console.log("请求类型：" + cfg.type ? cfg.type : "post");
 
 	// 
 	// 开始ajax
@@ -110,31 +109,27 @@ sa.ajax2 = function (url, data, success200, cfg) {
 		url: url,
 		type: cfg.type ? cfg.type : "post",
 		data: data,
-		dataType: 'json',
-		xhrFields: {
-			withCredentials: true // 携带跨域cookie
-		},
-		crossDomain: true,
-		beforeSend: function (xhr) {
-			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		},
+		// dataType: 'json',
+		// xhrFields: {
+		// 	withCredentials: true // 携带跨域cookie
+		// },
+		// crossDomain: true,
+		// beforeSend: function (xhr) {
+		// 	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		// },
 		success: function (res) {
 			layer.close(load);
-
-			// 业务成功的函数 
+			// 业务成功的函数
 			if (res.state == 1) {
 				return success200(res);
 			}
-
 			// 如果相应的处理函数存在
 			if (cfg['success' + res.state] != undefined) {
 				return cfg['success' + res.state](res);
 			}
-
 			layer.alert('未知状态码：' + JSON.stringify(res));
 		},
 		error: function (xhr, type, errorThrown) {
-
 			layer.close(load);
 			return cfg.errorfn(xhr, type, errorThrown);
 		},
@@ -142,35 +137,6 @@ sa.ajax2 = function (url, data, success200, cfg) {
 	});
 
 };
-
-
-/**
- * 对上面的函数再次重写，
- * 为什么再次重写？因为这只是个模板，没有相应的服务器，如果你想将模板集成到你的项目中，直接把下面这个函数删掉或者注释掉就ok了
- * @param {Object} url
- * @param {Object} data
- * @param {Object} success200
- * @param {Object} cfg
- */
-// sa.ajax2 = function (url, data, success200, cfg) {
-//
-// 	// 如果是简写模式
-// 	if (typeof data === 'function') {
-// 		cfg = success200;
-// 		success200 = data;
-// 		data = {};
-// 	}
-//
-// 	// 爱的魔力转圈圈
-// 	var load = layer.msg('正在努力加载...', {icon: 16, shade: 0.01, time: 1000 * 20, skin: 'ajax-layer-load'});
-//
-// 	// 模拟ajax的延时
-// 	setTimeout(function () {
-// 		layer.close(load);	// 隐藏掉转圈圈
-// 		success200();
-// 	}, 400)
-//
-// };
 
 
 // ===========================  弹窗相关   =======================================
@@ -291,9 +257,6 @@ sa.ajax2 = function (url, data, success200, cfg) {
 
 		// 为指定集合的每一项元素添加上is_update属性 
 		me.listAU = function (list) {
-			list.forEach(function (ts) {
-				ts.is_update = false;
-			});
 			return list;
 		};
 

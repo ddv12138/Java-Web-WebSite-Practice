@@ -19,4 +19,8 @@ public interface RoleMapper {
 	Integer clearResourceByRole(Role role);
 
 	Boolean insertOne(Role role);
+
+	Boolean deleteOne(Role check);
+
+	Boolean updateOne(Role role);
 }

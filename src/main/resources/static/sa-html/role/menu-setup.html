@@ -129,18 +129,6 @@
         },
         created: function () {
 
-            // 全部
-            sa.ajax2('/resource', null, function (arg) {
-                if (!arg || !arg.state) {
-                    return;
-                } else {
-                    arg = arg.data;
-                }
-                parseDataTooTree(arg);
-                this.dataList = arg;	// 数据
-            }.bind(this), {
-                type: "get"
-            });
 
             //当前有权限的节点
             sa.ajax2('/resource/byrole/' + role_id, null, function (res) {
@@ -150,6 +138,18 @@
                         this.select_list.push(data[i].id);
                     }
                     console.log(this.select_list);
+                    // 全部
+                    sa.ajax2('/resource', null, function (arg) {
+                        if (!arg || !arg.state) {
+                            return;
+                        } else {
+                            arg = arg.data;
+                        }
+                        parseDataTooTree(arg);
+                        this.dataList = arg;	// 数据
+                    }.bind(this), {
+                        type: "get"
+                    });
                 }
             }.bind(this), {
                 type: "get"

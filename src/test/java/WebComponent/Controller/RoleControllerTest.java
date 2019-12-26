@@ -75,4 +75,29 @@ public class RoleControllerTest {
 		actions.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
+
+	@Test
+	public void deleteOne() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/role")
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+				.param("id", "9")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void updateOne() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/role")
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+				.param("id", "9")
+				.param("name", "test")
+				.param("desc", "testdesc")
+				.param("lock", "1")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
 }

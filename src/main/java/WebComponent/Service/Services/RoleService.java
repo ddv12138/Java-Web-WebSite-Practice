@@ -12,4 +12,8 @@ public interface RoleService {
 	Boolean updateRoleResource(Integer roleid, List<Integer> resids);
 
 	Boolean insertOne(Role role);
+
+	Boolean deleteOne(Role role);
+
+	Boolean updateOne(Role role);
 }

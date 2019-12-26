@@ -41,4 +41,18 @@ public class RoleServiceImpl implements RoleService {
 		Assert.notNull(role.getName(), "角色名称不能为空");
 		return mapper.insertOne(role);
 	}
+
+	@Override
+	public Boolean deleteOne(Role role) {
+		Assert.notNull(role.getId(), "角色id不存在");
+		Role check = mapper.selectById(role.getId());
+		Assert.notNull(check, "角色不存在");
+		Assert.state(!check.getLock(), "此角色是维持系统正常运行的重要角色，已被锁定，不可删除");
+		return mapper.deleteOne(check);
+	}
+
+	@Override
+	public Boolean updateOne(Role role) {
+		return mapper.updateOne(role);
+	}
 }
