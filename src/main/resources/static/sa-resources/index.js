@@ -526,7 +526,7 @@ var sa_admin = new Vue({
 		// 打印日志 
 		setTimeout(function () {
 			if (this.is_log) {
-				console.log('欢迎使用sa-admin，当前版本：' + this.version + "，GitHub地址：" + this.github_url);
+				// console.log('欢迎使用sa-admin，当前版本：' + this.version + "，GitHub地址：" + this.github_url);
 			}
 		}.bind(this), 2000)
 
