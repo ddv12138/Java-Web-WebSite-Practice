@@ -3,8 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ORM.Mapper.UserMapper">
+    <resultMap id="userResult" type="ORM.POJO.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="baned" column="baned"/>
+        <result property="lock" column="lock"/>
+    </resultMap>
     <insert id="saveOne" parameterType="ORM.POJO.User" useGeneratedKeys="true" flushCache="true">
         insert into usertable (name, password)
         values (#{name}, #{password})
     </insert>
+    <select id="selectList" resultMap="userResult">
+        select *
+        from usertable
+        where id > #{maxid}
+        limit #{limit};
+    </select>
+    <select id="selectById" resultMap="userResult">
+        select *
+        from usertable
+        where name = #{id}
+    </select>
+    <select id="selectByName" resultMap="userResult">
+        select *
+        from usertable
+        where name = #{name}
+        limit 1
+    </select>
 </mapper>

@@ -30,12 +30,28 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void addUser() {
+	public void getCurrentUser() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/user/details")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk()).
+				andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
-	public void getCurrentUser() throws Exception {
-		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/user/details")
+	public void addUser() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/user")
+				.param("username", "ddv")
+				.param("password", "123")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk()).
+				andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void selectList() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/user/10")
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk()).

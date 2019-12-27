@@ -3,6 +3,23 @@ package ORM.POJO;
 public class User {
 	int id;
 	String name, password;
+	Boolean baned, lock;
+
+	public Boolean getLock() {
+		return lock;
+	}
+
+	public void setLock(Boolean lock) {
+		this.lock = lock;
+	}
+
+	public Boolean getBaned() {
+		return baned;
+	}
+
+	public void setBaned(Boolean baned) {
+		this.baned = baned;
+	}
 
 	public int getId() {
 		return id;

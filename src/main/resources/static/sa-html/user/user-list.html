@@ -18,7 +18,6 @@
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script src="../../static/kj/laydate/laydate.js"></script>
 	<script src="../../static/sa.js"></script>
-	<script src="data-list.js"></script>
 
 	<style type="text/css">
 
@@ -31,103 +30,54 @@
 <div style="margin-top: -1em;"><br></div>
 
 <div :style="'display: block;'" class="vue-box" style="display: none;">
-
 	<!-- 参数栏 -->
 	<div class="c-panel">
 		<div class="c-title">检索参数</div>
 		<el-form ref="form">
-
-			<div class="c-item">
-				<label class="c-label">昵称：</label>
-				<el-input @keyup.enter="f5" placeholder="模糊搜索" size="mini" v-model="p.username"></el-input>
-			</div>
-
-			<div class="c-item">
-				<label class="c-label">注册日期：</label>
-				<el-input class="start_time" size="mini" v-model="p.start_time"></el-input>
-				&nbsp;至&nbsp;
-				<el-input class="end_time" size="mini" v-model="p.end_time"></el-input>
-			</div>
-
 			<div class="c-item" style="min-width: 0px;">
 				<el-button @click="f5" icon="el-icon-search" size="mini" type="primary">查询</el-button>
 			</div>
-
-			<!-- <br />
-			<div class="c-item">
-				<label class="c-label">注册方式：</label>
-				<el-select size="mini" v-model="p.create_type">
-					<el-option label="全部" :value="0"></el-option>
-					<el-option label="账号注册" :value="1"></el-option>
-					<el-option label="手机号注册" :value="2"></el-option>
-					<el-option label="邮箱注册" :value="3"></el-option>
-				</el-select>
-			</div>
-			 -->
-			<br/>
-			<div class="c-item">
-				<label class="c-label">排序：</label>
-				<el-radio-group v-model="p.sort_type">
-					<el-radio :label="1">注册时间</el-radio>
-					<el-radio :label="2">最近登录</el-radio>
-					<el-radio :label="3">登陆次数</el-radio>
-					<el-radio :label="4">最近签到</el-radio>
-					<el-radio :label="5">签到次数</el-radio>
-				</el-radio-group>
-			</div>
-
 		</el-form>
-
 	</div>
-
 	<!-- 数据栏 -->
 	<div class="c-panel">
 		<div class="c-title">列表</div>
 		<el-table :data="dataList" class="data-table" size="mini" style="width: 100%">
 
 			<el-table-column label="编号" prop="id" width="70px"></el-table-column>
-			<el-table-column label="昵称" prop="username" width="200px">
+			<el-table-column label="用户名" prop="name" width="200px">
 				<template slot-scope="scope">
-					<img :src="scope.row.avatar"
-					     style="width: 3em; height: 3em; float: left; margin-right: 1em; border-radius: 50%;">
 					<div style="float: left; width: 130px; line-height: 20px;">
-						<b>{{scope.row.username}}</b>
-						<p>{{scope.row.tell}}</p>
+						<b>{{scope.row.name}}</b>
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column label="个人相册">
-				<template slot-scope="scope">
-					<img :src="scope.row.photo_list[0]" @click="pre_img(scope.row)"
-					     style="width: 40px; height: 40px; cursor: pointer;">
-					共{{scope.row.photo_list.length}}张, 点击预览
-				</template>
-			</el-table-column>
-			<el-table-column label="性别" prop="sex"></el-table-column>
-
-			<el-table-column label="注册方式" prop="create_type"></el-table-column>
-			<el-table-column label="注册于" prop="create_time"></el-table-column>
 			<el-table-column label="状态">
 				<template slot-scope="scope">
-					<span style="color: green;" v-if="scope.row.status == 1">正常</span>
-					<span style="color: red;" v-if="scope.row.status == 2">禁用</span>
+					<span style="color: green;" v-if="scope.row.baned == false">正常</span>
+					<span style="color: red;" v-if="scope.row.baned == true">禁用</span>
 				</template>
 			</el-table-column>
-
+			<el-table-column label="是否锁定">
+				<template slot-scope="scope">
+					<span style="color: green;" v-if="scope.row.lock == false">未锁定</span>
+					<span style="color: red;" v-if="scope.row.lock == true">锁定</span>
+				</template>
+			</el-table-column>
 			<el-table-column label="操作" prop="address">
 				<template slot-scope="scope">
 					<el-button @click="dongjie(scope.row)" class="c-button" icon="el-icon-edit" type="primary"
-					           v-if="scope.row.status == 1">禁用
+					           v-if="scope.row.baned == false && scope.row.lock == false">禁用
 					</el-button>
 					<el-button @click="jiejin(scope.row)" class="c-button" icon="el-icon-edit" type="primary"
-					           v-if="scope.row.status == 2">解禁
+					           v-if="scope.row.baned == true && scope.row.lock == false">解禁
 					</el-button>
-					<el-button @click="del(scope.row)" class="c-button" icon="el-icon-delete" type="danger">删除
+					<el-button @click="del(scope.row)" class="c-button" icon="el-icon-delete" type="danger"
+					           v-if="scope.row.lock == false">删除
 					</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
-
 		<!-- 分页 -->
 		<div class="page-box">
 			<el-pagination :current-page.sync="page.pageNo"
@@ -140,78 +90,32 @@
 			               layout="total, prev, pager, next, sizes, jumper">
 			</el-pagination>
 		</div>
-
 	</div>
-
-
-	<div class="c-panel" style="background-color: rgba(0,0,0,0);">
-		layer：
-		<el-link href="http://layer.layui.com/" target="_blank" type="primary">
-			一个可以让你想到即可做到的JavaScript弹窗（层）解决方案
-		</el-link>
-		<br>
-		laydate：
-		<el-link href="https://www.layui.com/laydate/" target="_blank" type="primary">
-			世界上最好用的日期选择插件
-		</el-link>
-		<br>
-
-	</div>
-
-	<br><br><br><br><br><br><br><br><br>
-
-
 </div>
 
 <script type="text/javascript">
-
-
-    // 渲染日期选择插件
-    function init_laydate() {
-        // 开始日期
-        laydate.render({
-            elem: '.start_time input',
-            type: 'date',
-            done: function (value, date) {
-                app.p.start_time = value;
-            }
-        });
-        // 结束日期
-        laydate.render({
-            elem: '.end_time input',
-            type: 'date',
-            done: function (value, date) {
-                app.p.end_time = value;
-            }
-        });
-    }
-
-
     var app = new Vue({
         el: '.vue-box',
         data: {
             p: {	// 查询参数
                 username: '',
-                create_type: 0,
-                sort_type: 1,
-                start_time: sa.$util.forDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1)), 	// 本月一号
-                end_time: sa.$util.forDate(new Date()),
             },
             page: {	// 分页信息
                 pageNo: 1,
                 pageSize: 10,
-                count: 1422
+                count: 1
             },
-            dataList: dataList
+            dataList: null
         },
         methods: {
             // 数据刷新
             f5: function () {
-                sa.ajax2('/user/getList', this.p, function (res) {
-                    // this.dataList = res.data;	// 数据
-                    // this.page = res.page;		// 分页
-                    this.$message('查询：' + JSON.stringify(this.p));
-                }.bind(this));
+                sa.ajax2("/user/" + this.page.pageSize, {}, function (res) {
+                    if (res && res.state) {
+                        console.log(res.data);
+                        this.dataList = res.data;
+                    }
+                }.bind(this), {type: "get"})
             },
             // 分页刷新
             pageNo_f5: function (pageNo) {
@@ -221,29 +125,6 @@
             pageSize_f5: function (pageSize) {
                 this.$message('切换页大小：' + pageSize);
                 this.f5();
-            },
-            // 预览图片
-            pre_img: function (data) {
-                var list = data.photo_list;
-                var arr_list = [];
-                list.forEach(function (item) {
-                    arr_list.push({
-                        alt: '左右键切换',
-                        pid: 1,
-                        src: item,
-                        thumb: item
-                    })
-                });
-                layer.photos({
-                    photos: {
-                        title: data.username + '的个人相册',
-                        id: data.id,
-                        start: 0,
-                        data: arr_list
-                    }
-                    , anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-                });
-
             },
             // 删除
             del: function (data) {
@@ -274,7 +155,7 @@
             }
         },
         mounted: function () {
-            init_laydate();
+            this.f5();
         }
     })
 

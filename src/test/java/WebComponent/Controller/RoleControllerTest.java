@@ -1,6 +1,8 @@
 package WebComponent.Controller;
 
 import GlobalUtils.Application;
+import ORM.POJO.Role;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.After;
 import org.junit.Before;
@@ -78,9 +80,20 @@ public class RoleControllerTest {
 
 	@Test
 	public void deleteOne() throws Exception {
-		ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/role")
+		Role role = new Role();
+		role.setId(1);
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.delete("/role")
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
-				.param("id", "9")
+				.content(JSON.toJSONString(role))
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isInternalServerError())
+				.andDo(MockMvcResultHandlers.print());
+
+		role.setId(75);
+		actions = mvc.perform(MockMvcRequestBuilders.delete("/role")
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+				.content(JSON.toJSONString(role))
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk())
@@ -89,12 +102,14 @@ public class RoleControllerTest {
 
 	@Test
 	public void updateOne() throws Exception {
-		ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/role")
+		Role role = new Role();
+		role.setId(9);
+		role.setName("test");
+		role.setDesc("testdesc");
+		role.setLock(true);
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/role")
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
-				.param("id", "9")
-				.param("name", "test")
-				.param("desc", "testdesc")
-				.param("lock", "1")
+				.content(JSON.toJSONString(role))
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk())

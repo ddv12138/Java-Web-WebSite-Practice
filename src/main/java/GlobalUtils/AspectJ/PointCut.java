@@ -2,7 +2,6 @@ package GlobalUtils.AspectJ;
 
 import GlobalUtils.Global;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
@@ -21,11 +20,5 @@ public class PointCut {
 		sb.append("耗时：" + (end - start) + "ms" + "");
 		Global.Logger(this).info(sb.toString());
 		return obj;
-	}
-
-	@AfterThrowing(value = "execution(* ORM.Mapper.*.*(..))", throwing = "throwable")
-	public void controllerException(Throwable throwable) throws Throwable {
-		Global.Logger(this).error(throwable);
-		throw throwable;
 	}
 }

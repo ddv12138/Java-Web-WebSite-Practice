@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service(value = "UserService")
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
 		this.mapper = mapper;
 	}
 
+	@Override
 	public int saveOne(User user) throws UserAleadyExistsException {
 		if (null != mapper.selectByName(user.getName())) {
 			throw new UserAleadyExistsException("user \"" + user.getName() + "\"already exists!");
@@ -28,12 +31,19 @@ public class UserServiceImpl implements UserService {
 		return mapper.saveOne(user);
 	}
 
+	@Override
 	public User selectByName(String name) {
 		return mapper.selectByName(name);
 	}
 
+	@Override
 	public User selectById(int id) {
 		return mapper.selectById(id);
+	}
+
+	@Override
+	public List<User> selectList(int maxid, int limit) {
+		return mapper.selectList(maxid, limit);
 	}
 
 	@Override

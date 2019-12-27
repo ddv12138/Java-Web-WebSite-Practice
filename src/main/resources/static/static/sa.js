@@ -95,7 +95,7 @@ sa.ajax2 = function (url, data, success200, cfg) {
 
 	// 日志
 	console.log("请求地址：" + url);
-	console.log("请求参数：" + data);
+	console.log("请求参数：" + JSON.stringify(data));
 	console.log("请求类型：" + cfg.type ? cfg.type : "post");
 
 	// 

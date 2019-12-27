@@ -5,10 +5,9 @@ import ORM.POJO.User;
 import WebComponent.Service.Services.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -19,13 +18,18 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@PostMapping("/signup")
+	@PostMapping
 	public int addUser(User user) throws UserAleadyExistsException {
 		return userService.saveOne(user);
 	}
 
-	@GetMapping("/details")
+	@GetMapping
 	public UserDetails getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
 		return userDetails;
+	}
+
+	@GetMapping("/{limit}")
+	public List<User> selectList(@RequestParam(defaultValue = "-1") int maxid, @PathVariable int limit) {
+		return userService.selectList(maxid, limit);
 	}
 }

@@ -1,6 +1,8 @@
 package WebComponent.Controller;
 
 import GlobalUtils.Application;
+import ORM.POJO.Resource;
+import com.alibaba.fastjson.JSON;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,10 +73,12 @@ public class ResourceControllerTest {
 
 	@Test
 	public void updateOne() throws Exception {
+		Resource resource = new Resource();
+		resource.setName("what-if-2");
+		resource.setId(36);
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/resource")
 				.accept(MediaType.APPLICATION_JSON)
-				.param("name", "what-if-2")
-				.param("id", "36")
+				.content(JSON.toJSONString(resource))
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk())

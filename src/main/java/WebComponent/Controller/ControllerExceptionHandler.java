@@ -5,7 +5,9 @@ import Exceptions.UserAleadyExistsException;
 import Exceptions.WrongPasswordException;
 import GlobalUtils.CommonResult;
 import GlobalUtils.Global;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
@@ -26,8 +28,9 @@ public class ControllerExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public CommonResult handleOtherException(Exception e) {
 		Global.Logger(this).error(e);
-		return new CommonResult(false, "服务器出现错误", null);
+		return new CommonResult(false, "服务器内部错误", null);
 	}
 }

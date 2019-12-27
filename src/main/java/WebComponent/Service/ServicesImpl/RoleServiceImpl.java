@@ -39,6 +39,8 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Boolean insertOne(Role role) {
 		Assert.notNull(role.getName(), "角色名称不能为空");
+		Role check = mapper.selectById(role.getId());
+		Assert.state(null == check, "角色已存在");
 		return mapper.insertOne(role);
 	}
 
