@@ -1,7 +1,9 @@
 package WebComponent.Service.ServicesImpl;
 
 import ORM.Mapper.RoleMapper;
+import ORM.Mapper.UserMapper;
 import ORM.POJO.Role;
+import ORM.POJO.User;
 import WebComponent.Service.Services.RoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +15,11 @@ import java.util.List;
 @Transactional
 public class RoleServiceImpl implements RoleService {
 	RoleMapper mapper;
+	UserMapper userMapper;
 
-	public RoleServiceImpl(RoleMapper mapper) {
+	public RoleServiceImpl(RoleMapper mapper, UserMapper userMapper) {
 		this.mapper = mapper;
+		this.userMapper = userMapper;
 	}
 
 	@Override
@@ -33,7 +37,15 @@ public class RoleServiceImpl implements RoleService {
 		Role role = mapper.selectById(roleid);
 		Assert.notNull(role, "角色不存在");
 		mapper.clearResourceByRole(role);
-		return mapper.updateRoleResource(role, resids);
+		return (null != resids && resids.size() > 0) ? mapper.updateRoleResource(role, resids) : true;
+	}
+
+	@Override
+	public Boolean updateRoleByUser(Integer userid, List<Integer> roleids) {
+		User user = userMapper.selectById(userid);
+		Assert.notNull(user, "用户不存在");
+		mapper.clearRoleByUser(user);
+		return (null != roleids && roleids.size() > 0) ? mapper.updateRoleByUser(user, roleids) : true;
 	}
 
 	@Override
@@ -56,5 +68,12 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Boolean updateOne(Role role) {
 		return mapper.updateOne(role);
+	}
+
+	@Override
+	public List<Role> listRoleByUser(Integer userid) {
+		User user = userMapper.selectById(userid);
+		Assert.notNull(user, "用户不存在");
+		return mapper.listRoleByUser(user);
 	}
 }

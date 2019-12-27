@@ -2,10 +2,10 @@ package WebComponent.Service.ServicesImpl;
 
 import Exceptions.UserAleadyExistsException;
 import GlobalUtils.Global;
+import ORM.Mapper.RoleMapper;
 import ORM.Mapper.UserMapper;
 import ORM.POJO.User;
 import WebComponent.Service.Services.UserService;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,11 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 	UserMapper mapper;
+	RoleMapper roleMapper;
 
-	public UserServiceImpl(UserMapper mapper) {
+	public UserServiceImpl(UserMapper mapper, RoleMapper roleMapper) {
 		this.mapper = mapper;
+		this.roleMapper = roleMapper;
 	}
 
 	@Override
@@ -49,10 +51,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = mapper.selectByName(username);
+		user.setRoles(roleMapper.listRoleByUser(user));
 		if (null == user)
 			throw new UsernameNotFoundException("用户不存在");
-		return new org.springframework.security.core.userdetails.User
-				(user.getName(), user.getPassword(),
-						AuthorityUtils.createAuthorityList("spittr"));
+		return user;
 	}
 }

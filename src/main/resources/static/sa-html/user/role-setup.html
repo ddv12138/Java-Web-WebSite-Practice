@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<title>角色列表</title>
+
+
+	<!-- 所有的 css 资源 -->
+	<link href="https://unpkg.com/element-ui@2.8.2/lib/theme-chalk/index.css" rel="stylesheet">
+	<link href="../../static/sa.css" rel="stylesheet">
+
+	<!-- 所有的 js 资源 -->
+	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui@2.8.2/lib/index.js"></script>
+	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+	<script src="../../static/sa.js"></script>
+</head>
+<body>
+<div class="vue-box">
+	<el-table
+			:data="tableData"
+			@selection-change="handleSelectionChange"
+			ref="multipleTable"
+			style="width: 100%"
+			tooltip-effect="dark">
+		<el-table-column
+				type="selection"
+				width="55">
+		</el-table-column>
+		<el-table-column
+				label="编号"
+				prop="id"
+				width="120">
+		</el-table-column>
+		<el-table-column
+				label="角色名称"
+				prop="name"
+				width="120">
+		</el-table-column>
+		<el-table-column
+				label="角色描述"
+				prop="desc"
+				show-overflow-tooltip>
+		</el-table-column>
+	</el-table>
+
+	<br>
+	<div class="c-item">
+		<el-button @click="submitData" icon="el-icon-search" size="mini" type="primary">确定</el-button>
+	</div>
+</div>
+<script type="text/javascript">
+    let userid = sa.$util.getUrlArgs('userid');
+    let tablevm = new Vue({
+        el: '.vue-box',
+        data: {
+            tableData: [],
+            selectedData: [],
+            multipleSelection: []
+        },
+        methods: {
+            submitData: function (arg) {
+                console.log(this.multipleSelection);
+                let roleids = [];
+                this.multipleSelection.forEach(function (role) {
+                    roleids.push(role.id);
+                });
+                sa.ajax2('/role/byuser', JSON.stringify({userid: userid, roleids: roleids}), function (res) {
+                    if (res && res.state && res.data) {
+                        layer.alert('成功', {}, function () {
+                            if (parent != window) {
+                                parent.layer.closeAll('iframe');
+                            }
+                            layer.closeAll();
+                        });
+                    }
+                }.bind(this), {
+                    type: "put"
+                });
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            }
+        },
+        created: function () {
+            sa.ajax2('/role', {}, function (res2) {
+                if (res2 && res2.state) {
+                    console.log(res2.data);
+                    let data = JSON.parse(JSON.stringify(res2.data));
+                    this.tableData = data;
+                }
+            }.bind(this), {
+                type: "get"
+            });
+        },
+        mounted: function () {
+            sa.ajax2('/role/byuser', {userid: userid}, function (res) {
+                if (res && res.state) {
+                    let checked = res.data;
+                    if (checked) {
+                        checked.forEach(function (row) {
+                            this.tableData.forEach(function (trow) {
+                                if (trow.id == row.id) {
+                                    this.$refs.multipleTable.toggleRowSelection(trow, true);
+                                }
+                            }.bind(this))
+                        }.bind(this))
+                    }
+                }
+            }.bind(this), {
+                type: "get"
+            });
+        }
+    });
+</script>
+</body>

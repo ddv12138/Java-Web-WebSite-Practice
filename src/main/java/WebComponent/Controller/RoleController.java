@@ -3,6 +3,7 @@ package WebComponent.Controller;
 import ORM.POJO.Role;
 import WebComponent.Service.Services.RoleService;
 import com.alibaba.fastjson.JSON;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/role")
+@PreAuthorize("hasAuthority('管理员')")
 public class RoleController {
 	RoleService roleService;
 
@@ -21,6 +23,18 @@ public class RoleController {
 	@GetMapping
 	public List<Role> listrole() {
 		return roleService.listRole();
+	}
+
+	@GetMapping("/byuser")
+	public List<Role> listRoleByUser(@RequestParam Integer userid) {
+		return roleService.listRoleByUser(userid);
+	}
+
+	@PutMapping("/byuser")
+	public Boolean updateRoleByUser(@RequestBody Map<String, String> par) {
+		Integer userid = Integer.parseInt(par.get("userid"));
+		List<Integer> roleids = JSON.parseArray(par.get("roleids"), Integer.class);
+		return roleService.updateRoleByUser(userid, roleids);
 	}
 
 	@PutMapping("/updateresource")

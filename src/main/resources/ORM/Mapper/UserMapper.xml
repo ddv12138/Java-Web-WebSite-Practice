@@ -23,7 +23,7 @@
     <select id="selectById" resultMap="userResult">
         select *
         from usertable
-        where name = #{id}
+        where id = #{id}
     </select>
     <select id="selectByName" resultMap="userResult">
         select *

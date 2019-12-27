@@ -37,6 +37,9 @@
 			<div class="c-item" style="min-width: 0px;">
 				<el-button @click="f5" icon="el-icon-search" size="mini" type="primary">查询</el-button>
 			</div>
+			<div class="c-item" style="min-width: 0px;">
+				<el-button @click="newUser()" icon="el-icon-search" size="mini" type="primary">新增用户</el-button>
+			</div>
 		</el-form>
 	</div>
 	<!-- 数据栏 -->
@@ -66,6 +69,8 @@
 			</el-table-column>
 			<el-table-column label="操作" prop="address">
 				<template slot-scope="scope">
+					<el-button @click="rolemanage(scope.row)" class="c-button" icon="el-icon-edit" type="primary">管理角色
+					</el-button>
 					<el-button @click="dongjie(scope.row)" class="c-button" icon="el-icon-edit" type="primary"
 					           v-if="scope.row.baned == false && scope.row.lock == false">禁用
 					</el-button>
@@ -117,6 +122,16 @@
                     }
                 }.bind(this), {type: "get"})
             },
+            newUser: function () {
+                layer.open({
+                    type: 2,
+                    title: '新增用户',
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['70%', '100%'],
+                    content: 'user-add.html'
+                });
+            },
             // 分页刷新
             pageNo_f5: function (pageNo) {
                 this.$message('切换当前页：' + pageNo);
@@ -152,6 +167,17 @@
                         layer.msg('解禁成功');
                     }.bind(this))
                 }.bind(this));
+            },
+            //管理角色
+            rolemanage: function (data) {
+                layer.open({
+                    type: 2,
+                    title: '管理用户 [' + data.name + '] 的角色',
+                    shadeClose: false,
+                    shade: 0.8,
+                    area: ['70%', '100%'],
+                    content: 'role-setup.html?userid=' + data.id
+                });
             }
         },
         mounted: function () {

@@ -16,4 +16,8 @@ public interface RoleService {
 	Boolean deleteOne(Role role);
 
 	Boolean updateOne(Role role);
+
+	List<Role> listRoleByUser(Integer userid);
+
+	Boolean updateRoleByUser(Integer userid, List<Integer> roleids);
 }

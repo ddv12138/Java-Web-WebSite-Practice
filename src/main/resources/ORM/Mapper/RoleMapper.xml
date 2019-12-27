@@ -26,6 +26,12 @@
             (#{role.id},#{resid})
         </foreach>
     </insert>
+    <insert id="updateRoleByUser">
+        insert into user_role_map (userid, roleid) values
+        <foreach collection="roleids" item="roleid" separator=",">
+            (#{user.id},#{roleid})
+        </foreach>
+    </insert>
     <insert id="insertOne" parameterType="ORM.POJO.Role">
         insert into roletable (name, "desc", "lock")
         VALUES (#{name}, #{desc}, #{lock})
@@ -49,4 +55,16 @@
         </trim>
         where id=#{id}
     </update>
+    <select id="listRoleByUser" parameterType="ORM.POJO.User" resultMap="roleResult">
+        select r.*
+        From roletable r
+                 inner join user_role_map map on map.roleid = r.id
+                 inner join usertable u on u.id = map.userid
+        where u.id = #{id}
+    </select>
+    <select id="clearRoleByUser" parameterType="ORM.POJO.User">
+        delete
+        from user_role_map
+        where userid = #{id}
+    </select>
 </mapper>

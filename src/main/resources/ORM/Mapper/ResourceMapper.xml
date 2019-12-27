@@ -3,9 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ORM.Mapper.ResourceMapper">
-    <parameterMap id="noIdParMap" type="ORM.POJO.Resource">
-
-    </parameterMap>
     <resultMap id="resourceModel" type="ORM.POJO.Resource">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
@@ -16,7 +13,7 @@
         <result column="level" property="level"/>
     </resultMap>
     <resultMap id="subResourceModel" type="ORM.POJO.Resource" extends="resourceModel">
-        <collection property="childList" javaType="java.util.ArrayList" column="id" select="selectResourceList"
+        <collection property="childList" javaType="java.util.ArrayList" column="id" select="selectResourceList2"
                     ofType="ORM.POJO.Resource">
             <id column="id" property="id"/>
             <result column="name" property="name"/>
@@ -27,10 +24,24 @@
             <result column="level" property="level"/>
         </collection>
     </resultMap>
-    <select id="selectResourceList" resultMap="subResourceModel">
+    <select id="selectResourceList2" resultMap="subResourceModel">
         select *
         From resource
         where pid = #{pid}
+        order by "order"
+    </select>
+    <select id="selectResourceList" resultMap="subResourceModel">
+        select *
+        From resource r
+        where pid = #{pid}
+          and EXISTS
+            (select 1
+             from role_res_map rrm
+                      INNER JOIN roletable ro on ro.id = rrm.roleid
+                      inner join user_role_map urm on urm.roleid = ro.id
+                      inner join usertable u on u.id = urm.userid
+             where rrm.resid = r.id
+               and u.id = #{param2.id})
         order by "order"
     </select>
     <select id="selectResourceListByRole" parameterType="ORM.POJO.Role" resultMap="resourceModel">

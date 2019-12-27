@@ -3,8 +3,10 @@ package WebComponent.Controller;
 import Exceptions.ResourceNotFoundException;
 import ORM.POJO.Resource;
 import ORM.POJO.Role;
+import ORM.POJO.User;
 import WebComponent.Service.Services.ResourceService;
 import WebComponent.Service.Services.RoleService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +25,10 @@ public class ResourceController {
 	}
 
 	@GetMapping
-	public List<Resource> selectResourceList(Integer pid) {
+	public List<Resource> selectResourceList(Integer pid, @AuthenticationPrincipal User user) {
 		if (null == pid)
 			pid = 0;
-		return resourceService.selectResourceList(pid);
+		return resourceService.selectResourceList(pid, user);
 	}
 
 	@GetMapping("/byrole/{roleid}")

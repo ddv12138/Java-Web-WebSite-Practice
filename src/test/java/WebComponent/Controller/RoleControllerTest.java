@@ -115,4 +115,30 @@ public class RoleControllerTest {
 		actions.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
+
+	@Test
+	public void listRoleByUser() throws Exception {
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/role/byuser")
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+				.param("userid", "2")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void updateRoleByUser() throws Exception {
+		JSONObject object = new JSONObject();
+		object.put("userid", "2");
+		Integer[] roleids = new Integer[]{1, 2, 3, 4, 5, 6};
+		object.put("roleids", roleids);
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/role/byuser")
+				.content(object.toJSONString())
+				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+		);
+		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
+		actions.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
 }

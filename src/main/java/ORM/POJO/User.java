@@ -1,9 +1,24 @@
 package ORM.POJO;
 
-public class User {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
+
+public class User implements UserDetails {
 	int id;
 	String name, password;
 	Boolean baned, lock;
+	List<Role> roles;
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 	public Boolean getLock() {
 		return lock;
@@ -37,8 +52,38 @@ public class User {
 		this.name = name;
 	}
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles;
+	}
+
 	public String getPassword() {
 		return password;
+	}
+
+	@Override
+	public String getUsername() {
+		return name;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return !baned;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return !baned;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return !baned;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return !baned;
 	}
 
 	public void setPassword(String password) {

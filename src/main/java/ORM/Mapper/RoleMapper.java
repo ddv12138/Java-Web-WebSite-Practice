@@ -1,6 +1,7 @@
 package ORM.Mapper;
 
 import ORM.POJO.Role;
+import ORM.POJO.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,10 @@ public interface RoleMapper {
 	Boolean deleteOne(Role check);
 
 	Boolean updateOne(Role role);
+
+	List<Role> listRoleByUser(User user);
+
+	Boolean clearRoleByUser(User user);
+
+	Boolean updateRoleByUser(@Param("user") User user, @Param("roleids") List<Integer> roleids);
 }

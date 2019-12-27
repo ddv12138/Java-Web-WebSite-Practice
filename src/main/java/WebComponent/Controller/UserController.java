@@ -3,6 +3,7 @@ package WebComponent.Controller;
 import Exceptions.UserAleadyExistsException;
 import ORM.POJO.User;
 import WebComponent.Service.Services.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@PreAuthorize("hasAuthority('管理员')")
 public class UserController {
 	UserService userService;
 
