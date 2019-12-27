@@ -31,7 +31,7 @@ public class UserControllerTest {
 
 	@Test
 	public void getCurrentUser() throws Exception {
-		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/user/details")
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/user")
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk()).
