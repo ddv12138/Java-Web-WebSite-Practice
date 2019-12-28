@@ -12,30 +12,6 @@ public class User implements UserDetails {
 	Boolean baned, lock;
 	List<Role> roles;
 
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-	public Boolean getLock() {
-		return lock;
-	}
-
-	public void setLock(Boolean lock) {
-		this.lock = lock;
-	}
-
-	public Boolean getBaned() {
-		return baned;
-	}
-
-	public void setBaned(Boolean baned) {
-		this.baned = baned;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -52,13 +28,42 @@ public class User implements UserDetails {
 		this.name = name;
 	}
 
+	public Boolean getBaned() {
+		return baned;
+	}
+
+	public void setBaned(Boolean baned) {
+		this.baned = baned;
+	}
+
+	public Boolean getLock() {
+		return lock;
+	}
+
+	public void setLock(Boolean lock) {
+		this.lock = lock;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;
 	}
 
-	public String getPassword() {
-		return password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
@@ -84,22 +89,5 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return !baned;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("{");
-		sb.append("\"id\":")
-				.append(id);
-		sb.append(",\"name\":\"")
-				.append(name).append('\"');
-		sb.append(",\"password\":\"")
-				.append(password).append('\"');
-		sb.append('}');
-		return sb.toString();
 	}
 }

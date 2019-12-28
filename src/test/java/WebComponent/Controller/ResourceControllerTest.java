@@ -5,13 +5,12 @@ import ORM.POJO.Resource;
 import com.alibaba.fastjson.JSON;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,7 +28,9 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @ContextConfiguration
-@WithMockUser(username = "测试用户", authorities = {"管理员", "普通用户"})
+@WithUserDetails("admin")
+//这里模拟登陆状态的说明具体参见官方文档
+//https://docs.spring.io/spring-security/site/docs/5.0.6.RELEASE/reference/htmlsingle/#test-method-withmockuser
 public class ResourceControllerTest {
 	@Autowired
 	private WebApplicationContext wac;
@@ -45,7 +46,6 @@ public class ResourceControllerTest {
 	}
 
 	@Test
-	@Ignore
 	public void selectResourceList() throws Exception {
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/resource?pid=1")
 				.accept(MediaType.APPLICATION_JSON)
