@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('管理员')")
 public class UserController {
 	UserService userService;
 
@@ -31,6 +30,7 @@ public class UserController {
 	}
 
 	@GetMapping("/{limit}")
+	@PreAuthorize("hasAuthority('管理员')")
 	public List<User> selectList(@RequestParam(defaultValue = "-1") int maxid, @PathVariable int limit) {
 		return userService.selectList(maxid, limit);
 	}

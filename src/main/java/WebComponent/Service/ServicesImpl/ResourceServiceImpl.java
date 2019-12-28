@@ -22,7 +22,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public List<Resource> selectResourceList(Integer pid, User user) {
-		return resourceMapper.selectResourceList(pid, user);
+		return resourceMapper.selectResourceList(pid, user.getId());
 	}
 
 	@Override

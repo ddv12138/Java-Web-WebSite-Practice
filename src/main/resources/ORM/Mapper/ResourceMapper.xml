@@ -13,7 +13,8 @@
         <result column="level" property="level"/>
     </resultMap>
     <resultMap id="subResourceModel" type="ORM.POJO.Resource" extends="resourceModel">
-        <collection property="childList" javaType="java.util.ArrayList" column="id" select="selectResourceList2"
+        <collection property="childList" javaType="java.util.ArrayList" column="{pid=id,userid=userid}"
+                    select="selectResourceList"
                     ofType="ORM.POJO.Resource">
             <id column="id" property="id"/>
             <result column="name" property="name"/>
@@ -24,14 +25,8 @@
             <result column="level" property="level"/>
         </collection>
     </resultMap>
-    <select id="selectResourceList2" resultMap="subResourceModel">
-        select *
-        From resource
-        where pid = #{pid}
-        order by "order"
-    </select>
     <select id="selectResourceList" resultMap="subResourceModel">
-        select *
+        select *, #{userid} as userid
         From resource r
         where pid = #{pid}
           and EXISTS
@@ -41,7 +36,7 @@
                       inner join user_role_map urm on urm.roleid = ro.id
                       inner join usertable u on u.id = urm.userid
              where rrm.resid = r.id
-               and u.id = #{param2.id})
+               and u.id = #{userid})
         order by "order"
     </select>
     <select id="selectResourceListByRole" parameterType="ORM.POJO.Role" resultMap="resourceModel">
