@@ -117,7 +117,6 @@
             f5: function () {
                 sa.ajax2("/user/" + this.page.pageSize, {}, function (res) {
                     if (res && res.state) {
-                        console.log(res.data);
                         this.dataList = res.data;
                     }
                 }.bind(this), {type: "get"})
@@ -129,7 +128,10 @@
                     shadeClose: false,
                     shade: 0.8,
                     area: ['70%', '100%'],
-                    content: 'user-add.html'
+                    content: 'user-add.html',
+                    end: function () {
+                        this.f5();
+                    }.bind(this)
                 });
             },
             // 分页刷新

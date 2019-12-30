@@ -73,21 +73,21 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return !baned;
+		return !(null != baned && baned);
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return !baned;
+		return !(null != baned && baned);
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return !baned;
+		return !(null != baned && baned);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return !baned;
+		return !(null != baned && baned);
 	}
 }

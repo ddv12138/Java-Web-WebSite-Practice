@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 		if (null != mapper.selectByName(user.getName())) {
 			throw new UserAleadyExistsException("user \"" + user.getName() + "\"already exists!");
 		}
+		Assert.notNull(user.getPassword(), "用户密码不能为空");
 		user.setPassword(Global.passwdEncrypt(user.getPassword()));
 		return mapper.saveOne(user);
 	}

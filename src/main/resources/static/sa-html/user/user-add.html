@@ -8,13 +8,14 @@
 
 	<!-- 所有的 css 资源 -->
 	<link href="https://unpkg.com/element-ui@2.8.2/lib/theme-chalk/index.css" rel="stylesheet">
-	<link href="../../static/sa.css" rel="stylesheet">
+	<link href="/static/sa.css" rel="stylesheet">
 
 	<!-- 所有的 js 资源 -->
 	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
 	<script src="https://unpkg.com/element-ui@2.8.2/lib/index.js"></script>
 	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+	<script src="/static/sa.js"></script>
 
 	<style type="text/css">
 
@@ -35,13 +36,13 @@
 
 			<div class="c-item">
 				<label class="c-label">用户名：</label>
-				<el-input size="mini" v-model="m.username"></el-input>
+				<el-input size="mini" v-model="user.name"></el-input>
 			</div>
 
 			<br>
 			<div class="c-item">
 				<label class="c-label">密码：</label>
-				<el-input size="mini" v-model="m.password"></el-input>
+				<el-input size="mini" v-model="user.password"></el-input>
 			</div>
 
 			<br>
@@ -66,15 +67,27 @@
     new Vue({
         el: '.vue-box',
         data: {
-            m: {	// 查询参数
-                username: '',
+            user: {	// 查询参数
+                name: '',
                 password: '',
             }
         },
         methods: {
             // ok
             ok: function (pageNo) {
-                this.$message('数据添加, 参数：' + JSON.stringify(this.m));
+                this.$message('数据添加, 参数：' + JSON.stringify(this.user));
+                sa.ajax2("/user", this.user, function (res) {
+                    if (res && res.state && res.data) {
+                        layer.alert('添加成功', {}, function () {
+                            if (parent != window) {
+                                parent.layer.closeAll('iframe');
+                            }
+                            layer.closeAll();
+                        });
+                    }
+                }, {
+                    type: "post"
+                })
             },
 
         }
