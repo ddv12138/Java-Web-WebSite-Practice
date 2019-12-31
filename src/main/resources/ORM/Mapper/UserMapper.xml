@@ -14,6 +14,11 @@
         insert into usertable (name, password)
         values (#{name}, #{password})
     </insert>
+    <delete id="deleteOne" parameterType="ORM.POJO.User">
+        delete
+        from usertable
+        where id = #{id}
+    </delete>
     <select id="selectList" resultMap="userResult">
         select *
         from usertable

@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class User implements UserDetails {
-	int id;
+	Integer id;
 	String name, password;
 	Boolean baned, lock;
 	List<Role> roles;

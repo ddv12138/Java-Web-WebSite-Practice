@@ -78,7 +78,7 @@
 					           v-if="scope.row.baned == true && scope.row.lock == false">解禁
 					</el-button>
 					<el-button @click="del(scope.row)" class="c-button" icon="el-icon-delete" type="danger"
-					           v-if="scope.row.lock == false">删除
+					           v-if="scope.row.lock == false || scope.row.lock == null">删除
 					</el-button>
 				</template>
 			</el-table-column>
@@ -146,10 +146,15 @@
             // 删除
             del: function (data) {
                 layer.confirm('是否删除，此操作不可撤销', {}, function () {
-                    sa.ajax2('url', {}, function (res) {
-                        sa.$util.arrayDelete(this.dataList, data);
-                        layer.msg('删除成功');
-                    }.bind(this))
+                    console.log({id: data.id, name: data.name});
+                    sa.ajax2('/user', JSON.stringify({id: data.id}), function (res) {
+                        if (res && res.state && res.data) {
+                            this.f5();
+                            layer.msg('删除成功');
+                        }
+                    }.bind(this), {
+                        type: "DELETE"
+                    })
                 }.bind(this));
             },
             // 账号冻结

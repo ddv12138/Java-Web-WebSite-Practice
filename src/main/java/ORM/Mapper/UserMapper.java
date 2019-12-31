@@ -17,4 +17,6 @@ public interface UserMapper {
 	List<User> selectList(@Param("maxid") int maxid, @Param("limit") int limit);
 
 	int saveOne(User user);
+
+	boolean deleteOne(User user);
 }
