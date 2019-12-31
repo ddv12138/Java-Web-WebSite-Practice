@@ -19,10 +19,6 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	public String loginpage() {
-		return " login";
-	}
-
 	@PostMapping
 	public int addUser(User user) throws UserAleadyExistsException {
 		return userService.saveOne(user);
