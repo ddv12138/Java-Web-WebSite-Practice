@@ -31,6 +31,12 @@ public class UserServiceImpl implements UserService {
 			throw new UserAleadyExistsException("user \"" + user.getName() + "\"already exists!");
 		}
 		Assert.notNull(user.getPassword(), "用户密码不能为空");
+		if (null == user.getBaned()) {
+			user.setBaned(false);
+		}
+		if (null == user.getLock()) {
+			user.setLock(false);
+		}
 		user.setPassword(Global.passwdEncrypt(user.getPassword()));
 		return mapper.saveOne(user);
 	}
@@ -56,5 +62,18 @@ public class UserServiceImpl implements UserService {
 		Assert.notNull(user, "用户不存在");
 		user.setRoles(roleMapper.listRoleByUser(user));
 		return user;
+	}
+
+	@Override
+	public Boolean deleteUser(User paruser) {
+		Assert.notNull(paruser.getId(), "删除用户时主键id不允许为null");
+		User user = mapper.selectById(paruser.getId());
+		Assert.notNull(user, "用户不存在");
+		return mapper.deleteOne(user);
+	}
+
+	@Override
+	public Integer selectCount() {
+		return mapper.selectCount();
 	}
 }

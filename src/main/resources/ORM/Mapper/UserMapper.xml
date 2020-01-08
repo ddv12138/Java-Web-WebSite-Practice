@@ -11,8 +11,8 @@
         <result property="lock" column="lock"/>
     </resultMap>
     <insert id="saveOne" parameterType="ORM.POJO.User" useGeneratedKeys="true" flushCache="true">
-        insert into usertable (name, password)
-        values (#{name}, #{password})
+        insert into usertable (name, password, baned, "lock")
+        values (#{name}, #{password}, #{baned}, #{lock})
     </insert>
     <select id="selectList" resultMap="userResult">
         select *
@@ -30,5 +30,14 @@
         from usertable
         where name = #{name}
         limit 1
+    </select>
+    <delete id="deleteOne">
+        delete
+        from usertable
+        where id = #{id}
+    </delete>
+    <select id="selectCount" resultType="Integer">
+        select count(1)
+        from usertable;
     </select>
 </mapper>

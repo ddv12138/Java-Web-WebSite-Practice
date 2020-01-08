@@ -47,7 +47,7 @@
 		<div class="c-title">列表</div>
 		<el-table :data="dataList" class="data-table" size="mini" style="width: 100%">
 
-			<el-table-column label="编号" prop="id" width="70px"></el-table-column>
+			<el-table-column label="编号" type="index" width="70px"></el-table-column>
 			<el-table-column label="用户名" prop="name" width="200px">
 				<template slot-scope="scope">
 					<div style="float: left; width: 130px; line-height: 20px;">
@@ -108,16 +108,22 @@
             page: {	// 分页信息
                 pageNo: 1,
                 pageSize: 10,
-                count: 1
+                count: 1,
+                maxid: -1
             },
             dataList: null
         },
         methods: {
             // 数据刷新
             f5: function () {
-                sa.ajax2("/user/" + this.page.pageSize, {}, function (res) {
-                    if (res && res.state) {
-                        this.dataList = res.data;
+                sa.ajax2("/user/list", {
+                    pagesize: this.page.pageSize,
+                    maxid: this.page.maxid
+                }, function (res) {
+                    if (res && res.state && res.data) {
+                        this.dataList = res.data.data;
+                        this.page.count = res.data.count;
+                        this.page.maxid = res.data.maxid;
                     }
                 }.bind(this), {type: "get"})
             },
@@ -146,10 +152,12 @@
             // 删除
             del: function (data) {
                 layer.confirm('是否删除，此操作不可撤销', {}, function () {
-                    sa.ajax2('url', {}, function (res) {
-                        sa.$util.arrayDelete(this.dataList, data);
-                        layer.msg('删除成功');
-                    }.bind(this))
+                    sa.ajax2('/user', JSON.stringify(data), function (res) {
+                        if (res && res.state && res.data) {
+                            layer.msg('删除成功');
+                            this.f5();
+                        }
+                    }.bind(this), {type: "delete"})
                 }.bind(this));
             },
             // 账号冻结

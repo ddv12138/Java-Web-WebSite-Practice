@@ -7,16 +7,16 @@ import java.util.Collection;
 import java.util.List;
 
 public class User implements UserDetails {
-	int id;
+	Integer id;
 	String name, password;
 	Boolean baned, lock;
 	List<Role> roles;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

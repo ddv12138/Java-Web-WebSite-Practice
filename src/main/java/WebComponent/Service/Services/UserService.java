@@ -20,4 +20,8 @@ public interface UserService extends UserDetailsService {
 
 	@Override
 	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+	Boolean deleteUser(User user);
+
+	Integer selectCount();
 }
