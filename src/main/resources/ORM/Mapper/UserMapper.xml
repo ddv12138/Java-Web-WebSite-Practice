@@ -22,8 +22,6 @@
     <select id="selectList" resultMap="userResult">
         select *
         from usertable
-        where id > #{maxid}
-        limit #{limit};
     </select>
     <select id="selectById" resultMap="userResult">
         select *
@@ -35,9 +33,5 @@
         from usertable
         where name = #{name}
         limit 1
-    </select>
-    <select id="selectCount" resultType="Integer">
-        select count(1)
-        from usertable;
     </select>
 </mapper>

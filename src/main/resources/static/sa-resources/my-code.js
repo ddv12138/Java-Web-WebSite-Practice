@@ -37,7 +37,6 @@ sp.icon_url = 'sa-resources/admin-logo.png';    // 设置icon图标地址   默�
 $.get("/user", function (res) {
 	if (res.state) {
 		let data = res.data;
-		console.log(data);
 		if (data.accountNonExpired && data.accountNonLocked && data.credentialsNonExpired && data.enabled) {
 			sp.user = {
 				username: data.username,	// 昵称

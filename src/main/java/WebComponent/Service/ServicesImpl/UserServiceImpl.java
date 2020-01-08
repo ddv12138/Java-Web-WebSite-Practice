@@ -6,6 +6,7 @@ import ORM.Mapper.RoleMapper;
 import ORM.Mapper.UserMapper;
 import ORM.POJO.User;
 import WebComponent.Service.Services.UserService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> selectList(int maxid, int limit) {
-		return mapper.selectList(maxid, limit);
+	public List<User> selectList(int pagenum, int pageSize) {
+		return PageHelper.startPage(pagenum, pageSize).doSelectPage(() -> mapper.selectList());
+	}
+
+	@Override
+	public long selectCount() {
+		return PageHelper.count(() -> mapper.selectList());
 	}
 
 	@Override
@@ -72,8 +78,4 @@ public class UserServiceImpl implements UserService {
 		return mapper.deleteOne(user);
 	}
 
-	@Override
-	public Integer selectCount() {
-		return mapper.selectCount();
-	}
 }

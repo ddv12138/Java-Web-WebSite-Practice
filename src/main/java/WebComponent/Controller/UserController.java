@@ -8,9 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -40,18 +38,9 @@ public class UserController {
 
 	@GetMapping("/list")
 	@PreAuthorize("hasAuthority('管理员')")
-	public Map<String, Object> selectList(@RequestParam(defaultValue = "-1") Integer maxid, @RequestParam("pagesize") int limit) {
+	public Map<String, Object> selectList(@RequestParam(defaultValue = "-1", name = "pagenum") Integer pageNum, @RequestParam("pagesize") int pageSize) {
 		LinkedHashMap<String, Object> res = new LinkedHashMap<>();
-		List<User> data = userService.selectList(maxid, limit);
-		ArrayList<Integer> list = new ArrayList<>(1);
-		list.add(maxid);
-		data.forEach(user -> {
-			if (user.getId() > list.get(0)) {
-				list.add(0, user.getId());
-			}
-		});
-		res.put("data", data);
-		res.put("maxid", list.get(0));
+		res.put("data", userService.selectList(pageNum, pageSize));
 		res.put("count", userService.selectCount());
 		return res;
 	}

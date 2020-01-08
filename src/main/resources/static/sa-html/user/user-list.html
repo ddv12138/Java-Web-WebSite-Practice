@@ -14,7 +14,7 @@
 	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
 	<script src="https://unpkg.com/element-ui@2.8.2/lib/index.js"></script>
 
-	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script src="../../static/kj/laydate/laydate.js"></script>
 	<script src="../../static/sa.js"></script>
@@ -85,7 +85,7 @@
 		</el-table>
 		<!-- 分页 -->
 		<div class="page-box">
-			<el-pagination :current-page.sync="page.pageNo"
+			<el-pagination :current-page.sync="page.pageNum"
 			               :page-size.sync="page.pageSize"
 			               :page-sizes="[1, 10, 20, 30, 40, 50, 100]"
 			               :total="page.count"
@@ -99,17 +99,16 @@
 </div>
 
 <script type="text/javascript">
-    var app = new Vue({
+    const app = new Vue({
         el: '.vue-box',
         data: {
             p: {	// 查询参数
                 username: '',
             },
             page: {	// 分页信息
-                pageNo: 1,
+                pageNum: 1,
                 pageSize: 10,
                 count: 1,
-                maxid: -1
             },
             dataList: null
         },
@@ -118,12 +117,11 @@
             f5: function () {
                 sa.ajax2("/user/list", {
                     pagesize: this.page.pageSize,
-                    maxid: this.page.maxid
+                    pagenum: this.page.pageNum
                 }, function (res) {
                     if (res && res.state && res.data) {
                         this.dataList = res.data.data;
                         this.page.count = res.data.count;
-                        this.page.maxid = res.data.maxid;
                     }
                 }.bind(this), {type: "get"})
             },
@@ -193,7 +191,7 @@
         mounted: function () {
             this.f5();
         }
-    })
+    });
 
 </script>
 

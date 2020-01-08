@@ -49,6 +49,7 @@ public class DataSourceConfig {
 		return sessionFactory.getObject();
 	}
 
+
 	@Bean
 	public DataSourceTransactionManager transactionManager(DruidDataSource dataSource) {
 		DataSourceTransactionManager manager = new DataSourceTransactionManager();

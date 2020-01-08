@@ -7,10 +7,7 @@ import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.*;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -20,6 +17,8 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.session.SessionRepository;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 
 import java.time.Duration;
 
@@ -85,5 +84,17 @@ class RootConfig {
 //		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(serializer);
 //		RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(pair);
 		return configuration;
+	}
+
+	@Bean
+	@Primary
+	public SessionRepository sessionRepositoryconfig(RedisIndexedSessionRepository redisIndexedSessionRepository) {
+		FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+		FastJsonConfig fastJsonConfig = new FastJsonConfig();
+		fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteClassName);
+		fastJsonRedisSerializer.setFastJsonConfig(fastJsonConfig);
+		redisIndexedSessionRepository.setDefaultSerializer(fastJsonRedisSerializer);
+		redisIndexedSessionRepository.setDefaultMaxInactiveInterval(36000);
+		return redisIndexedSessionRepository;
 	}
 }
