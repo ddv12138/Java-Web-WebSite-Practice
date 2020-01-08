@@ -53,7 +53,9 @@ public class UserControllerTest {
 
 	@Test
 	public void selectList() throws Exception {
-		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/user/10")
+		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/user/list")
+				.param("maxid", "-1")
+				.param("pagesize", "10")
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk()).

@@ -8,10 +8,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -28,6 +28,7 @@ public class UserController {
 	}
 
 	@DeleteMapping
+	@PreAuthorize("hasAuthority('管理员')")
 	public Boolean deleteUser(@RequestBody User user) {
 		return userService.deleteUser(user);
 	}
@@ -42,14 +43,15 @@ public class UserController {
 	public Map<String, Object> selectList(@RequestParam(defaultValue = "-1") Integer maxid, @RequestParam("pagesize") int limit) {
 		LinkedHashMap<String, Object> res = new LinkedHashMap<>();
 		List<User> data = userService.selectList(maxid, limit);
-		final Optional<Integer>[] maxidop = new Optional[]{Optional.of(maxid)};
+		ArrayList<Integer> list = new ArrayList<>(1);
+		list.add(maxid);
 		data.forEach(user -> {
-			if (user.getId() > maxidop[0].get()) {
-				maxidop[0] = Optional.of(user.getId());
+			if (user.getId() > list.get(0)) {
+				list.add(0, user.getId());
 			}
 		});
 		res.put("data", data);
-		res.put("maxid", maxidop[0].get());
+		res.put("maxid", list.get(0));
 		res.put("count", userService.selectCount());
 		return res;
 	}

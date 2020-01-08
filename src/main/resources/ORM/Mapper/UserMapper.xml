@@ -36,11 +36,6 @@
         where name = #{name}
         limit 1
     </select>
-    <delete id="deleteOne">
-        delete
-        from usertable
-        where id = #{id}
-    </delete>
     <select id="selectCount" resultType="Integer">
         select count(1)
         from usertable;
