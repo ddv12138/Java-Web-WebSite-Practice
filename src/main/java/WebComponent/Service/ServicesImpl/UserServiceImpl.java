@@ -78,4 +78,14 @@ public class UserServiceImpl implements UserService {
 		return mapper.deleteOne(user);
 	}
 
+	@Override
+	public Boolean userBan(User paruser, Boolean baned) {
+		Assert.notNull(paruser.getId(), "此操作要求用户主键id不允许为null");
+		User user = mapper.selectById(paruser.getId());
+		Assert.notNull(user, "用户不存在");
+		user.setBaned(baned);
+		return mapper.updateOne(user);
+	}
+
+
 }

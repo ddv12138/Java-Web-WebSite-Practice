@@ -1,6 +1,7 @@
 package WebComponent.Controller;
 
 import Exceptions.UserAleadyExistsException;
+import ORM.Mapper.UserMapper;
 import ORM.POJO.User;
 import WebComponent.Service.Services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,9 +16,11 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 	UserService userService;
+	UserMapper mapper;
 
-	public UserController(UserService userService) {
+	public UserController(UserService userService, UserMapper mapper) {
 		this.userService = userService;
+		this.mapper = mapper;
 	}
 
 	@PostMapping
@@ -43,5 +46,15 @@ public class UserController {
 		res.put("data", userService.selectList(pageNum, pageSize));
 		res.put("count", userService.selectCount());
 		return res;
+	}
+
+	@PutMapping("ban")
+	public Boolean banUser(@RequestBody User user) {
+		return userService.userBan(user, true);
+	}
+
+	@PutMapping("unban")
+	public Boolean unBanUser(@RequestBody User user) {
+		return userService.userBan(user, false);
 	}
 }

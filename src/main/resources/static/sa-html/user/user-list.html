@@ -38,7 +38,7 @@
 				<el-button @click="f5" icon="el-icon-search" size="mini" type="primary">查询</el-button>
 			</div>
 			<div class="c-item" style="min-width: 0px;">
-				<el-button @click="newUser()" icon="el-icon-search" size="mini" type="primary">新增用户</el-button>
+				<el-button @click="newUser()" size="mini" type="primary">新增用户</el-button>
 			</div>
 		</el-form>
 	</div>
@@ -99,7 +99,7 @@
 </div>
 
 <script type="text/javascript">
-    const app = new Vue({
+    window.app = new Vue({
         el: '.vue-box',
         data: {
             p: {	// 查询参数
@@ -131,11 +131,8 @@
                     title: '新增用户',
                     shadeClose: false,
                     shade: 0.8,
-                    area: ['70%', '100%'],
+                    area: ['40%', '50%'],
                     content: 'user-add.html',
-                    end: function () {
-                        this.f5();
-                    }.bind(this)
                 });
             },
             // 分页刷新
@@ -161,19 +158,23 @@
             // 账号冻结
             dongjie: function (data) {
                 layer.confirm('冻结此用户？', {}, function () {
-                    sa.ajax2('url', {}, function (res) {
-                        data.status = 2;
-                        layer.msg('冻结成功');
-                    }.bind(this))
+                    sa.ajax2('/user/ban', JSON.stringify(data), function (res) {
+                        if (res && res.state && res.data) {
+                            layer.msg('冻结成功');
+                            this.f5();
+                        }
+                    }.bind(this), {type: "put"})
                 }.bind(this));
             },
             // 解禁
             jiejin: function (data) {
                 layer.confirm('解禁此用户？', {}, function () {
-                    sa.ajax2('url', {}, function (res) {
-                        data.status = 1;
-                        layer.msg('解禁成功');
-                    }.bind(this))
+                    sa.ajax2('/user/unban', JSON.stringify(data), function (res) {
+                        if (res && res.state && res.data) {
+                            layer.msg('解禁成功');
+                            this.f5();
+                        }
+                    }.bind(this), {type: "put"})
                 }.bind(this));
             },
             //管理角色
@@ -183,7 +184,7 @@
                     title: '管理用户 [' + data.name + '] 的角色',
                     shadeClose: false,
                     shade: 0.8,
-                    area: ['70%', '100%'],
+                    area: ['50%', '50%'],
                     content: 'role-setup.html?userid=' + data.id
                 });
             }

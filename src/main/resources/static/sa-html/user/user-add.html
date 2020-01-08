@@ -33,32 +33,23 @@
 	<div class="c-panel">
 		<div class="c-title">用户添加</div>
 		<el-form ref="form">
-
 			<div class="c-item">
 				<label class="c-label">用户名：</label>
 				<el-input size="mini" v-model="user.name"></el-input>
 			</div>
-
-			<br>
+			<br/>
 			<div class="c-item">
 				<label class="c-label">密码：</label>
 				<el-input size="mini" v-model="user.password"></el-input>
 			</div>
-
-			<br>
-			<div class="c-item" style="min-width: 0px;">
-				<label class="c-label"></label>
-				<el-button @click="ok" icon="el-icon-plus" size="mini" type="primary">确定</el-button>
-			</div>
+			<br/>
+			<el-row class="row-bg" justify="space-around" type="flex">
+				<el-button @click="ok" size="mini" type="primary">确定</el-button>
+			</el-row>
 
 		</el-form>
 
 	</div>
-
-
-	<br><br><br><br><br><br><br><br><br>
-
-
 </div>
 
 
@@ -79,9 +70,9 @@
                 sa.ajax2("/user", this.user, function (res) {
                     if (res && res.state && res.data) {
                         layer.alert('添加成功', {}, function () {
-                            if (parent != window) {
-                                parent.layer.closeAll('iframe');
-                            }
+                            let curr_index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.app.f5();
+                            parent.layer.close(curr_index); //再执行关闭
                             layer.closeAll();
                         });
                     }

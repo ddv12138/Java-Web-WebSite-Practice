@@ -24,4 +24,7 @@ public interface UserService extends UserDetailsService {
 	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
 	Boolean deleteUser(User user);
+
+	Boolean userBan(User paruser, Boolean baned);
+
 }
