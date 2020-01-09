@@ -7,10 +7,6 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletRegistration;
-import java.io.File;
-import java.io.FileNotFoundException;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	@Override
@@ -26,23 +22,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	@Override
 	protected String[] getServletMappings() {
 		return new String[]{"/"};
-	}
-
-	@Override
-	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-		File tmp = new File("C:/springupload/");
-		if (!tmp.exists()) {
-			if (!tmp.mkdirs()) {
-				try {
-					throw new FileNotFoundException("文件夹未找到或创建失败");
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		registration.setMultipartConfig(
-				new MultipartConfigElement(tmp.getAbsolutePath(),
-						5 * 1024 * 1024, 6 * 1024 * 1024, 0));
 	}
 
 	@Bean
