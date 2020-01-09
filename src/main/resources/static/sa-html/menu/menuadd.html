@@ -4,6 +4,27 @@
 		<meta charset="UTF-8">
 		<title>添加菜单项</title>
 		<link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+		<style>
+			.icon-item:hover {
+				color: #2D8CF0;
+			}
+
+			.icon-item {
+				font-size: 32px;
+				color: #444;
+				margin: 1rem;
+				cursor: pointer;
+			}
+
+			.infinite-list {
+				overflow: auto;
+				border: 1px solid #DCDFE6;
+				margin: 1rem 0;
+				padding: 0.2rem;
+				border-radius: 4px;
+				max-height: 7rem;
+			}
+		</style>
 	</head>
 	<body>
 		<el-card class="box-card">
@@ -25,6 +46,12 @@
 				<el-form-item label="菜单项URL(填写相对路径)" prop="url">
 					<el-input v-model="resource.url"></el-input>
 				</el-form-item>
+				<el-form-item label="菜单图标" prop="url">
+					<el-input :disabled="true" v-model="resource.icon"></el-input>
+					<div class="infinite-list" style="overflow:auto" v-infinite-scroll="loadicon">
+						<i :class="[i.name,'icon-item']" @click="choseIcon(i.name)" v-for="i in icon.iconList"></i>
+					</div>
+				</el-form-item>
 				<el-form-item>
 					<el-button @click="submitForm('resource')" type="primary">提交</el-button>
 					<el-button @click="resetForm('resource')">重置</el-button>
@@ -33,29 +60,38 @@
 		</el-card>
 	</body>
 	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
-	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>
 	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+	<script src="/static/sa.js"></script>
 	<script type="text/javascript">
         window.setData = function (data, modify) {
+            if (!data) return;
             let formdata = {
                 name: data.name,
                 url: data.url,
-                id: data.id
+                id: data.id,
+                icon: data.icon
             };
-            if (!data) return;
             if (!modify) {
                 formdata = {
                     pid: data.id,
                     pname: data.name,
                 };
             }
+            console.log(formdata);
             let resource = new Vue({
                 el: "#form",
                 data: {
                     isModify: modify,
                     labelPosition: "top",
                     resource: formdata,
+                    icon: {
+                        pagenum: 1,
+                        pagesize: 30,
+                        iconList: [],
+                        count: 31,
+                    },
                     rules: {
                         name: [
                             {required: true, message: '请输入菜单项名称', trigger: 'blur'},
@@ -115,6 +151,27 @@
                     },
                     resetForm(formName) {
                         this.$refs[formName].resetFields();
+                    },
+                    choseIcon(arg) {
+                        this.resource.icon = arg;
+                    },
+                    loadicon(arg) {
+                        if (this.icon.pagenum >= (this.icon.count / this.icon.pagesize) + 1) {
+                            return;
+                        }
+                        sa.ajax2("/icon/list", {
+                            pagesize: this.icon.pagesize,
+                            pagenum: this.icon.pagenum
+                        }, function (res) {
+                            if (res && res.state && res.data) {
+                                console.log(res.data);
+                                this.icon.iconList = this.icon.iconList.concat(res.data.data);
+                                this.icon.count = res.data.count;
+                                if (this.icon.pagenum < (this.icon.count / this.icon.pagesize) + 1) {
+                                    this.icon.pagenum += 1;
+                                }
+                            }
+                        }.bind(this), {type: "get"})
                     }
                 }
             })
