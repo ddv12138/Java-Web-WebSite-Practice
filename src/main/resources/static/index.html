@@ -6,8 +6,8 @@
 	<link class="admin-icon" rel="shortcut icon" type="image/x-icon">
 	<meta content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
 	      name="viewport"/>
-	<link href="https://unpkg.com/element-ui@2.8.2/lib/theme-chalk/index.css" rel="stylesheet">
-	<link href="https://unpkg.com/swiper@4.5.0/dist/css/swiper.min.css" rel="stylesheet">
+	<link href="https://cdn.bootcss.com/element-ui/2.12.0/theme-chalk/index.css" rel="stylesheet">
+	<link href="https://cdn.bootcss.com/Swiper/4.5.1/css/swiper.min.css" rel="stylesheet">
 	<link href="sa-resources/index.css" rel="stylesheet">
 	<link href="sa-resources/theme.css" rel="stylesheet">
 
@@ -61,35 +61,29 @@
 								<div :key="index" v-for="(menu2, index) in menu.childList">
 									<!-- 2 如果是子菜单 -->
 									<el-menu-item :index="menu2.id + '' " v-if="menu2.childList == null">
+										<i :class="menu2.icon" :title="menu2.name"></i>
 										{{menu2.name}}
 									</el-menu-item>
 
 									<!-- 2 如果是父菜单 -->
 									<el-submenu :index="menu2.id + '' " v-else>
 										<template slot="title">
+											<i :class="menu2.icon" :title="menu2.name"></i>
 											{{menu2.name}}
 										</template>
 										<el-menu-item :index="menu3.id + '' " :key="index3"
 										              v-for="(menu3, index3) in menu2.childList">
+											<i :class="menu3.icon" :title="menu3.name"></i>
 											{{menu3.name}}
 										</el-menu-item>
 									</el-submenu>
-
 								</div>
-
 							</el-submenu>
-
 						</div>
-
 					</el-menu>
-
-
 				</div>
 			</div>
-
-
 		</div>
-
 	</div>
 
 	<!-- 右边 -->
@@ -228,12 +222,12 @@
 
 
 </div>
-<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
 <script type="text/javascript">
     Vue.config.productionTip = false;
 </script>
 <script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>
-<script src="https://unpkg.com/swiper@4.5.0/dist/js/swiper.min.js"></script>
+<script src="https://cdn.bootcss.com/Swiper/4.5.1/js/swiper.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 

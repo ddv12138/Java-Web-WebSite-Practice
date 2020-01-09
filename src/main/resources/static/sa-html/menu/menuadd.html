@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>添加菜单项</title>
-		<link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/element-ui/2.12.0/theme-chalk/index.css" rel="stylesheet">
 		<style>
 			.icon-item:hover {
 				color: #2D8CF0;
@@ -14,6 +14,10 @@
 				color: #444;
 				margin: 1rem;
 				cursor: pointer;
+			}
+
+			.activeicon {
+				color: #2D8CF0;
 			}
 
 			.infinite-list {
@@ -46,12 +50,13 @@
 				<el-form-item label="菜单项URL(填写相对路径)" prop="url">
 					<el-input v-model="resource.url"></el-input>
 				</el-form-item>
-				<el-form-item label="菜单图标" prop="url">
-					<el-input :disabled="true" v-model="resource.icon"></el-input>
-					<div class="infinite-list" style="overflow:auto" v-infinite-scroll="loadicon">
-						<i :class="[i.name,'icon-item']" @click="choseIcon(i.name)" v-for="i in icon.iconList"></i>
-					</div>
+				<el-form-item label="菜单图标" prop="icon">
+					<el-input v-model="resource.icon"></el-input>
 				</el-form-item>
+				<div class="infinite-list" style="overflow:auto" v-infinite-scroll="loadicon">
+					<i :class="[i.name,'icon-item',i.isActive ? 'activeicon' : '']" @click="choseIcon(i)"
+					   v-for="i in icon.iconList"></i>
+				</div>
 				<el-form-item>
 					<el-button @click="submitForm('resource')" type="primary">提交</el-button>
 					<el-button @click="resetForm('resource')">重置</el-button>
@@ -59,7 +64,7 @@
 			</el-form>
 		</el-card>
 	</body>
-	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
 	<script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>
 	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
@@ -79,7 +84,6 @@
                     pname: data.name,
                 };
             }
-            console.log(formdata);
             let resource = new Vue({
                 el: "#form",
                 data: {
@@ -96,6 +100,9 @@
                         name: [
                             {required: true, message: '请输入菜单项名称', trigger: 'blur'},
                             {min: 0, max: 10, message: '长度不超过 10 个字符', trigger: 'blur'}
+                        ],
+                        icon: [
+                            {required: true, message: '请选择图标', trigger: 'blur'},
                         ],
                         url: [
                             {required: false, message: '请输入菜单项URL(填写相对路径,如果留空则是普通菜单节点)', trigger: 'blur'}
@@ -153,7 +160,12 @@
                         this.$refs[formName].resetFields();
                     },
                     choseIcon(arg) {
-                        this.resource.icon = arg;
+                        this.icon.iconList.forEach(ele => {
+                            ele.isActive = false
+                        });
+                        arg.isActive = true;
+                        this.resource.icon = arg.name;
+                        this.resource = JSON.parse(JSON.stringify(this.resource));
                     },
                     loadicon(arg) {
                         if (this.icon.pagenum >= (this.icon.count / this.icon.pagesize) + 1) {

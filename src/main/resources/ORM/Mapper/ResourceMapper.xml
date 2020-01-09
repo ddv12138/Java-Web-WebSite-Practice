@@ -11,6 +11,7 @@
         <result column="order" property="order"/>
         <result column="level_id" property="levelId"/>
         <result column="level" property="level"/>
+        <result column="icon" property="icon"/>
     </resultMap>
     <resultMap id="subResourceModel" type="ORM.POJO.Resource" extends="resourceModel">
         <collection property="childList" javaType="java.util.ArrayList" column="{pid=id,userid=userid}"
@@ -23,8 +24,29 @@
             <result column="order" property="order"/>
             <result column="level_id" property="levelId"/>
             <result column="level" property="level"/>
+            <result column="icon" property="icon"/>
         </collection>
     </resultMap>
+    <resultMap id="subResourceModel_All" type="ORM.POJO.Resource" extends="resourceModel">
+        <collection property="childList" javaType="java.util.ArrayList" column="{pid=id}"
+                    select="selectAllResourceList"
+                    ofType="ORM.POJO.Resource">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="url" property="url"/>
+            <result column="pid" property="pid"/>
+            <result column="order" property="order"/>
+            <result column="level_id" property="levelId"/>
+            <result column="level" property="level"/>
+            <result column="icon" property="icon"/>
+        </collection>
+    </resultMap>
+    <select id="selectAllResourceList" resultMap="subResourceModel_All">
+        select *
+        From resource r
+        where pid = #{pid}
+        order by "order"
+    </select>
     <select id="selectResourceList" resultMap="subResourceModel">
         select *, #{userid} as userid
         From resource r
@@ -47,8 +69,8 @@
         ORDER BY "order"
     </select>
     <insert id="addOne" parameterType="ORM.POJO.Resource" useGeneratedKeys="true">
-        insert into resource (name, url, pid, "order", level, level_id)
-        values (#{name}, #{url}, #{pid}, #{order}, #{level}, #{levelId})
+        insert into resource (name, url, pid, "order", level, level_id, icon)
+        values (#{name}, #{url}, #{pid}, #{order}, #{level}, #{levelId}, #{icon})
     </insert>
     <select id="selectMaxOrder" resultType="Integer">
         select max("order")
@@ -79,6 +101,7 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="null!=name">name=#{name},</if>
             <if test="null!=url">url=#{url},</if>
+            <if test="null!=icon">icon=#{icon},</if>
         </trim>
         where id=#{id}
     </update>

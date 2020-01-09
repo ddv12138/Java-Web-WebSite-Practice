@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/element-ui/2.12.0/theme-chalk/index.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="block">
@@ -13,7 +13,9 @@
 			         default-expand-all
 			         node-key="id">
 				<span class="custom-tree-node" slot-scope="{ node, data }">
-					<span>{{ node.label }}</span>
+					<span>
+						<i :class="data.icon" :title="data.name" style="margin-right: 0.5rem"></i>{{ node.label }}
+					</span>
 					<span>
 						<el-button
 								@click="() => append(data)"
@@ -38,14 +40,13 @@
 			</el-tree>
 		</div>
 	</body>
-	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
 	<script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>
 	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script type="module">
         let parseDataTooTree = function (arg) {
             for (let i = 0; i < arg.length; i++) {
-                arg[i].icon = 'el-icon-document-remove';
                 arg[i].label = arg[i].name;
                 if (arg[i].childList && arg[i].childList == 0) {
                     delete arg[i].childList;

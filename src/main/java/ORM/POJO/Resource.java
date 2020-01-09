@@ -4,8 +4,16 @@ import java.util.List;
 
 public class Resource {
 	Integer id, pid, order, level;
-	String name, url, levelId;
+	String name, url, levelId, icon;
 	List<Resource> childList;
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 
 	public Integer getLevel() {
 		return level;

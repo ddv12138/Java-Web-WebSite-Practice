@@ -3,6 +3,7 @@ package WebComponent.Service.ServicesImpl;
 import ORM.Mapper.IconMapper;
 import WebComponent.Service.Services.IconService;
 import com.github.pagehelper.PageHelper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class IconServiceImpl implements IconService {
 	}
 
 	@Override
+	@Cacheable(value = "iconCahe")
 	public Map<String, Object> selectList(int pagenum, int pageSize) {
 		Map<String, Object> res = new LinkedHashMap<>();
 		res.put("data", PageHelper.startPage(pagenum, pageSize).doSelectPage(() -> iconMapper.selectList()));
