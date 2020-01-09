@@ -7,26 +7,29 @@
 		<style>
 			.icon-item:hover {
 				color: #2D8CF0;
+				background: #ccc;
 			}
 
 			.icon-item {
 				font-size: 32px;
 				color: #444;
-				margin: 1rem;
+				padding: 1rem;
 				cursor: pointer;
+				border: 1px solid #ccc;
 			}
 
 			.activeicon {
 				color: #2D8CF0;
+				background: #ccc;
 			}
 
 			.infinite-list {
 				overflow: auto;
 				border: 1px solid #DCDFE6;
-				margin: 1rem 0;
 				padding: 0.2rem;
 				border-radius: 4px;
-				max-height: 7rem;
+				max-height: 10rem;
+				max-width: 51rem;
 			}
 		</style>
 	</head>
@@ -51,12 +54,14 @@
 					<el-input v-model="resource.url"></el-input>
 				</el-form-item>
 				<el-form-item label="菜单图标" prop="icon">
-					<el-input v-model="resource.icon"></el-input>
+					<el-input style="display: none;" v-model="resource.icon"></el-input>
+					<div class="infinite-list" style="overflow: auto;display: flex;flex-flow: wrap;"
+					     v-infinite-scroll="loadicon">
+						<div :class="['icon-item',i.isActive ? 'activeicon' : '']" v-for="i in icon.iconList">
+							<i :class="[i.name]" @click="choseIcon(i)"></i>
+						</div>
+					</div>
 				</el-form-item>
-				<div class="infinite-list" style="overflow:auto" v-infinite-scroll="loadicon">
-					<i :class="[i.name,'icon-item',i.isActive ? 'activeicon' : '']" @click="choseIcon(i)"
-					   v-for="i in icon.iconList"></i>
-				</div>
 				<el-form-item>
 					<el-button @click="submitForm('resource')" type="primary">提交</el-button>
 					<el-button @click="resetForm('resource')">重置</el-button>
