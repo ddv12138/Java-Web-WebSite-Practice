@@ -27,15 +27,15 @@ public class DataSourceConfig {
 	@Bean(initMethod = "init", destroyMethod = "close")
 	public DruidDataSource dataSource() {
 		DruidDataSource dataSource = new DruidDataSource();
-		dataSource.setUrl(env.getProperty("db.jdbcUrl"));
-		dataSource.setUsername(env.getProperty("db.user"));
-		dataSource.setPassword(env.getProperty("db.password"));
+		dataSource.setUrl(env.getProperty("ddvudo.datasource.jdbcUrl"));
+		dataSource.setUsername(env.getProperty("ddvudo.datasource.user"));
+		dataSource.setPassword(env.getProperty("ddvudo.datasource.password"));
 		dataSource.setMaxActive(10);
 		dataSource.setTestWhileIdle(true);
 		dataSource.setTestOnBorrow(false);
 		dataSource.setTestOnReturn(false);
 		dataSource.setInitialSize(1);
-		dataSource.setDriverClassName(env.getProperty("db.driverclass"));
+		dataSource.setDriverClassName(env.getProperty("ddvudo.datasource.driverclass"));
 		Global.Logger(this).info("druid dataSource pool created");
 		return dataSource;
 	}

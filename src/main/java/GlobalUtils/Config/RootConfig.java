@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -29,6 +30,12 @@ import java.time.Duration;
 		@ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class)
 })
 class RootConfig {
+	Environment env;
+
+	public RootConfig(Environment env) {
+		this.env = env;
+	}
+
 	@Bean
 	public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory, RedisCacheConfiguration redisCacheConfiguration) {
 		//初始化一个RedisCacheWriter
