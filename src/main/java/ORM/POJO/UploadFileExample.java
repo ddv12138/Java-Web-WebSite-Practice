@@ -514,6 +514,76 @@ public class UploadFileExample {
 			addCriterion("ownerid not between", value1, value2, "ownerid");
 			return (Criteria) this;
 		}
+
+		public Criteria andRealnameIsNull() {
+			addCriterion("realname is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameIsNotNull() {
+			addCriterion("realname is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameEqualTo(String value) {
+			addCriterion("realname =", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameNotEqualTo(String value) {
+			addCriterion("realname <>", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameGreaterThan(String value) {
+			addCriterion("realname >", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameGreaterThanOrEqualTo(String value) {
+			addCriterion("realname >=", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameLessThan(String value) {
+			addCriterion("realname <", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameLessThanOrEqualTo(String value) {
+			addCriterion("realname <=", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameLike(String value) {
+			addCriterion("realname like", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameNotLike(String value) {
+			addCriterion("realname not like", value, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameIn(List<String> values) {
+			addCriterion("realname in", values, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameNotIn(List<String> values) {
+			addCriterion("realname not in", values, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameBetween(String value1, String value2) {
+			addCriterion("realname between", value1, value2, "realname");
+			return (Criteria) this;
+		}
+
+		public Criteria andRealnameNotBetween(String value1, String value2) {
+			addCriterion("realname not between", value1, value2, "realname");
+			return (Criteria) this;
+		}
 	}
 
 	/**

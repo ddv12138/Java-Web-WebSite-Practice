@@ -117,6 +117,11 @@
             <artifactId>mybatis-generator-core</artifactId>
             <version>1.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>6.0.11</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -32,6 +32,7 @@
 				:on-exceed="handleExceed"
 				:on-preview="handlePreview"
 				:on-remove="handleRemove"
+				:on-progress="handleProgress"
 				action="/uploadfile"
 				class="upload-demo">
 			<el-button size="small" type="primary">点击上传</el-button>
@@ -47,6 +48,9 @@
             fileList: []
         },
         methods: {
+            handleProgress(arg) {
+                console.log(arg)
+            },
             handlePreview(arg) {
                 console.log(arg)
             },

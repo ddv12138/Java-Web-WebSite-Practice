@@ -23,10 +23,10 @@
         </commentGenerator>
 
         <!--jdbc的数据库连接-->
-        <jdbcConnection driverClass="${db.driverclass}"
-                        connectionURL="${db.jdbcUrl}"
-                        userId="${db.user}"
-                        password="${db.password}">
+        <jdbcConnection driverClass="${ddvudo.datasource.driverclass}"
+                        connectionURL="${ddvudo.datasource.jdbcUrl}"
+                        userId="${ddvudo.datasource.user}"
+                        password="${ddvudo.datasource.password}">
         </jdbcConnection>
 
         <!--非必须，类型处理器，在数据库类型和java类型之间的转换控制-->
@@ -67,6 +67,7 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <table tableName="file" domainObjectName="UploadFile">
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
         </table>
     </context>
 </generatorConfiguration>
