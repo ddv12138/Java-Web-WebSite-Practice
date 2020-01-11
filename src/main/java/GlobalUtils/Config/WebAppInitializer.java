@@ -1,9 +1,6 @@
 package GlobalUtils.Config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
@@ -22,11 +19,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	@Override
 	protected String[] getServletMappings() {
 		return new String[]{"/"};
-	}
-
-	@Bean
-	public MultipartResolver getMultipartResolver() {
-		return new StandardServletMultipartResolver();
 	}
 
 	@Override
