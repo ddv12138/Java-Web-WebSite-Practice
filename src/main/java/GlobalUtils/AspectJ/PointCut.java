@@ -15,16 +15,6 @@ public class PointCut {
 		return processPointCut(joinPoint, "Controller");
 	}
 
-	@Around("execution(* WebComponent.Service.ServicesImpl.*.*(..))")
-	public Object serviceAnalysis(ProceedingJoinPoint joinPoint) throws Throwable {
-		return processPointCut(joinPoint, "Service");
-	}
-
-	@Around("execution(* ORM.Mapper.*.*(..))")
-	public Object daoAnalysis(ProceedingJoinPoint joinPoint) throws Throwable {
-		return processPointCut(joinPoint, "Mapper");
-	}
-
 	private Object processPointCut(ProceedingJoinPoint joinPoint, String cutType) throws Throwable {
 		long start = System.currentTimeMillis();
 		Object obj = joinPoint.proceed(joinPoint.getArgs());
