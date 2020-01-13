@@ -40,7 +40,7 @@ public class FileServiceImpl implements FileService {
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		String fileExtendName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 		String randomFileName = uuid + fileExtendName;
-		String folder = LocalDate.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
+		String folder = LocalDate.now().format(DateTimeFormatter.ofPattern("YYYY/MM/dd"));
 		uploadFile.setFilename(folder + "/" + randomFileName);
 		uploadFile.setRealname(file.getOriginalFilename());
 		fileStorageUtil.saveOne(file, uploadFile, user);

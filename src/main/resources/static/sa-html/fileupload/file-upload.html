@@ -16,16 +16,50 @@
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script src="/sa-resources/admin-util.js"></script>
 	<script src="/static/sa.js"></script>
+	<style>
+		.box-card {
+			margin-bottom: 1rem;
+		}
+
+		.avatar-uploader .el-upload {
+			border: 1px dashed #d9d9d9;
+			border-radius: 6px;
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.avatar-uploader .el-upload:hover {
+			border-color: #409EFF;
+		}
+
+		.avatar-uploader-icon {
+			font-size: 28px;
+			color: #8c939d;
+			width: 178px;
+			height: 178px;
+			line-height: 178px;
+			text-align: center;
+		}
+
+		.avatar {
+			width: 178px;
+			height: 178px;
+			display: block;
+		}
+	</style>
 </head>
 <body>
 <div class="vue-box">
 	<el-card class="box-card">
+		<p>原始上传</p>
 		<form action="/uploadfile" enctype="multipart/form-data" id="normalForm" method="post">
 			<input name="file" type="file" value="upload">
 			<input @click="normalSubmit()" type="button" value="do it!">
 		</form>
 	</el-card>
 	<el-card class="box-card">
+		<p>elment-ui基本上传</p>
 		<el-upload
 				:before-remove="beforeRemove"
 				:file-list="fileList"
@@ -36,7 +70,18 @@
 				action="/uploadfile"
 				class="upload-demo">
 			<el-button size="small" type="primary">点击上传</el-button>
-			<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+		</el-upload>
+	</el-card>
+	<el-card class="box-card">
+		<p>elment-ui头像上传</p>
+		<el-upload
+				:before-upload="beforeAvatarUpload"
+				:on-success="handleAvatarSuccess"
+				:show-file-list="false"
+				action="/uploadfile"
+				class="avatar-uploader">
+			<img :src="imageUrl" class="avatar" v-if="imageUrl">
+			<i class="el-icon-plus avatar-uploader-icon" v-else></i>
 		</el-upload>
 	</el-card>
 </div>
@@ -45,7 +90,8 @@
     const vm = new Vue({
         el: ".vue-box",
         data: {
-            fileList: []
+            fileList: [],
+            imageUrl: ''
         },
         methods: {
             handleProgress(arg) {
@@ -65,9 +111,6 @@
             },
             normalSubmit(arg) {
                 let data = new FormData($("#normalForm")[0]);
-                // sa.ajax2("/uploadfile",data,function (res) {
-                //     console.log(res)
-                // },{type:"POST",processData: false});
                 $.ajax({
                     url: "/uploadfile",//后台的接口地址
                     type: "post",//post请求方式
@@ -81,6 +124,22 @@
                     }
 
                 });
+            },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                console.log(file.type);
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
             }
         }
     });
