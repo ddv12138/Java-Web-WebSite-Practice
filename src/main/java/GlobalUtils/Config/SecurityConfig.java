@@ -2,24 +2,32 @@ package GlobalUtils.Config;
 
 import GlobalUtils.PasswdEncoder;
 import WebComponent.Service.Services.UserService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.Session;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig<S extends Session> extends WebSecurityConfigurerAdapter {
+	RedisIndexedSessionRepository redisIndexedSessionRepository;
 	UserService userService;
 	PasswdEncoder passwdEncoder;
 
-	public SecurityConfig(UserService userService, PasswdEncoder passwdEncoder) {
+	public SecurityConfig(UserService userService, PasswdEncoder passwdEncoder,
+						  RedisIndexedSessionRepository redisIndexedSessionRepository) {
 		this.userService = userService;
 		this.passwdEncoder = passwdEncoder;
+		this.redisIndexedSessionRepository = redisIndexedSessionRepository;
 	}
 
 	@Override
@@ -48,6 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 //		http.authorizeRequests().anyRequest().permitAll();
 		http.headers().frameOptions().disable();
+		//spring session配置
+		http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
+	}
+
+	@Bean
+	public SpringSessionBackedSessionRegistry<S> sessionRegistry() {
+		return new SpringSessionBackedSessionRegistry<S>(
+				(FindByIndexNameSessionRepository<S>) this.redisIndexedSessionRepository);
 	}
 
 	@Override

@@ -25,7 +25,10 @@ public class FileController {
 	}
 
 	@PostMapping
-	public Boolean addOne(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user) throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException, InvalidArgumentException, InvalidResponseException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException, RegionConflictException {
+	public Boolean addOne(@RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user)
+			throws IOException, InvalidKeyException, NoSuchAlgorithmException, XmlPullParserException,
+			InvalidArgumentException, InvalidResponseException, ErrorResponseException, NoResponseException,
+			InvalidBucketNameException, InsufficientDataException, InternalException, RegionConflictException {
 		return fileService.saveOne(file, user).getId() > 0;
 	}
 }
