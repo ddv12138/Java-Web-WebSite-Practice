@@ -12,7 +12,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 @Configuration
 @EnableWebSecurity
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 36000)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	UserService userService;
 	PasswdEncoder passwdEncoder;

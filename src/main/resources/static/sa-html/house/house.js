@@ -7,7 +7,7 @@ window.onload = function () {
             center: [cityData.location.lng, cityData.location.lat],
             zoom: 11
         });
-        $.post("/community/getCommunitiesByCity", {cityName: cityStr}, function (commData, status) {
+        $.post("/community/list", {cityName: cityStr}, function (commData, status) {
             let points = [];
             commData = commData.data;
             commData.forEach(function (loc) {

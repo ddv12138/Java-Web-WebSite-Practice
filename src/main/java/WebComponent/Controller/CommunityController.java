@@ -1,6 +1,5 @@
 package WebComponent.Controller;
 
-import GlobalUtils.CommonResult;
 import ORM.POJO.City;
 import ORM.POJO.Community;
 import WebComponent.Service.Services.CommunityService;
@@ -24,11 +23,11 @@ public class CommunityController {
 		this.cityService = cityService;
 	}
 
-	@RequestMapping("/getCommunitiesByCity")
+	@RequestMapping("/list")
 	@ResponseBody
-	public CommonResult getCommunityByCity(String cityName) {
+	public List<Community> getCommunityByCity(String cityName) {
 		City city = cityService.selectByName(cityName);
 		List<Community> communities = communityService.selectHetMapDataByCity(city);
-		return new CommonResult(true, "success", communities);
+		return communities;
 	}
 }

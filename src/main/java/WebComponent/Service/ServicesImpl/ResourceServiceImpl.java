@@ -5,6 +5,8 @@ import ORM.POJO.Resource;
 import ORM.POJO.Role;
 import ORM.POJO.User;
 import WebComponent.Service.Services.ResourceService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -21,6 +23,7 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
+	@Cacheable(value = "Resource", key = "'selectResourceList-'+#pid+'-'+#user.name")
 	public List<Resource> selectResourceList(Integer pid, User user) {
 		return user.getName().equals("admin") ? resourceMapper.selectAllResourceList(pid) : resourceMapper.selectResourceList(pid, user.getId());
 	}
@@ -31,6 +34,7 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
+	@CacheEvict(value = "Resource", allEntries = true)
 	public int addOne(Resource resource) {
 		if (null == resource.getOrder()) {
 			resource.setOrder(resourceMapper.selectMaxOrder() + 1);
@@ -69,11 +73,13 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
+	@CacheEvict(value = "Resource", allEntries = true)
 	public int deleteOne(Resource resource) {
 		return resourceMapper.deleteOne(resource);
 	}
 
 	@Override
+	@CacheEvict(value = "Resource", allEntries = true)
 	public int updateOne(Resource resource) {
 		return resourceMapper.updateOne(resource);
 	}

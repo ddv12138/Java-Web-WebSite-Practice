@@ -5,20 +5,17 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
@@ -29,28 +26,14 @@ import java.time.Duration;
 @ComponentScan(basePackages = {"WebComponent", "GlobalUtils"}, excludeFilters = {
 		@ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class)
 })
+@EnableConfigurationProperties
 class RootConfig {
-	Environment env;
-
-	public RootConfig(Environment env) {
-		this.env = env;
-	}
-
 	@Bean
 	public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory, RedisCacheConfiguration redisCacheConfiguration) {
 		//初始化一个RedisCacheWriter
 		RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
 		//初始化RedisCacheManager
 		return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
-	}
-
-	@Bean
-	public JedisConnectionFactory redisConnectionFactory() {
-		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration("188.131.157.4", 6379);
-		configuration.setPassword(RedisPassword.of("liukang951006"));
-		JedisConnectionFactory factory = new JedisConnectionFactory(configuration);
-		factory.afterPropertiesSet();
-		return factory;
 	}
 
 	@Bean(name = "redisTemplate")

@@ -16,7 +16,6 @@ public class PointCut {
 	}
 
 	private Object processPointCut(ProceedingJoinPoint joinPoint, String cutType) throws Throwable {
-		Global.Logger(this).info("开始调用" + cutType + ":" + joinPoint.getSignature().getName());
 		long start = System.currentTimeMillis();
 		Object obj = joinPoint.proceed(joinPoint.getArgs());
 		long end = System.currentTimeMillis();
