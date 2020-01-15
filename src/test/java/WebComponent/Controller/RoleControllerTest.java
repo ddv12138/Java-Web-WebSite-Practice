@@ -60,7 +60,7 @@ public class RoleControllerTest {
 		Integer[] resids = new Integer[]{1, 2, 3, 4, 5, 6};
 		object.put("resids", resids);
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/role/updateresource")
-				.content(object.toJSONString())
+				.content(object.toJSONString()).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
@@ -75,6 +75,7 @@ public class RoleControllerTest {
 				.param("name", "test")
 				.param("desc", "testdesc")
 				.param("lock", "1")
+				.contentType(MediaType.APPLICATION_JSON)
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk())
@@ -87,7 +88,7 @@ public class RoleControllerTest {
 		role.setId(1);
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.delete("/role")
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
-				.content(JSON.toJSONString(role))
+				.content(JSON.toJSONString(role)).contentType(MediaType.APPLICATION_JSON)
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isInternalServerError())
@@ -112,7 +113,7 @@ public class RoleControllerTest {
 		role.setLock(true);
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/role")
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
-				.content(JSON.toJSONString(role))
+				.content(JSON.toJSONString(role)).contentType(MediaType.APPLICATION_JSON)
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk())
@@ -123,7 +124,7 @@ public class RoleControllerTest {
 	public void listRoleByUser() throws Exception {
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.get("/role/byuser")
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
-				.param("userid", "2")
+				.param("userid", "2").contentType(MediaType.APPLICATION_JSON)
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk())

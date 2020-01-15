@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 
 @Controller
-@RequestMapping("enterprise")
+@RequestMapping("/enterprise")
 public class EnterpriseController {
 	EnterpriseService service;
 

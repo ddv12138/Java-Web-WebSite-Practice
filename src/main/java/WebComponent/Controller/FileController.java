@@ -16,7 +16,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 @RestController
-@RequestMapping("uploadfile")
+@RequestMapping("/uploadfile")
 public class FileController {
 	FileService fileService;
 
