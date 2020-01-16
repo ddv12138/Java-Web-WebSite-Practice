@@ -1,38 +1,14 @@
 package GlobalUtils.Config;
 
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpInputMessage;
-import org.springframework.http.HttpOutputMessage;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 //@SpringBootConfiguration
-@Configuration(proxyBeanMethods = false)
-@Import(WebMvcAutoConfiguration.EnableWebMvcConfiguration.class)
-@EnableConfigurationProperties({WebMvcProperties.class, ResourceProperties.class})
-@EnableWebMvc
-@EnableAspectJAutoProxy
+//@Configuration
+//@Import(WebMvcAutoConfiguration.EnableWebMvcConfiguration.class)
+//@EnableConfigurationProperties({WebMvcProperties.class, ResourceProperties.class})
 //@ComponentScan(basePackages = {"WebComponent"})
 //先注释，不然静态资源和主页加载有问题，研究好源码再写，源码在-WebMvcAutoConfigurationAdapter
-public class WebConfig implements WebMvcConfigurer {
+//此类自spring-boot2之后弃用，原因是spring-boot2不再适用如下配置方法,springboot2自带autoconfigurer来处理，要自定义其中的实现可参照官方文档
+//如消息转换器的介绍在https://docs.spring.io/spring-boot/docs/2.2.2.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-message-converters
+public class WebConfig {
 
 
 //	private final WebMvcProperties mvcProperties;
@@ -213,67 +189,5 @@ public class WebConfig implements WebMvcConfigurer {
 //	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 //		configurer.enable();
 //	}
-
-	@Bean
-	public HttpMessageConverters customConverters() {
-		//创建消息转换器
-		FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-		//创建配置类
-		com.alibaba.fastjson.support.config.FastJsonConfig config = new com.alibaba.fastjson.support.config.FastJsonConfig();
-		//返回内容的过滤
-		config.setSerializerFeatures(
-				SerializerFeature.DisableCircularReferenceDetect,
-				SerializerFeature.WriteMapNullValue,
-				SerializerFeature.WriteNullListAsEmpty
-		);
-		List<MediaType> supportedMediaTypes = new ArrayList<>();
-		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-		supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
-		supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
-		supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
-		supportedMediaTypes.add(MediaType.APPLICATION_PDF);
-		supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
-		supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
-		supportedMediaTypes.add(MediaType.APPLICATION_XML);
-		supportedMediaTypes.add(MediaType.IMAGE_GIF);
-		supportedMediaTypes.add(MediaType.IMAGE_JPEG);
-		supportedMediaTypes.add(MediaType.IMAGE_PNG);
-		supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
-		supportedMediaTypes.add(MediaType.TEXT_HTML);
-		supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
-		supportedMediaTypes.add(MediaType.TEXT_PLAIN);
-		supportedMediaTypes.add(MediaType.TEXT_XML);
-		fastConverter.setSupportedMediaTypes(supportedMediaTypes);
-		fastConverter.setFastJsonConfig(config);
-		HttpMessageConverter another = new HttpMessageConverter() {
-			@Override
-			public boolean canRead(Class clazz, MediaType mediaType) {
-				return false;
-			}
-
-			@Override
-			public boolean canWrite(Class clazz, MediaType mediaType) {
-				return false;
-			}
-
-			@Override
-			public List<MediaType> getSupportedMediaTypes() {
-				return null;
-			}
-
-			@Override
-			public Object read(Class clazz, HttpInputMessage inputMessage)
-					throws IOException, HttpMessageNotReadableException {
-				return null;
-			}
-
-			@Override
-			public void write(Object o, MediaType contentType, HttpOutputMessage outputMessage)
-					throws IOException, HttpMessageNotWritableException {
-
-			}
-		};
-		return new HttpMessageConverters(another);
-	}
 
 }

@@ -139,7 +139,7 @@ public class RoleControllerTest {
 		object.put("roleids", roleids);
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/role/byuser")
 				.content(object.toJSONString())
-				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+				.accept(MediaType.APPLICATION_JSON)
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
 		actions.andExpect(MockMvcResultMatchers.status().isOk())
