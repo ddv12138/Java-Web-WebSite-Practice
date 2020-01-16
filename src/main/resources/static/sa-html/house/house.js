@@ -99,7 +99,7 @@ function updateInfo(ev) {
     console.log(ev);
     let $val = document.getElementById('val');
     let $lngLat = document.getElementById('lng-lat');
-    $val.innerText = (parseFloat(ev.rawData[0].count) * window.countScale) + "";
+    $val.innerText = ev.value;
     $lngLat.innerText = ev.lngLat.valueOf();
 }
 
