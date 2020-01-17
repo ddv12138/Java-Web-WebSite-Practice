@@ -1,21 +1,44 @@
 window.onload = function () {
-    let cityStr = "武汉";
-    window.countScale = 10;
+    let dropdown = new Vue({
+        el: "#dropdown",
+        data: {
+            currentcity: "武汉",
+            cityList: [{name: '武汉'}, {name: '深圳'}],
+        },
+        methods: {
+            handleCommand(command) {
+                this.$message('click on item ' + command);
+                this.currentcity = command;
+                loadCityData(this.currentcity);
+            },
+        },
+        mounted: function () {
+            loadCityData(this.currentcity);
+        }
+    });
+};
+
+function loadCityData(cityStr) {
+    window.countScale = 20;
+    let viewMode = '3D';
     $.post("/city/getCityInfo", {cityName: cityStr}, function (cityData, status) {
         cityData = JSON.parse(cityData.data).results[0];
-        var map = new AMap.Map("container", {
-            mapStyle: 'amap://styles/1de318cbb8d12c02303a22c550b9ccc9',
-            viewMode: '3D',
-            pitch: 15,
-            resizeEnable: true,
-            center: [cityData.location.lng, cityData.location.lat],
-            zoom: 12,
-        });
-        window.map = map;
+        if (!window.map) {
+            const map = new AMap.Map("container", {
+                mapStyle: 'amap://styles/1de318cbb8d12c02303a22c550b9ccc9',
+                viewMode: viewMode,
+                pitch: 15,
+                resizeEnable: true,
+                center: [cityData.location.lng, cityData.location.lat],
+                zoom: 12,
+            });
+            window.map = map;
+        } else {
+            window.map.setCenter([cityData.location.lng, cityData.location.lat]);
+        }
         $.post("/community/list", {cityName: cityStr}, function (commData) {
             let points = [];
             let height = 0;
-            let viewMode = '3D';
             commData = commData.data;
             commData.forEach(function (loc) {
                 if ((parseFloat(loc.unit_price) / window.countScale) > height) {
@@ -28,30 +51,31 @@ window.onload = function () {
                     lnglat: loc.gaode_lng + "," + loc.gaode_lat
                 });
             });
-            console.log(height);
             initPointAdcode(points, height, viewMode);
         })
     })
-};
+}
 
 function initPointAdcode(points, height, viewMode) {
-    let mapLayer = new Loca.HexagonLayer({
-        map: window.map,
-        visible: true,
-        zIndex: 777,
-        // fitView: true,
-        eventSupport: true,
-    });
-    mapLayer.setData(points, {
+    if (!window.mapLayer) {
+        window.mapLayer = new Loca.HexagonLayer({
+            map: window.map,
+            visible: true,
+            zIndex: 777,
+            // fitView: true,
+            eventSupport: true,
+        });
+    }
+    window.mapLayer.setData(points, {
         type: 'json',
         lnglat: function (obj) {
             return [parseFloat(obj.value.lng), parseFloat(obj.value.lat)];
         },
         value: 'count'
     });
-    mapLayer.setOptions({
+    window.mapLayer.setOptions({
         unit: 'meter',
-        mode: 'mean',
+        mode: 'max',
         style: {
             radius: 100,
             opacity: 0.9,
@@ -65,42 +89,41 @@ function initPointAdcode(points, height, viewMode) {
     }).render();
     // mapLayer.setFitView();
     // 事件 legendupdate: 图例数据更新完成回调此函数
-    mapLayer.on('legendupdate', function (ev) {
-        var colorLegend = ev.colorLegend;
-
-        var legends = colorLegend.map(item => {
-            // color 为 gradient 传入的格式
-            return `<li class="color-item" style="background-color: ${item.color}"></li>`
-        });
-
-        var ranges = colorLegend.map((item, index) => {
-            // range 可能为小数，可以自行取整计算
-            console.log(item.range);
-            item.range[0] = Math.ceil(item.range[0] * window.countScale);
-            item.range[1] = Math.ceil(item.range[1] * window.countScale);
-
-            if (index == colorLegend.length - 1) {
-                return `<li class="label-item">${item.range[0]}</li><li class="label-item">${item.range[1]}</li>`;
-            }
-            return `<li class="label-item">${item.range[0]}</li>`;
-        });
-
-        document.getElementById('legend-color').innerHTML = legends.join('');
-        document.getElementById('legend-label').innerHTML = ranges.join('');
-    });
-    mapLayer.on('mousemove', function (ev) {
+    // window.mapLayer.on('legendupdate', function (ev) {
+    //     const colorLegend = ev.colorLegend;
+    //
+    //     const legends = colorLegend.map(item => {
+    //         // color 为 gradient 传入的格式
+    //         return `<li class="color-item" style="background-color: ${item.color}"></li>`
+    //     });
+    //
+    //     const ranges = colorLegend.map((item, index) => {
+    //         // range 可能为小数，可以自行取整计算
+    //         item.range[0] = Math.ceil(item.range[0] * window.countScale)+'';
+    //         item.range[1] = Math.ceil(item.range[1] * window.countScale)+'';
+    //
+    //         if (index == colorLegend.length - 1) {
+    //             return `<li class="label-item">${item.range[0]}</li><li class="label-item">${item.range[1]}</li>`;
+    //         }
+    //         return `<li class="label-item">${item.range[0]}</li>`;
+    //     });
+    //     document.getElementById('legend-color').innerHTML="";
+    //     document.getElementById('legend-label').innerHTML="";
+    //     document.getElementById('legend-color').innerHTML = legends.join('');
+    //     document.getElementById('legend-label').innerHTML = ranges.join('');
+    // });
+    window.mapLayer.on('mousemove', function (ev) {
         updateInfo(ev);
     });
-    onHeight(viewMode, mapLayer, height);
+    onHeight(viewMode, window.mapLayer, height);
     // initContourLayer(points);
 }
 
 function updateInfo(ev) {
-    console.log(ev);
     let $val = document.getElementById('val');
     let $lngLat = document.getElementById('lng-lat');
-    $val.innerText = ev.value;
-    $lngLat.innerText = ev.lngLat.valueOf();
+    $val.innerText = (ev.value * window.countScale) + "元/平米";
+    $lngLat.innerText = ev.lngLat.valueOf() + "";
 }
 
 function initContourLayer(points) {
@@ -124,7 +147,7 @@ function initContourLayer(points) {
 }
 
 function onHeight(viewMode, gridLayer, height) {
-    var heightBtn = document.querySelector('#heightBtn');
+    const heightBtn = document.querySelector('#heightBtn');
 
     heightBtn.onclick = function () {
         viewMode = viewMode === '2D' ? '3D' : '2D';
