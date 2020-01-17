@@ -3,7 +3,7 @@ window.onload = function () {
         el: "#dropdown",
         data: {
             currentcity: "武汉",
-            cityList: [{name: '武汉'}, {name: '深圳'}],
+            cityList: [{name: '武汉'}, {name: '深圳'}, {name: '北京'}],
         },
         methods: {
             handleCommand(command) {
