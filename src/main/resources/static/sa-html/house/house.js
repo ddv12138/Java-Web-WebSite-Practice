@@ -3,23 +3,29 @@ window.onload = function () {
         el: "#dropdown",
         data: {
             currentcity: "武汉",
-            cityList: [{name: '武汉'}, {name: '深圳'}, {name: '北京'}],
+            cityList: [{city_name: '武汉'}, {city_name: '深圳'}, {city_name: '北京'}],
         },
         methods: {
             handleCommand(command) {
-                this.$message('click on item ' + command);
+                this.$message('切换城市到 ' + command);
                 this.currentcity = command;
                 loadCityData(this.currentcity);
             },
         },
         mounted: function () {
             loadCityData(this.currentcity);
+            sa.ajax2("/city/avaliable", null, function (res) {
+                if (res && res.state && res.data) {
+                    console.log(res);
+                    this.cityList = JSON.parse(JSON.stringify(res.data));
+                }
+            }.bind(this))
         }
     });
 };
 
 function loadCityData(cityStr) {
-    window.countScale = 20;
+    window.countScale = 25;
     let viewMode = '3D';
     $.post("/city/getCityInfo", {cityName: cityStr}, function (cityData, status) {
         cityData = JSON.parse(cityData.data).results[0];

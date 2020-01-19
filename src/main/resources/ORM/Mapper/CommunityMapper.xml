@@ -19,7 +19,7 @@
         where district_id = #{id};
     </select>
     <select id="selectHetMapDataByCity" resultType="ORM.POJO.Community" parameterType="ORM.POJO.City">
-        select uuid,gaode_lat,gaode_lng,unit_price,name
+        select uuid,longitude,latitude,gaode_lat,gaode_lng,unit_price,name
         from Community
         where city_id = #{city_id} order by name
     </select>

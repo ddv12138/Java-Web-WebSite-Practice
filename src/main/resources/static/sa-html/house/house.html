@@ -120,7 +120,8 @@
 	<el-dropdown @command="handleCommand" size="mini" split-button type="primary">
 		{{currentcity}}
 		<el-dropdown-menu slot="dropdown">
-			<el-dropdown-item v-bind:command="item.name" v-bind:key="item.name" v-for="item in cityList">{{item.name}}
+			<el-dropdown-item v-bind:command="item.city_name" v-bind:key="item.city_name" v-for="item in cityList">
+				{{item.city_name}}
 			</el-dropdown-item>
 		</el-dropdown-menu>
 	</el-dropdown>

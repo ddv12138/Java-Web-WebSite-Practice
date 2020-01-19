@@ -8,6 +8,11 @@
         from City
         where city_name = #{city_name}
     </select>
+    <select id="selectAvaliableCity" resultType="ORM.POJO.City">
+        select city_name
+        from community
+        group by city_name
+    </select>
     <insert id="initDefaultData" useGeneratedKeys="false">
         insert into City(city_id, city_name, max_lat, min_lat, max_lng, min_lng)
         values ('310000', '上海', '31.36552', '31.106158', '121.600985', '121.360095'),

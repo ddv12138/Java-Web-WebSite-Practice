@@ -6,6 +6,8 @@ import WebComponent.Service.Services.CityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service("CityService")
 @Transactional
 public class CityServiceImpl implements CityService {
@@ -20,8 +22,12 @@ public class CityServiceImpl implements CityService {
 	}
 
 	public int initDefaultData() {
-		int res = mapper.initDefaultData();
-		return res;
+		return mapper.initDefaultData();
+	}
+
+	@Override
+	public List<City> selectAvaliableCity() {
+		return mapper.selectAvaliableCity();
 	}
 
 }
