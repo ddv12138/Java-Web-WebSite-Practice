@@ -6,6 +6,7 @@ import WebComponent.Service.Services.CityService;
 import WebComponent.Service.Services.CommunityService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class DataTest {
 	CommunityService communityService;
 
 	@Test
+	@Ignore
 	public void insertGaoDeLngAngLat() {
 		String citystr = "厦门";
 		City city = cityService.selectByName(citystr);
