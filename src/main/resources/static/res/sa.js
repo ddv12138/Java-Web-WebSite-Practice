@@ -109,7 +109,8 @@ sa.ajax2 = function (url, data, success200, cfg) {
 		url: url,
 		type: cfg.type ? cfg.type : "post",
 		data: data,
-		// dataType: 'json',
+		dataType: 'json',
+		contentType: "application/json",
 		// xhrFields: {
 		// 	withCredentials: true // 携带跨域cookie
 		// },
