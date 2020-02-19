@@ -7,11 +7,13 @@ import ORM.POJO.User;
 import WebComponent.Service.Services.ResourceService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service("ResourceService")
 @Transactional
@@ -25,7 +27,8 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	@Cacheable(value = "Resource", key = "'selectResourceList-'+#pid+'-'+#user.name")
 	public List<Resource> selectResourceList(Integer pid, User user) {
-		return user.getName().equals("admin") ? resourceMapper.selectAllResourceList(pid) : resourceMapper.selectResourceList(pid, user.getId());
+		boolean isAdmin = user.getAuthorities().parallelStream().anyMatch((Predicate<GrantedAuthority>) grantedAuthority -> grantedAuthority.getAuthority().equals("管理员"));
+		return isAdmin ? resourceMapper.selectAllResourceList(pid) : resourceMapper.selectResourceList(pid, user.getId());
 	}
 
 	@Override
