@@ -1,7 +1,5 @@
 package GlobalUtils.Config;
 
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 //@SpringBootConfiguration
 //@EnableWebMvc
 //@EnableAspectJAutoProxy
@@ -10,7 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //先注释，不然静态资源和主页加载有问题，研究好源码再写，源码在-WebMvcAutoConfigurationAdapter
 //此类自spring-boot2之后弃用，原因是spring-boot2不再适用如下配置方法,springboot2自带autoconfigurer来处理，要自定义其中的实现可参照官方文档
 //如消息转换器的介绍在https://docs.spring.io/spring-boot/docs/2.2.2.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-message-converters
-public class WebConfig implements WebMvcConfigurer {
+//public class WebConfig implements WebMvcConfigurer {
+public class WebConfig {
 
 //	@Override
 //	public void addResourceHandlers(ResourceHandlerRegistry registry) {
