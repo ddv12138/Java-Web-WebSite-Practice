@@ -44,7 +44,6 @@ public class Global {
 				StringBuilder sbf = new StringBuilder();
 				String temp;
 				while ((temp = br.readLine()) != null) {
-					Global.Logger(Global.class).info(temp);
 					sbf.append(temp);
 				}
 				result = sbf.toString();
