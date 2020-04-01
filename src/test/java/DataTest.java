@@ -25,6 +25,12 @@ public class DataTest {
 
 	@Test
 	@Ignore
+	public void ncovTest() {
+		Global.doGetHttpRequest("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv");
+	}
+
+	@Test
+	@Ignore
 	public void insertGaoDeLngAngLat() {
 		String citystr = "厦门";
 		City city = cityService.selectByName(citystr);
