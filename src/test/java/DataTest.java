@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.IOException;
 import java.util.List;
 
 @SpringBootTest(classes = Application.class)
@@ -24,9 +25,8 @@ public class DataTest {
 	CommunityService communityService;
 
 	@Test
-	@Ignore
-	public void ncovTest() {
-		Global.doGetHttpRequest("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv");
+	public void ncovTest() throws IOException {
+		Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "Wuhan-2019-nCoV.json", "G:\\");
 	}
 
 	@Test
