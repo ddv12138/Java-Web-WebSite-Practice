@@ -58,8 +58,8 @@
     <select id="listRoleByUser" parameterType="ORM.POJO.User" resultMap="roleResult">
         select r.*
         From roletable r
-                 inner join user_role_map map on map.roleid = r.id
-                 inner join usertable u on u.id = map.userid
+        inner join user_role_map map on map.roleid = r.id
+        inner join usertable u on u.id = map.userid
         where u.id = #{id}
     </select>
     <select id="clearRoleByUser" parameterType="ORM.POJO.User">

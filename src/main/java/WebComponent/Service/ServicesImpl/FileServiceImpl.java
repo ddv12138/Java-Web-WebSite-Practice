@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service("FileService")
@@ -38,7 +39,7 @@ public class FileServiceImpl implements FileService {
 		uploadFile.setOwnerid(user.getId());
 		uploadFile.setCreatetime(new Date());
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-		String fileExtendName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		String fileExtendName = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
 		String randomFileName = uuid + fileExtendName;
 		String folder = LocalDate.now().format(DateTimeFormatter.ofPattern("YYYY/MM/dd"));
 		uploadFile.setFilename(folder + "/" + randomFileName);
@@ -52,7 +53,7 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public String getURLById(Integer id) throws IOException, XmlPullParserException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, ErrorResponseException, NoResponseException, InvalidBucketNameException, InsufficientDataException, InternalException {
 		UploadFile uploadFile = fileMapper.selectByPrimaryKey(id);
-		Assert.notNull(uploadFile,"文件不存在");
+		Assert.notNull(uploadFile, "文件不存在");
 		return fileStorageUtil.getUrl(uploadFile);
 	}
 }

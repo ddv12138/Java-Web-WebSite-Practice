@@ -85,7 +85,7 @@ function arrayToTree(menu_list) {
 			if (parent_menu) {
 				parent_menu.childList = parent_menu.childList || [];
 				parent_menu.childList.push(menu);
-				menu_list.splice(i, 1);	// 从一维中删除 
+				menu_list.splice(i, 1);	// 从一维中删除
 				i--;
 			}
 		}
@@ -98,7 +98,7 @@ function arrayToTree(menu_list) {
 function refMenuList(menu_list) {
 	for (var i = 0; i < menu_list.length; i++) {
 		var menu = menu_list[i];
-		// 有子项的递归处理 
+		// 有子项的递归处理
 		if (menu.childList) {
 			menu.children = menu.childList;
 			refMenuList(menu.childList);
@@ -115,7 +115,7 @@ function getMenuById(menuList, id) {
 		if (menu.id + '' == id + '') {
 			return menu;
 		}
-		// 如果是二级或多级 
+		// 如果是二级或多级
 		if (menu.childList) {
 			var menu2 = getMenuById(menu.childList, id);
 			if (menu2 != null) {

@@ -35,52 +35,52 @@ sp.icon_url = 'sa-resources/admin-logo.png';    // 设置icon图标地址   默�
 // ================================= 示例：设置user信息 =================================
 // 用户登录后，右上角可直接显示用户的头像和昵称
 $.get("/user", function (res) {
-	if (res.state) {
-		let data = res.data;
-		if (data.accountNonExpired && data.accountNonLocked && data.credentialsNonExpired && data.enabled) {
-			sp.user = {
-				username: data.username,	// 昵称
-				avatar: 'sa-resources/admin-logo.png'	// 头像地址
-			};
-		}
-	}
+    if (res.state) {
+        let data = res.data;
+        if (data.accountNonExpired && data.accountNonLocked && data.credentialsNonExpired && data.enabled) {
+            sp.user = {
+                username: data.username,	// 昵称
+                avatar: 'sa-resources/admin-logo.png'	// 头像地址
+            };
+        }
+    }
 });
 
 
 // ================================= 示例：设置登录后的头像处，下拉可以出现的选项  =================================
 sp.dropList = [		// 头像点击处可操作的选项
-	// {
-	// 	name: '我的资料',
-	// 	click: function () {
-	// 		sp.$message('点击了我的资料，你可以参照文档重写此函数');
-	// 	}
-	// },
-	// {
-	// 	name: '切换账号',
-	// 	click: function () {
-	// 		layer.open({
-	// 			type: 2,
-	// 			title: '登录',
-	// 			shadeClose: true,
-	// 			shade: 0.8,
-	// 			area: ['70%', '80%'],
-	// 			resize: true,
-	// 			content: '/user/login'
-	// 		});
-	// 	}
-	// },
-	{
-		name: '退出登录',
-		click: function () {
-			//sp.$message('点击了退出登录，你可以参照文档重写此函数');
-			// location="login.html";
-			layer.confirm('退出登录？', function (res) {
-				layer.alert('注销成功', function () {
-					location.href = "/user/logout";
-				})
-			});
-		}
-	}
+    // {
+    // 	name: '我的资料',
+    // 	click: function () {
+    // 		sp.$message('点击了我的资料，你可以参照文档重写此函数');
+    // 	}
+    // },
+    // {
+    // 	name: '切换账号',
+    // 	click: function () {
+    // 		layer.open({
+    // 			type: 2,
+    // 			title: '登录',
+    // 			shadeClose: true,
+    // 			shade: 0.8,
+    // 			area: ['70%', '80%'],
+    // 			resize: true,
+    // 			content: '/user/login'
+    // 		});
+    // 	}
+    // },
+    {
+        name: '退出登录',
+        click: function () {
+            //sp.$message('点击了退出登录，你可以参照文档重写此函数');
+            // location="login.html";
+            layer.confirm('退出登录？', function (res) {
+                layer.alert('注销成功', function () {
+                    location.href = "/user/logout";
+                })
+            });
+        }
+    }
 ];
 
 
@@ -88,8 +88,8 @@ sp.dropList = [		// 头像点击处可操作的选项
 // sa_admin.init();
 // 或者以下方式，增加配置项
 sa_admin.init({
-	themeDefault: '1',	// 默认的主题，可选值：1、2、3、4
-	switchDefault: '4',	// 默认的切换动画，可选值：fade、slide、cube、coverflow、flip
+    themeDefault: '1',	// 默认的主题，可选值：1、2、3、4
+    switchDefault: '4',	// 默认的切换动画，可选值：fade、slide、cube、coverflow、flip
 });
 
 

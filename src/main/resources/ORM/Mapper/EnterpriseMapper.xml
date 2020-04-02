@@ -76,7 +76,7 @@
     </sql>
     <sql id="Base_Column_List">
         Id, `name`, code, regday, `character`, legalRepresentative, capital, businessScope,
-    province, city, address
+        province, city, address
     </sql>
     <select id="selectByExample" parameterType="ORM.POJO.EnterpriseExample" resultMap="BaseResultMap">
         select
@@ -119,13 +119,13 @@
     </delete>
     <insert id="insert" keyColumn="Id" keyProperty="id" parameterType="ORM.POJO.Enterprise" useGeneratedKeys="true">
         insert into Enterprise_Registration (`name`, code, regday,
-                                             `character`, legalRepresentative, capital,
-                                             businessScope, province, city,
-                                             address)
+        `character`, legalRepresentative, capital,
+        businessScope, province, city,
+        address)
         values (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{regday,jdbcType=TIMESTAMP},
-                #{character,jdbcType=VARCHAR}, #{legalrepresentative,jdbcType=VARCHAR}, #{capital,jdbcType=VARCHAR},
-                #{businessscope,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
-                #{address,jdbcType=VARCHAR})
+        #{character,jdbcType=VARCHAR}, #{legalrepresentative,jdbcType=VARCHAR}, #{capital,jdbcType=VARCHAR},
+        #{businessscope,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" keyColumn="Id" keyProperty="id" parameterType="ORM.POJO.Enterprise"
             useGeneratedKeys="true">
@@ -297,16 +297,16 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="ORM.POJO.Enterprise">
         update Enterprise_Registration
-        set `name`              = #{name,jdbcType=VARCHAR},
-            code                = #{code,jdbcType=VARCHAR},
-            regday              = #{regday,jdbcType=TIMESTAMP},
-            `character`         = #{character,jdbcType=VARCHAR},
-            legalRepresentative = #{legalrepresentative,jdbcType=VARCHAR},
-            capital             = #{capital,jdbcType=VARCHAR},
-            businessScope       = #{businessscope,jdbcType=VARCHAR},
-            province            = #{province,jdbcType=VARCHAR},
-            city                = #{city,jdbcType=VARCHAR},
-            address             = #{address,jdbcType=VARCHAR}
+        set `name` = #{name,jdbcType=VARCHAR},
+        code = #{code,jdbcType=VARCHAR},
+        regday = #{regday,jdbcType=TIMESTAMP},
+        `character` = #{character,jdbcType=VARCHAR},
+        legalRepresentative = #{legalrepresentative,jdbcType=VARCHAR},
+        capital = #{capital,jdbcType=VARCHAR},
+        businessScope = #{businessscope,jdbcType=VARCHAR},
+        province = #{province,jdbcType=VARCHAR},
+        city = #{city,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR}
         where Id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>
