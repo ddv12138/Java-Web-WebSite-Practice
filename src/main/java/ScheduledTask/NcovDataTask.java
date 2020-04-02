@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.io.IOException;
 
 public class NcovDataTask {
-	@Scheduled(cron = "* * 0/1 * * ?")
+	@Scheduled(fixedDelay = 60 * 60 * 60)
 	public void downloadData() {
 		try {
 			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", ".\\ncovData\\");
