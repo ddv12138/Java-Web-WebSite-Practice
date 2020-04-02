@@ -25,8 +25,9 @@ public class DataTest {
 	CommunityService communityService;
 
 	@Test
+	@Ignore
 	public void ncovTest() throws IOException {
-		Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "Wuhan-2019-nCoV.json", "G:\\");
+		Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "Wuhan-2019-nCoV.json", ".\\ncovData\\");
 	}
 
 	@Test
