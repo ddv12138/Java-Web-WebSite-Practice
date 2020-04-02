@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.io.IOException;
 
 public class NcovDataTask {
+	//commons-csv官方文档
+	//https://commons.apache.org/proper/commons-csv/user-guide.html#Example:_Parsing_an_Excel_CSV_File
 	@Scheduled(fixedDelay = 60 * 60 * 60)
 	public void downloadData() {
 		try {
