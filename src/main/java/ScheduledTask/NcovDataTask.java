@@ -13,16 +13,16 @@ public class NcovDataTask {
 	//https://commons.apache.org/proper/commons-csv/user-guide.html#Example:_Parsing_an_Excel_CSV_File
 	@Value("${file.tmp.location}")
 	String location;
-	@Scheduled(fixedRate = 60)
+
+	@Scheduled(fixedRate = 1000 * 60 * 30)
 	public void downloadData() {
 		try {
 			File file = new File(location);
 			if (!file.exists()) {
 				file.mkdirs();
 			}
-			Global.Logger(this).info(file.getAbsolutePath());
-//			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", ".\\ncovData\\");
-//			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv", "nCoVData.csv", ".\\ncovData\\");
+			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", location);
+			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv", "nCoVData.csv", location);
 		} catch (Exception e) {
 			Global.Logger(this).error(e);
 		}

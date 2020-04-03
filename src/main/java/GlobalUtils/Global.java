@@ -89,7 +89,6 @@ public class Global {
 		conn.setConnectTimeout(3 * 1000);
 		//防止屏蔽程序抓取而返回403错误
 		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-
 		//得到输入流
 		InputStream inputStream = conn.getInputStream();
 		//获取自己数组
@@ -103,15 +102,9 @@ public class Global {
 		File file = new File(saveDir + File.separator + fileName);
 		FileOutputStream fos = new FileOutputStream(file);
 		fos.write(getData);
-		if (fos != null) {
-			fos.close();
-		}
-		if (inputStream != null) {
-			inputStream.close();
-		}
-
-
-		System.out.println("info:" + url + " download success");
+		fos.close();
+		inputStream.close();
+		Global.Logger(Global.class).info("info:" + url + " download success");
 
 	}
 
