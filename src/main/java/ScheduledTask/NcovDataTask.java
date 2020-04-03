@@ -15,6 +15,9 @@ public class NcovDataTask {
 	public void downloadData() {
 		try {
 			File file = new File(ResourceUtils.getURL("classpath:").getPath());
+			if (!file.exists()) {
+				file.mkdirs();
+			}
 			Global.Logger(this).info(file.getAbsolutePath());
 //			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", ".\\ncovData\\");
 //			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv", "nCoVData.csv", ".\\ncovData\\");
