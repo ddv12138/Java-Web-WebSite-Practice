@@ -3,6 +3,7 @@ package ScheduledTask;
 import GlobalUtils.Global;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 
@@ -13,7 +14,7 @@ public class NcovDataTask {
 	@Scheduled(cron = "0/1 * * * * ?")
 	public void downloadData() {
 		try {
-			File file = new File(".\\ncovData\\");
+			File file = new File(ResourceUtils.getURL("classpath:").getPath());
 			Global.Logger(this).info(file.getAbsolutePath());
 //			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", ".\\ncovData\\");
 //			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv", "nCoVData.csv", ".\\ncovData\\");
