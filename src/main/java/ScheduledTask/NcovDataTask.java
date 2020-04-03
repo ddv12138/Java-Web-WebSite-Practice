@@ -11,7 +11,7 @@ import java.io.File;
 public class NcovDataTask {
 	//commons-csv官方文档
 	//https://commons.apache.org/proper/commons-csv/user-guide.html#Example:_Parsing_an_Excel_CSV_File
-	@Scheduled(cron = "0/1 * * * * ?")
+	@Scheduled(fixedRate = 60)
 	public void downloadData() {
 		try {
 			File file = new File(ResourceUtils.getURL("classpath:").getPath());
