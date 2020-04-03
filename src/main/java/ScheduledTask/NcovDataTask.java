@@ -6,6 +6,7 @@ import ORM.POJO.Ncov;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component
+@Profile("server")
 public class NcovDataTask {
 	//commons-csv官方文档
 	//https://commons.apache.org/proper/commons-csv/user-guide.html#Example:_Parsing_an_Excel_CSV_File
@@ -29,7 +31,7 @@ public class NcovDataTask {
 		this.ncovMapper = ncovMapper;
 	}
 
-	@Scheduled(fixedRate = 1000 * 60 * 30)
+	@Scheduled(fixedRate = 1000 * 60 * 30, initialDelay = 6 * 60 * 1000)
 	public void downloadData() {
 		try {
 			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", location);
