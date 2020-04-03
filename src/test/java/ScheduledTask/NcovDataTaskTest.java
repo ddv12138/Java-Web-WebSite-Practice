@@ -45,7 +45,7 @@ class NcovDataTaskTest {
 //		Global.Logger(this).info(ncovMapper.insertAll(data));
 
 		//-----------------------------------------------
-		URL url = new URL("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv");
+		URL url = new URL("http://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv");
 		Reader reader = new InputStreamReader(new BOMInputStream(url.openStream()), StandardCharsets.UTF_8);
 		CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withFirstRecordAsHeader());
 		try {

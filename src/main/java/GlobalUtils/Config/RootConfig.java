@@ -29,7 +29,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -37,11 +36,10 @@ import java.util.List;
 
 @Configuration
 @EnableCaching
-@ComponentScan(basePackages = {"WebComponent", "GlobalUtils"}, excludeFilters = {
+@ComponentScan(basePackages = {"WebComponent", "GlobalUtils", "ScheduledTask"}, excludeFilters = {
 		@ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class)
 })
 @EnableConfigurationProperties
-@EnableScheduling
 class RootConfig {
 	@Bean
 	public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory,
