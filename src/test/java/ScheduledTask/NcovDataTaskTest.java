@@ -3,6 +3,7 @@ package ScheduledTask;
 import GlobalUtils.Application;
 import GlobalUtils.Global;
 import ORM.Mapper.NcovMapper;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,13 @@ class NcovDataTaskTest {
 	NcovDataTask task;
 
 	@Test
+	@Ignore
 	void insertData() throws IOException {
 		task.downloadData();
 	}
 
 	@Test
+	@Ignore
 	void clearTable() throws IOException {
 		Global.Logger(this).info(ncovMapper.cleartable());
 	}
