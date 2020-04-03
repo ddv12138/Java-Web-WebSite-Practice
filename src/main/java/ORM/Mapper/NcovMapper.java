@@ -68,4 +68,6 @@ public interface NcovMapper {
 	int updateByExample(@Param("record") Ncov record, @Param("example") NcovExample example);
 
 	int insertAll(@Param("list") List<Ncov> ncovs);
+
+	int cleartable();
 }

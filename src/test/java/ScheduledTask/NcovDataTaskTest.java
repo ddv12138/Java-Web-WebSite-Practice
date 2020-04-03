@@ -3,7 +3,6 @@ package ScheduledTask;
 import GlobalUtils.Application;
 import GlobalUtils.Global;
 import ORM.Mapper.NcovMapper;
-import ORM.POJO.Ncov;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 @SpringBootTest(classes = Application.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,19 +21,16 @@ class NcovDataTaskTest {
 
 	@Autowired
 	NcovMapper ncovMapper;
+	@Autowired
+	NcovDataTask task;
 
 	@Test
 	void insertData() throws IOException {
-		List<Ncov> data = new LinkedList<>();
-		for (int i = 0; i < 100; i++) {
-			Ncov ncov = new Ncov();
-			ncov.setCity(i + "");
-			ncov.setCitycode(i + "");
-			ncov.setConfirmed(i + "");
-			ncov.setCountry(i + "");
-			ncov.setProvince(i + "");
-			data.add(ncov);
-		}
-		Global.Logger(this).info(ncovMapper.insertAll(data));
+		task.downloadData();
+	}
+
+	@Test
+	void clearTable() throws IOException {
+		Global.Logger(this).info(ncovMapper.cleartable());
 	}
 }

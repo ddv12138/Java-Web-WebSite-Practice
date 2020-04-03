@@ -304,4 +304,7 @@
             #{record.cured,jdbcType=VARCHAR}, #{record.dead,jdbcType=VARCHAR})
         </foreach>
     </insert>
+    <update id="cleartable">
+        truncate table ncov;
+    </update>
 </mapper>

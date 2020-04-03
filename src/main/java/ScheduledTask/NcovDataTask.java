@@ -1,11 +1,20 @@
 package ScheduledTask;
 
 import GlobalUtils.Global;
+import ORM.Mapper.NcovMapper;
+import ORM.POJO.Ncov;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 @Component
 public class NcovDataTask {
@@ -14,15 +23,45 @@ public class NcovDataTask {
 	@Value("${file.tmp.location}")
 	String location;
 
+	NcovMapper ncovMapper;
+
+	public NcovDataTask(NcovMapper ncovMapper) {
+		this.ncovMapper = ncovMapper;
+	}
+
 	@Scheduled(fixedRate = 1000 * 60 * 30)
 	public void downloadData() {
 		try {
-			File file = new File(location);
-			if (!file.exists()) {
-				file.mkdirs();
-			}
 			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", location);
 			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv", "nCoVData.csv", location);
+			File csvFile = new File(location + "/nCoVData.csv");
+			if (csvFile.exists()) {
+				Reader reader = new FileReader(csvFile);
+				Iterable<CSVRecord> records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
+				SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
+				List<Ncov> ncovList = new LinkedList<>();
+				for (CSVRecord record : records) {
+					Ncov ncov = new Ncov();
+					ncov.setProvince(record.get("province"));
+					ncov.setCountry(record.get("country"));
+					ncov.setConfirmed(record.get("confirmed"));
+					ncov.setCitycode(record.get("cityCode"));
+					ncov.setCity(record.get("city"));
+					ncov.setCured(record.get("cured"));
+					ncov.setDate(ymd.parse(record.get("date")));
+					ncov.setDead(record.get("dead"));
+					ncov.setProvincecode(record.get("provinceCode"));
+					ncov.setSuspected(record.get("suspected"));
+					ncovList.add(ncov);
+				}
+				ncovMapper.cleartable();
+				int pageSize = 100;
+				int pageCount = (int) Math.ceil(ncovList.size() / (double) pageSize);
+				for (int i = 0; i < pageCount; i++) {
+					int endIndex = (i + 1) * pageSize > ncovList.size() ? ncovList.size() - 1 : (i + 1) * pageSize;
+					ncovMapper.insertAll(ncovList.subList(i * pageSize, endIndex));
+				}
+			}
 		} catch (Exception e) {
 			Global.Logger(this).error(e);
 		}
