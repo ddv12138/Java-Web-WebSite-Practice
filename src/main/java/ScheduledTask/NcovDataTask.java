@@ -14,7 +14,7 @@ public class NcovDataTask {
 	@Scheduled(fixedRate = 60)
 	public void downloadData() {
 		try {
-			File file = new File(ResourceUtils.getURL("classpath:").getPath());
+			File file = new File(ResourceUtils.getURL("user.dir").getPath());
 			if (!file.exists()) {
 				file.mkdirs();
 			}
