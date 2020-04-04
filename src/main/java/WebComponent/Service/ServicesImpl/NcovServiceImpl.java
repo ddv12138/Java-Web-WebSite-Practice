@@ -44,4 +44,9 @@ public class NcovServiceImpl implements NcovService {
 	public Date getLastUpdateTime() throws ParseException {
 		return ymdhms.parse(redisTemplate.opsForValue().get(lastUpdateTimeKey));
 	}
+
+	@Override
+	public int insert(Ncov ncov) {
+		return ncovMapper.insertSelective(ncov);
+	}
 }

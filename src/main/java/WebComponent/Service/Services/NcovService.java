@@ -14,4 +14,6 @@ public interface NcovService {
 	void setLastUpdateTime();
 
 	Date getLastUpdateTime() throws ParseException;
+
+	int insert(Ncov ncov);
 }

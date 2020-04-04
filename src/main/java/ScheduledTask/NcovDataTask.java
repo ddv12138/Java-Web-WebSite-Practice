@@ -61,11 +61,15 @@ public class NcovDataTask {
 					ncovList.add(ncov);
 				}
 				ncovService.cleartable();
-				int pageSize = 1000;
-				int pageCount = (int) Math.ceil(ncovList.size() / (double) pageSize);
-				for (int i = 0; i < pageCount; i++) {
-					int endIndex = (i + 1) * pageSize > ncovList.size() ? ncovList.size() - 1 : (i + 1) * pageSize;
-					ncovService.insertAll(ncovList.subList(i * pageSize, endIndex));
+				long t1 = System.currentTimeMillis();
+//				int pageSize = 1000;
+//				int pageCount = (int) Math.ceil(ncovList.size() / (double) pageSize);
+//				for (int i = 0; i < pageCount; i++) {
+//					int endIndex = (i + 1) * pageSize > ncovList.size() ? ncovList.size() - 1 : (i + 1) * pageSize;
+//					ncovService.insertAll(ncovList.subList(i * pageSize, endIndex));
+//				}
+				for (Ncov ncov : ncovList) {
+					ncovService.insert(ncov);
 				}
 				ncovService.setLastUpdateTime();
 			}
