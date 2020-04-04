@@ -1,3 +1,74 @@
+function loadlayer() {
+    var colors = {};
+    var getColorBySOC = function (SOC) {
+        //可按需改为其他实现
+        if (SOC) {
+            if (!colors[SOC]) {
+                var R = SOC.charCodeAt(0) * 1;
+                var G = SOC.charCodeAt(1) * 3;
+                var B = SOC.charCodeAt(2) * 5;
+                colors[SOC] = 'rgb(' + R + ',' + G + ',' + B + ')';
+            }
+            return colors[SOC]
+        } else {
+            return 'rgb(200,200,240)'
+
+        }
+
+    };
+    const disWorld = new AMap.DistrictLayer.World({
+        zIndex: 10,
+        styles: {
+            // 颜色格式: #RRGGBB、rgba()、rgb()、[r,g,b,a]
+            // 'nation-stroke':function(props){
+            //     //props:{type:Nation_Border_China/Nation_Border_Foreign}
+            //     if(props.type=='Nation_Border_China'){
+            //         return 'red'
+            //     }else{
+            //         return 'white'
+            //     }
+            // },
+            'coastline-stroke': [0.8, 0.63, 1, 1],
+            'nation-stroke': 'rgba(20, 20, 233, 0.6)',
+            'fill': function (props) {
+                //props:{NAME_CHH,NAME_ENG,SOC}
+                return getColorBySOC(props.SOC)
+            }
+        }
+    });
+    var nationFill = 'rgba(20, 120, 230, 1)';
+    map.on('mousemove', function (ev) {
+        var px = ev.pixel;
+        // 拾取所在位置的行政区
+        var props = disWorld.getDistrictByContainerPos(px);
+
+        if (props) {
+            var SOC = props.SOC;
+            if (SOC) {
+                // 重置行政区样式
+                disWorld.setStyles({
+                    // 国境线
+                    //nation-stroke': nationStroke,
+                    // 海岸线
+                    'nation-stroke': 'rgba(20, 20, 233, 0.6)',
+                    'fill': function (props) {
+                        return props.SOC == SOC ? nationFill : getColorBySOC(props.SOC);
+                    }
+                });
+                updateInfo(props);
+            }
+        }
+    });
+
+    function updateInfo(props) {
+        document.getElementById('name').innerText = props.NAME_CHN;
+        document.getElementById('eng-name').innerText = props.NAME_ENG;
+        document.getElementById('soc').innerText = props.SOC;
+    }
+
+    window.map.add(disWorld);
+}
+
 function loadMap() {
     if (!window.map) {
         const map = new AMap.Map("container", {
@@ -16,14 +87,15 @@ function loadMap() {
             resizeEnable: true
         });
         window.map = map;
+        loadlayer();
     } else {
-        window.map.setCenter([cityData.location.lng, cityData.location.lat]);
+        loadlayer();
     }
 }
 
 window.onload = function () {
     let dropdown = new Vue({
-        el: "#map",
+        el: "#container",
         data: {},
         methods: {},
         mounted: function () {
