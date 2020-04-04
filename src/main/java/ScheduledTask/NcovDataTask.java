@@ -34,7 +34,7 @@ public class NcovDataTask {
 		this.redisTemplate = redisTemplate;
 	}
 
-	@Scheduled(fixedRate = 1000 * 60 * 30, initialDelay = 6 * 60 * 1000)
+	@Scheduled(fixedRate = 1000 * 60 * 30, initialDelay = 1 * 60 * 1000)
 	public void downloadData() {
 		try {
 			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", location);
@@ -61,7 +61,7 @@ public class NcovDataTask {
 					ncovList.add(ncov);
 				}
 				ncovService.cleartable();
-				int pageSize = 500;
+				int pageSize = 1000;
 				int pageCount = (int) Math.ceil(ncovList.size() / (double) pageSize);
 				for (int i = 0; i < pageCount; i++) {
 					int endIndex = (i + 1) * pageSize > ncovList.size() ? ncovList.size() - 1 : (i + 1) * pageSize;
