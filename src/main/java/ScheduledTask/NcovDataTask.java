@@ -45,6 +45,7 @@ public class NcovDataTask {
 				for (CSVRecord record : records) {
 					Ncov ncov = new Ncov();
 					ncov.setProvince(record.get("province"));
+					ncov.setCountrycode(record.get("countryCode"));
 					ncov.setCountry(record.get("country"));
 					ncov.setConfirmed(record.get("confirmed"));
 					ncov.setCitycode(record.get("cityCode"));
