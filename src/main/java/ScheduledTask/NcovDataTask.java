@@ -1,8 +1,8 @@
 package ScheduledTask;
 
 import GlobalUtils.Global;
-import ORM.Mapper.NcovMapper;
 import ORM.POJO.Ncov;
+import WebComponent.Service.Services.NcovService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,11 +26,11 @@ public class NcovDataTask {
 	@Value("${file.tmp.location}")
 	String location;
 
-	NcovMapper ncovMapper;
+	NcovService ncovService;
 	RedisTemplate redisTemplate;
 
-	public NcovDataTask(NcovMapper ncovMapper, RedisTemplate redisTemplate) {
-		this.ncovMapper = ncovMapper;
+	public NcovDataTask(NcovService ncovService, RedisTemplate redisTemplate) {
+		this.ncovService = ncovService;
 		this.redisTemplate = redisTemplate;
 	}
 
@@ -61,15 +60,14 @@ public class NcovDataTask {
 					ncov.setSuspected(record.get("suspected"));
 					ncovList.add(ncov);
 				}
-				ncovMapper.cleartable();
+				ncovService.cleartable();
 				int pageSize = 100;
 				int pageCount = (int) Math.ceil(ncovList.size() / (double) pageSize);
 				for (int i = 0; i < pageCount; i++) {
 					int endIndex = (i + 1) * pageSize > ncovList.size() ? ncovList.size() - 1 : (i + 1) * pageSize;
-					ncovMapper.insertAll(ncovList.subList(i * pageSize, endIndex));
+					ncovService.insertAll(ncovList.subList(i * pageSize, endIndex));
 				}
-				SimpleDateFormat ymdhms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				redisTemplate.opsForValue().set("lastncovupdatetime", ymdhms.format(new Date()));
+				ncovService.setLastUpdateTime();
 			}
 		} catch (Exception e) {
 			Global.Logger(this).error(e);
