@@ -61,7 +61,7 @@ public class NcovDataTask {
 					ncovList.add(ncov);
 				}
 				ncovService.cleartable();
-				int pageSize = 100;
+				int pageSize = 500;
 				int pageCount = (int) Math.ceil(ncovList.size() / (double) pageSize);
 				for (int i = 0; i < pageCount; i++) {
 					int endIndex = (i + 1) * pageSize > ncovList.size() ? ncovList.size() - 1 : (i + 1) * pageSize;

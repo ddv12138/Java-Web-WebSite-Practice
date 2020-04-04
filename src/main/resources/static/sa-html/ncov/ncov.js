@@ -37,26 +37,36 @@ function loadlayer() {
         }
     });
     var nationFill = 'rgba(20, 120, 230, 1)';
+    var lastProps = null;
     map.on('mousemove', function (ev) {
-        var px = ev.pixel;
+        const px = ev.pixel;
         // 拾取所在位置的行政区
-        var props = disWorld.getDistrictByContainerPos(px);
-
+        const props = disWorld.getDistrictByContainerPos(px);
         if (props) {
-            var SOC = props.SOC;
+            lastProps = props;
+            const SOC = props.SOC;
             if (SOC) {
                 // 重置行政区样式
                 disWorld.setStyles({
                     // 国境线
-                    //nation-stroke': nationStroke,
-                    // 海岸线
-                    'nation-stroke': 'rgba(20, 20, 233, 0.6)',
+                    'nation-stroke': 'rgba(20, 20, 233, 1)',
                     'fill': function (props) {
                         return props.SOC == SOC ? nationFill : getColorBySOC(props.SOC);
                     }
                 });
                 updateInfo(props);
             }
+        } else {
+            disWorld.setStyles({
+                // 国境线
+                //nation-stroke': nationStroke,
+                // 海岸线
+                'nation-stroke': 'rgba(20, 20, 233, 1)',
+                'fill': function (props) {
+                    //props:{NAME_CHH,NAME_ENG,SOC}
+                    return getColorBySOC(props.SOC)
+                }
+            });
         }
     });
 
