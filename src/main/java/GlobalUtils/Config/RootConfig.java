@@ -6,6 +6,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@MapperScan("ORM.Mapper")
+@ComponentScan(value = "ORM.Mapper")
 @EnableCaching
 @ComponentScan(basePackages = {"WebComponent", "GlobalUtils", "ScheduledTask"}, excludeFilters = {
 		@ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class)
