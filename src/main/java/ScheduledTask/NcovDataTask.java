@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,9 +28,11 @@ public class NcovDataTask {
 	String location;
 
 	NcovMapper ncovMapper;
+	RedisTemplate redisTemplate;
 
-	public NcovDataTask(NcovMapper ncovMapper) {
+	public NcovDataTask(NcovMapper ncovMapper, RedisTemplate redisTemplate) {
 		this.ncovMapper = ncovMapper;
+		this.redisTemplate = redisTemplate;
 	}
 
 	@Scheduled(fixedRate = 1000 * 60 * 30, initialDelay = 6 * 60 * 1000)
@@ -64,6 +68,8 @@ public class NcovDataTask {
 					int endIndex = (i + 1) * pageSize > ncovList.size() ? ncovList.size() - 1 : (i + 1) * pageSize;
 					ncovMapper.insertAll(ncovList.subList(i * pageSize, endIndex));
 				}
+				SimpleDateFormat ymdhms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				redisTemplate.opsForValue().set("lastncovupdatetime", ymdhms.format(new Date()));
 			}
 		} catch (Exception e) {
 			Global.Logger(this).error(e);
