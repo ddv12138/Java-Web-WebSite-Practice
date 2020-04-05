@@ -70,4 +70,6 @@ public interface NcovMapper {
 	int insertAll(@Param("list") List<Ncov> ncovs);
 
 	int cleartable();
+
+	int updateCountryCoude();
 }

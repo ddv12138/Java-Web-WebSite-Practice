@@ -64,9 +64,7 @@ public class NcovDataTask {
 					ncov.setSuspected(record.get("suspected"));
 					ncovList.add(ncov);
 				}
-				ncovService.cleartable();
 				ncovService.insertAll(ncovList);
-				ncovService.setLastUpdateTime();
 			}
 		} catch (Exception e) {
 			Global.Logger(this).error(e);

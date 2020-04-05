@@ -307,4 +307,9 @@
     <update id="cleartable">
         truncate table ncov;
     </update>
+    <update id="updateCountryCoude">
+        update ncov n
+        set "countryCode" = (select cnname from worldarea w where w.cnname = n.country)
+        where n."countryCode" = ''
+    </update>
 </mapper>

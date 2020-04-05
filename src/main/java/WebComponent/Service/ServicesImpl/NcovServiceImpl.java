@@ -27,6 +27,7 @@ public class NcovServiceImpl implements NcovService {
 
 	@Override
 	public int insertAll(List<Ncov> ncovList) {
+		ncovMapper.cleartable();
 		long t1 = System.currentTimeMillis();
 		int pageSize = 500;
 		int pageCount = (int) Math.ceil(ncovList.size() / (double) pageSize);
@@ -36,12 +37,9 @@ public class NcovServiceImpl implements NcovService {
 		}
 		long t2 = System.currentTimeMillis();
 		redisTemplate.opsForValue().set("timeuse", String.valueOf(t2 - t1));
+		this.setLastUpdateTime();
+		ncovMapper.updateCountryCoude();
 		return ncovList.size();
-	}
-
-	@Override
-	public int cleartable() {
-		return ncovMapper.cleartable();
 	}
 
 	@Override
@@ -57,5 +55,10 @@ public class NcovServiceImpl implements NcovService {
 	@Override
 	public int insert(Ncov ncov) {
 		return ncovMapper.insertSelective(ncov);
+	}
+
+	@Override
+	public List<Ncov> getWorldNcovDataBy(Date date) {
+		return null;
 	}
 }
