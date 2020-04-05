@@ -8,10 +8,10 @@ function loadlayer() {
                 "#ff7b69", "#cc2929", "#8c0d0d", "#660208"];
             console.log(gradient);//控制台输出
             let dataMap = {};
+            let dataSet = {};
             for (let i = 0; i < data.length; i++) {
                 let color = gradient[0];
                 let count = parseInt(data[i].confirmed);
-                console.log(count);
                 if (count <= 9) {
                     color = gradient[1];
                 } else if (count <= 49) {
@@ -28,12 +28,12 @@ function loadlayer() {
                     color = gradient[7];
                 }
                 dataMap[data[i].countrycode] = color;
+                dataSet[data[i].countrycode] = data[i];
             }
-            console.log(dataMap);
             var getColorBySOC = function (SOC) {
                 //可按需改为其他实现
                 if (SOC) {
-                    return dataMap[SOC]
+                    return dataMap[SOC] ? dataMap[SOC] : "#ccc";
                 } else {
                     return 'rgb(200,200,240)'
 
@@ -56,7 +56,7 @@ function loadlayer() {
                     'nation-stroke': 'rgba(20, 20, 233, 0.6)',
                     'fill': function (props) {
                         //props:{NAME_CHH,NAME_ENG,SOC}
-                        return getColorBySOC(props.SOC)
+                        return getColorBySOC(props.SOC);
                     }
                 }
             });
@@ -78,7 +78,7 @@ function loadlayer() {
                                 return props.SOC == SOC ? nationFill : getColorBySOC(props.SOC);
                             }
                         });
-                        updateInfo(props);
+                        updateInfo(dataSet[props.SOC], props);
                     }
                 } else {
                     disWorld.setStyles({
@@ -94,10 +94,14 @@ function loadlayer() {
                 }
             });
 
-            function updateInfo(props) {
+            function updateInfo(data, props) {
                 document.getElementById('name').innerText = props.NAME_CHN;
                 document.getElementById('eng-name').innerText = props.NAME_ENG;
                 document.getElementById('soc').innerText = props.SOC;
+                document.getElementById('confirmed').innerText = data ? data.confirmed : "暂无数据";
+                document.getElementById('suspected').innerText = data ? data.suspected : "暂无数据";
+                document.getElementById('cured').innerText = data ? data.cured : "暂无数据";
+                document.getElementById('dead').innerText = data ? data.dead : "暂无数据";
             }
 
             window.map.add(disWorld);

@@ -309,12 +309,22 @@
     </update>
     <update id="updateCountryCoude">
         update ncov n
-        set "countryCode" = (select threecharcode
-                             from worldarea w
-                             where (w.cnname = n.country or n."countryCode" = w.twocharcode))
+        set "countryCode" =
+                (select threecharcode
+                 from worldarea w
+                 where (
+                               (n."countryCode" is not null and n."countryCode" = w.twocharcode)
+                               or n."country" = w.cnname
+                           )
+                )
     </update>
     <select id="getWorldNcovDataByDate" parameterType="String" resultType="ORM.POJO.Ncov">
-        select "country", "countryCode", "confirmed"
+        select "country",
+               "countryCode",
+               "confirmed",
+               "suspected",
+               "cured",
+               "dead"
         From ncov
         where province = ''
           and date ::text = #{date}

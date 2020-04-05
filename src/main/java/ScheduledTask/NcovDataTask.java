@@ -37,7 +37,7 @@ public class NcovDataTask {
 	@Scheduled(fixedRate = 1000 * 60 * 30, initialDelay = 1 * 60 * 1000)
 	public void downloadData() {
 		try {
-			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", location);
+//			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json", "nCoVData.json", location);
 			Global.downLoadFromUrl("https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv", "nCoVData.csv", location);
 		} catch (Exception e) {
 			Global.Logger(this).error(e);
