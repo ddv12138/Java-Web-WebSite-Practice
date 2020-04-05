@@ -2,10 +2,8 @@ import GlobalUtils.Application;
 import GlobalUtils.Global;
 import ORM.POJO.City;
 import ORM.POJO.Community;
-import ScheduledTask.NcovDataTask;
 import WebComponent.Service.Services.CityService;
 import WebComponent.Service.Services.CommunityService;
-import WebComponent.Service.Services.NcovService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Ignore;
@@ -13,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -25,17 +22,6 @@ public class DataTest {
 	CityService cityService;
 	@Autowired
 	CommunityService communityService;
-
-	@Autowired
-	NcovService ncovService;
-	@Autowired
-	RedisTemplate redisTemplate;
-
-	@Test
-	public void test() {
-		NcovDataTask task = new NcovDataTask(ncovService, redisTemplate);
-		task.downloadData();
-	}
 
 	@Test
 	@Ignore
