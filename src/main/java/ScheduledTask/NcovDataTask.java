@@ -51,17 +51,17 @@ public class NcovDataTask {
 				List<Ncov> ncovList = new LinkedList<>();
 				for (CSVRecord record : records) {
 					Ncov ncov = new Ncov();
-					ncov.setProvince(record.get("province"));
-					ncov.setCountrycode(record.get("countryCode"));
-					ncov.setCountry(record.get("country"));
-					ncov.setConfirmed(record.get("confirmed"));
-					ncov.setCitycode(record.get("cityCode"));
-					ncov.setCity(record.get("city"));
-					ncov.setCured(record.get("cured"));
+					ncov.setProvince(record.get("province").equals("") ? null : record.get("province"));
+					ncov.setCountrycode(record.get("countryCode").equals("") ? null : record.get("countryCode"));
+					ncov.setCountry(record.get("country").equals("") ? null : record.get("country"));
+					ncov.setConfirmed(record.get("confirmed").equals("") ? null : record.get("confirmed"));
+					ncov.setCitycode(record.get("cityCode").equals("") ? null : record.get("cityCode"));
+					ncov.setCity(record.get("city").equals("") ? null : record.get("city"));
+					ncov.setCured(record.get("cured").equals("") ? null : record.get("cured"));
 					ncov.setDate(ymd.parse(record.get("date")));
-					ncov.setDead(record.get("dead"));
-					ncov.setProvincecode(record.get("provinceCode"));
-					ncov.setSuspected(record.get("suspected"));
+					ncov.setDead(record.get("dead").equals("") ? null : record.get("dead"));
+					ncov.setProvincecode(record.get("provinceCode").equals("") ? null : record.get("provinceCode"));
+					ncov.setSuspected(record.get("suspected").equals("") ? null : record.get("suspected"));
 					ncovList.add(ncov);
 				}
 				ncovService.insertAll(ncovList);
