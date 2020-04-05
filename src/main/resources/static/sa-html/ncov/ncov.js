@@ -1,5 +1,10 @@
 function loadlayer() {
     var colors = {};
+    sa.ajax2("/ncov/world", null, function (arg) {
+        console.log(arg);
+    }, {
+        type: "get"
+    });
     var getColorBySOC = function (SOC) {
         //可按需改为其他实现
         if (SOC) {

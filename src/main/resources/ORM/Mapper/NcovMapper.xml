@@ -309,7 +309,13 @@
     </update>
     <update id="updateCountryCoude">
         update ncov n
-        set "countryCode" = (select cnname from worldarea w where w.cnname = n.country)
-        where n."countryCode" = ''
+        set "countryCode" = (select threecharcode from worldarea w where w.cnname = n.country)
     </update>
+    <select id="getWorldNcovDataByDate" parameterType="String" resultType="ORM.POJO.Ncov">
+        select "country", "countryCode", "confirmed"
+        From ncov
+        where province = ''
+          and date ::text = #{date}
+        order by confirmed:: int desc
+    </select>
 </mapper>

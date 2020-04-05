@@ -58,7 +58,8 @@ public class NcovServiceImpl implements NcovService {
 	}
 
 	@Override
-	public List<Ncov> getWorldNcovDataBy(Date date) {
-		return null;
+	public List<Ncov> getWorldNcovDataByDate(Date date) {
+		SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
+		return ncovMapper.getWorldNcovDataByDate(ymd.format(date));
 	}
 }

@@ -15,5 +15,5 @@ public interface NcovService {
 
 	int insert(Ncov ncov);
 
-	List<Ncov> getWorldNcovDataBy(Date date);
+	List<Ncov> getWorldNcovDataByDate(Date date);
 }

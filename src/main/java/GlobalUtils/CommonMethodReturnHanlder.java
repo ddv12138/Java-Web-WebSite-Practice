@@ -1,5 +1,6 @@
 package GlobalUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -43,7 +44,6 @@ public class CommonMethodReturnHanlder extends RequestResponseBodyMethodProcesso
 				|| controllerClass.isAnnotationPresent(ResponseBody.class)
 				|| returnType.getMethodAnnotation(ResponseBody.class) != null;
 	}
-
 	@Override
 	public void handleReturnValue(@Nullable Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws IOException, HttpMediaTypeNotAcceptableException {
 		CommonResult responseInfo;
@@ -58,7 +58,7 @@ public class CommonMethodReturnHanlder extends RequestResponseBodyMethodProcesso
 		ServletServerHttpRequest inputMessage = createInputMessage(webRequest);
 		ServletServerHttpResponse outputMessage = createOutputMessage(webRequest);
 
-		writeWithMessageConverters(responseInfo, returnType, inputMessage, outputMessage);
+		writeWithMessageConverters(JSONObject.toJSONString(responseInfo), returnType, inputMessage, outputMessage);
 	}
 
 }

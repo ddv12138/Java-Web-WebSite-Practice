@@ -72,4 +72,6 @@ public interface NcovMapper {
 	int cleartable();
 
 	int updateCountryCoude();
+
+	List<Ncov> getWorldNcovDataByDate(String date);
 }

@@ -101,7 +101,6 @@ class RootConfig {
 		//返回内容的过滤
 		config.setSerializerFeatures(
 				SerializerFeature.DisableCircularReferenceDetect,
-				SerializerFeature.WriteMapNullValue,
 				SerializerFeature.WriteNullListAsEmpty
 		);
 		List<MediaType> supportedMediaTypes = new ArrayList<>();
