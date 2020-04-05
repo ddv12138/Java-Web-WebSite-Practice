@@ -326,7 +326,7 @@
                "cured",
                "dead"
         From ncov
-        where province = ''
+        where province is null
           and date ::text = #{date}
         order by confirmed:: int
         desc
