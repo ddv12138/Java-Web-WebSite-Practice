@@ -1,30 +1,28 @@
 package GlobalUtils.Config;
 
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+@Deprecated
+public class WebAppInitializer
+//		extends AbstractAnnotationConfigDispatcherServletInitializer
+{
+//	@Override
+//	protected Class<?>[] getRootConfigClasses() {
+//		return new Class[]{RootConfig.class, FileStorageConfig.class};
+//	}
+//
+//	@Override
+//	protected Class<?>[] getServletConfigClasses() {
+//		return new Class[]{SecurityConfig.class, MethodSecurityConfig.class};
+//	}
 
-import javax.servlet.Filter;
+//	@Override
+//	protected String[] getServletMappings() {
+//		return new String[]{"/"};
+//	}
 
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-	@Override
-	protected Class<?>[] getRootConfigClasses() {
-		return new Class[]{RootConfig.class, DataSourceConfig.class, FileStorageConfig.class};
-	}
-
-	@Override
-	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{SecurityConfig.class, MethodSecurityConfig.class, CommonReponseConfig.class};
-	}
-
-	@Override
-	protected String[] getServletMappings() {
-		return new String[]{"/"};
-	}
-
-	@Override
-	protected Filter[] getServletFilters() {
-		return new Filter[]{new CharacterEncodingFilter("UTF-8")};
-	}
+//	@Override
+//	protected Filter[] getServletFilters() {
+//		return new Filter[]{new CharacterEncodingFilter("UTF-8")};
+//	}
 
 	/*
 	 *添加自定义filter和servlet或者listener可以在这里注册，如果是注册到dispatherservlet的就不用在这里注册，直接重写 getServletFilters() 即可

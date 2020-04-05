@@ -1,5 +1,6 @@
 package GlobalUtils.Config;
 
+import GlobalUtils.CommonMethodReturnHanlder;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
@@ -22,11 +23,16 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 @MapperScan("ORM.Mapper")
@@ -93,36 +99,32 @@ class RootConfig {
 	@Bean
 	//springboot2中消息转换器的介绍在
 	// https://docs.spring.io/spring-boot/docs/2.2.2.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-message-converters
-	public HttpMessageConverters customConverters() {
-		//创建消息转换器
+	public HttpMessageConverters fastJsonMessageConverters(List<HttpMessageConverter<?>> converters) {
+		//需要定义一个convert转换消息的对象;
 		FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-		//创建配置类
-		com.alibaba.fastjson.support.config.FastJsonConfig config = new com.alibaba.fastjson.support.config.FastJsonConfig();
-		//返回内容的过滤
-		config.setSerializerFeatures(
-				SerializerFeature.DisableCircularReferenceDetect,
-				SerializerFeature.WriteNullListAsEmpty
-		);
-		List<MediaType> supportedMediaTypes = new ArrayList<>();
-		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-		supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
-		supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
-		supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
-		supportedMediaTypes.add(MediaType.APPLICATION_PDF);
-		supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
-		supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
-		supportedMediaTypes.add(MediaType.APPLICATION_XML);
-		supportedMediaTypes.add(MediaType.IMAGE_GIF);
-		supportedMediaTypes.add(MediaType.IMAGE_JPEG);
-		supportedMediaTypes.add(MediaType.IMAGE_PNG);
-		supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
-		supportedMediaTypes.add(MediaType.TEXT_HTML);
-		supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
-		supportedMediaTypes.add(MediaType.TEXT_PLAIN);
-		supportedMediaTypes.add(MediaType.TEXT_XML);
-		fastConverter.setSupportedMediaTypes(supportedMediaTypes);
-		fastConverter.setFastJsonConfig(config);
-		return new HttpMessageConverters(fastConverter);
+		//添加fastJson的配置信息;
+		FastJsonConfig fastJsonConfig = new FastJsonConfig();
+		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+		//全局时间配置
+		fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+		fastJsonConfig.setCharset(StandardCharsets.UTF_8);
+		//处理中文乱码问题
+		List<MediaType> fastMediaTypes = new ArrayList<>();
+		fastMediaTypes.add(MediaType.APPLICATION_JSON);
+		//在convert中添加配置信息.
+		fastConverter.setSupportedMediaTypes(fastMediaTypes);
+		fastConverter.setFastJsonConfig(fastJsonConfig);
+		converters.add(0, fastConverter);
+		return new HttpMessageConverters(true, converters);
 	}
 
+	@Bean
+	public CommonMethodReturnHanlder commonMethodReturnHanlder(RequestMappingHandlerAdapter handlerAdapter, HttpMessageConverters converters) {
+		List<HandlerMethodReturnValueHandler> handlers = new ArrayList<>();
+		CommonMethodReturnHanlder commonMethodReturnHanlder = new CommonMethodReturnHanlder(converters.getConverters());
+		handlers.add(commonMethodReturnHanlder);
+		handlers.addAll(Objects.requireNonNull(handlerAdapter.getReturnValueHandlers()));
+		handlerAdapter.setReturnValueHandlers(handlers);
+		return commonMethodReturnHanlder;
+	}
 }
