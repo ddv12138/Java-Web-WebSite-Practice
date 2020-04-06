@@ -22,24 +22,25 @@
 		<div class="web_login" id="web_login">
 			<div class="login-box">
 				<div class="login_form">
-					<form accept-charset="utf-8" action="/user/login" class="loginForm" id="login_form" method="post"
+					<form accept-charset="utf-8" class="loginForm" id="login_form"
 					      name="loginform">
 						<input name="did" type="hidden" value="0"/>
 						<input name="to" type="hidden" value="log"/>
 						<div class="uinArea" id="uinArea">
-							<label class="input-tips" for="u">帐号：</label>
+							<label class="input-tips" for="username">帐号：</label>
 							<div class="inputOuter" id="uArea">
-								<input class="inputstyle" id="u" name="username" type="text"/>
+								<input class="inputstyle" id="username" name="username" type="text"/>
 							</div>
 						</div>
 						<div class="pwdArea" id="pwdArea">
-							<label class="input-tips" for="p">密码：</label>
+							<label class="input-tips" for="username">密码：</label>
 							<div class="inputOuter" id="pArea">
-								<input class="inputstyle" id="p" name="password" type="password"/>
+								<input class="inputstyle" id="password" name="password" type="password"/>
 							</div>
 						</div>
 						<div style="padding-left:50px;margin-top:20px;">
-							<input class="button_blue login-btn" style="width: 208px;" type="submit" value="登 录"/>
+							<input class="button_blue login-btn" id="login_btn" style="width: 208px;" type="button"
+							       value="登 录"/>
 						</div>
 					</form>
 				</div>
@@ -58,6 +59,7 @@
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+<script src="/res/sa.js"></script>
 <script type="text/javascript">
 
     // 你所有要改的代码全在这里   ↓↓↓↓↓
@@ -66,25 +68,7 @@
     let two_title = '操作帮助';			// 第二个卡片的标题(最好四个字)
     var username = '';	// 默认的key
     var password = '';	// 默认的password
-    // 第二个模板的内容
     let tow_content = '输入账号和密码，点击按钮登录即可';
-    // let tow_content = '本页面参考于此模板：<br/> <a href="http://www.jq22.com/demo/jQuery-dl20160111/" target="_blank">http://www.jq22.com/yanshi5518</a>';
-
-    // 你所有要改的代码全在这里   ↑↑↑↑↑
-    // $('.login-btn').click(function () {
-    //     $.post("/user/login",$("#login_form").serialize(),function(arg){
-    //         console.log(arg);
-    //     })
-    // setTimeout(function () {
-    //     if (parent == window) {
-    //         location.href = "index.html";
-    //     } else {
-    //         parent.layer.closeAll('iframe');
-    //         parent.location.reload();
-    //     }
-    // }, 500);
-
-    // });
 
     // 替换属性
     $('.page-title').html(page_title);
@@ -99,6 +83,14 @@
             $('.login-btn').click();
         }
     });
+    $("#login_btn").bind("click", function () {
+        console.log(1);
+        sa.ajax2("/user/login", JSON.stringify($("#login_form").serializeObject()), function (arg) {
+            console.log(arg)
+        }, {
+            type: "post"
+        })
+    })
 
 
 </script>

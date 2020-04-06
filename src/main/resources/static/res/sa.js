@@ -1,4 +1,19 @@
 var sa = {};
+$.fn.serializeObject = function () {
+    var ct = this.serializeArray();
+    var obj = {};
+    $.each(ct, function () {
+        if (obj[this.name] !== undefined) {
+            if (!obj[this.name].push) {
+                obj[this.name] = [obj[this.name]];
+            }
+            obj[this.name].push(this.value || "");
+        } else {
+            obj[this.name] = this.value || "";
+        }
+    });
+    return obj;
+};
 
 // ===========================  服务器环境配置  ======================================= 
 
