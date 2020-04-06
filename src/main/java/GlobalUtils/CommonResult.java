@@ -13,11 +13,6 @@ public class CommonResult {
 		this.data = data;
 	}
 
-	public CommonResult() {
-
-	}
-
-
 	public int getState() {
 		return state;
 	}
