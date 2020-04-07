@@ -14,8 +14,8 @@ public class CommonResult<T> {
 	}
 
 
-	public SystemCode getState() {
-		return state;
+	public int getState() {
+		return state.getCode();
 	}
 
 	public void setState(SystemCode state) {

@@ -2,6 +2,7 @@ package WebComponent.Service.ServicesImpl;
 
 import Exceptions.UserAleadyExistsException;
 import GlobalUtils.Global;
+import GlobalUtils.PasswdEncoder;
 import ORM.Mapper.RoleMapper;
 import ORM.Mapper.UserMapper;
 import ORM.POJO.User;
@@ -20,10 +21,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 	UserMapper mapper;
 	RoleMapper roleMapper;
+	PasswdEncoder passwdEncoder;
 
-	public UserServiceImpl(UserMapper mapper, RoleMapper roleMapper) {
+	public UserServiceImpl(UserMapper mapper, RoleMapper roleMapper, PasswdEncoder passwdEncoder) {
 		this.mapper = mapper;
 		this.roleMapper = roleMapper;
+		this.passwdEncoder = passwdEncoder;
 	}
 
 	@Override
@@ -85,6 +88,22 @@ public class UserServiceImpl implements UserService {
 		Assert.notNull(user, "用户不存在");
 		user.setBaned(baned);
 		return mapper.updateOne(user);
+	}
+
+	@Override
+	public boolean authUser(User user) {
+		if (user == null) {
+			return false;
+		}
+		String encodePwd = user.getPassword();
+		if (null == encodePwd || encodePwd.length() == 0) {
+			return false;
+		}
+		User orginUser = selectByName(user.getName());
+		if (null == orginUser) {
+			throw new UsernameNotFoundException("用户不存在");
+		}
+		return passwdEncoder.matches(encodePwd, orginUser.getPassword());
 	}
 
 
