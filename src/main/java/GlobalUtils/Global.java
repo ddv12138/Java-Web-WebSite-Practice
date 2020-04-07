@@ -90,22 +90,20 @@ public class Global {
 		//防止屏蔽程序抓取而返回403错误
 		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 		//得到输入流
-		InputStream inputStream = conn.getInputStream();
-		//获取自己数组
-		byte[] getData = readInputStream(inputStream);
-
-		//文件保存位置
-		File saveDir = new File(savePath);
-		if (!saveDir.exists()) {
-			saveDir.mkdir();
+		try (InputStream inputStream = conn.getInputStream()) {
+			//获取自己数组
+			byte[] getData = readInputStream(inputStream);
+			//文件保存位置
+			File saveDir = new File(savePath);
+			if (!saveDir.exists()) {
+				saveDir.mkdir();
+			}
+			File file = new File(saveDir + File.separator + fileName);
+			try (FileOutputStream fos = new FileOutputStream(file)) {
+				fos.write(getData);
+			}
 		}
-		File file = new File(saveDir + File.separator + fileName);
-		FileOutputStream fos = new FileOutputStream(file);
-		fos.write(getData);
-		fos.close();
-		inputStream.close();
 		Global.Logger(Global.class).info("info:" + url + " download success");
-
 	}
 
 	/**
