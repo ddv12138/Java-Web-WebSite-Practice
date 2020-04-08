@@ -1,4 +1,19 @@
 var sa = {};
+$.fn.serializeObject = function () {
+    var ct = this.serializeArray();
+    var obj = {};
+    $.each(ct, function () {
+        if (obj[this.name] !== undefined) {
+            if (!obj[this.name].push) {
+                obj[this.name] = [obj[this.name]];
+            }
+            obj[this.name].push(this.value || "");
+        } else {
+            obj[this.name] = this.value || "";
+        }
+    });
+    return obj;
+};
 
 // ===========================  服务器环境配置  ======================================= 
 
@@ -54,27 +69,26 @@ sa.ajax2 = function (url, data, success200, cfg) {
         // baseUrl: (url.indexOf('/') == 0 ? sa.cfg.api_url : ''),// 父url，拼接在url前面
         baseUrl: url,// 父url，拼接在url前面
         // 回调函数处理
-        // code=500, 代表成功
         success500: function (res) {
             return layer.alert('失败：' + res.msg);
         },
-        // code=998, 代表权限不足
-        success998: function (res) {
-            return layer.alert("权限不足," + res.msg, {icon: 5});
+        // code=402, 代表密码错误
+        success402: function (res) {
+            return layer.alert("登陆失败", {icon: 5});
         },
-        // code=999, 代表未登录
-        success999: function (res) {
+        // code=401, 代表未登录
+        success401: function (res) {
             return layer.confirm("您当前暂未登录，是否立即登录？", {}, function () {
                 layer.closeAll();
-                return layer.open({
-                    type: 2,
-                    title: '登录',
-                    shadeClose: true,
-                    shade: 0.8,
-                    area: ['90%', '90%'],
-                    content: cfg.login_url || '../../login.html'
-                });
-
+                // return layer.open({
+                //     type: 2,
+                //     title: '登录',
+                //     shadeClose: true,
+                //     shade: 0.8,
+                //     area: ['90%', '90%'],
+                //     content: cfg.login_url || '/login.html'
+                // });
+                window.location.href = '/login.html';
             });
         },
         // ajax发生异常时的默认处理函数

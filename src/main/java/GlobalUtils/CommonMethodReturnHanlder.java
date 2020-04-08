@@ -37,7 +37,7 @@ public class CommonMethodReturnHanlder extends RequestResponseBodyMethodProcesso
 		if (returnValue instanceof CommonResult) {
 			responseInfo = (CommonResult) returnValue;
 		} else {
-			responseInfo = new CommonResult(true, "success", returnValue);
+			responseInfo = new CommonResult(SystemCode.OK, "success", returnValue);
 		}
 
 		// 标识请求是否已经在该方法内完成处理

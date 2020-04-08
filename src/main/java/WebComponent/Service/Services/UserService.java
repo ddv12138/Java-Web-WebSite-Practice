@@ -27,4 +27,5 @@ public interface UserService extends UserDetailsService {
 
 	Boolean userBan(User paruser, Boolean baned);
 
+	boolean authUser(User user);
 }

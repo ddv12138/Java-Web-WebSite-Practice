@@ -1,6 +1,7 @@
 package GlobalUtils.Config;
 
 import GlobalUtils.PasswdEncoder;
+import GlobalUtils.SecurityHandlers.*;
 import WebComponent.Service.Services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.data.redis.RedisIndexedSessionRepository;
@@ -22,36 +24,49 @@ public class SecurityConfig<S extends Session> extends WebSecurityConfigurerAdap
 	RedisIndexedSessionRepository redisIndexedSessionRepository;
 	UserService userService;
 	PasswdEncoder passwdEncoder;
+	RestAccessDeniedHandler restAccessDeniedHandler;
+	RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	RestLoginAuthenticationEntryPoint restAuthenticationEntryPoint;
+	RestAuthenticationProvider restAuthenticationProvider;
+	RestLogoutSuccessHandler restLogoutSuccessHandler;
 
 	public SecurityConfig(UserService userService, PasswdEncoder passwdEncoder,
-						  RedisIndexedSessionRepository redisIndexedSessionRepository) {
+						  RedisIndexedSessionRepository redisIndexedSessionRepository, RestAccessDeniedHandler restAccessDeniedHandler,
+						  RestAuthenticationSuccessHandler restAuthenticationSuccessHandler,
+						  RestAuthenticationFailureHandler restAuthenticationFailureHandler,
+						  RestLoginAuthenticationEntryPoint restAuthenticationEntryPoint,
+						  RestAuthenticationProvider restAuthenticationProvider,
+						  RestLogoutSuccessHandler restLogoutSuccessHandler) {
 		this.userService = userService;
 		this.passwdEncoder = passwdEncoder;
 		this.redisIndexedSessionRepository = redisIndexedSessionRepository;
+		this.restAccessDeniedHandler = restAccessDeniedHandler;
+		this.restAuthenticationSuccessHandler = restAuthenticationSuccessHandler;
+		this.restAuthenticationFailureHandler = restAuthenticationFailureHandler;
+		this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+		this.restAuthenticationProvider = restAuthenticationProvider;
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-//				.antMatchers("/user/**", "/", "/spittr", "/spittr/{id}").permitAll()
-				.antMatchers("user/login", "/sa-html/cfg/500.html").permitAll()
-				.regexMatchers(".*(css|js|ico|png|jpg)\\??[^/\\\\]*").permitAll()
+				.antMatchers("/user/login", "/").permitAll()
+				.regexMatchers(".*(css|js|ico|png|jpg|html)\\??[^/\\\\]*").permitAll()
 				.anyRequest().authenticated()
 				.and()
+				.addFilterAt(restUsernamePasswordAuthenticationFilter(restAuthenticationSuccessHandler, restAuthenticationFailureHandler), UsernamePasswordAuthenticationFilter.class)
 				.formLogin()
-				//指定登录页的路径
-				.loginPage("/login.html")
+//				.loginPage("/login.html")
 				.usernameParameter("username")
 				.passwordParameter("password")
-				//指定自定义form表单请求的路径
-				.loginProcessingUrl("/user/login")
-				.failureUrl("/sa-html/cfg/500.html")
-				.defaultSuccessUrl("/")
-				//必须允许所有用户访问我们的登录页（例如未验证的用户，否则验证流程就会进入死循环）
-				//这个formLogin().permitAll()方法允许所有用户基于表单登录访问/login这个page。
-				.and().logout().logoutUrl("/user/logout")
-				.logoutSuccessUrl("/login.html")
-				.permitAll();
+//				.loginProcessingUrl("/user/login")
+				.failureHandler(restAuthenticationFailureHandler).permitAll()
+//				.defaultSuccessUrl("/")
+				.and().logout().logoutUrl("/user/logout").logoutSuccessUrl("/login.html").clearAuthentication(true).permitAll()
+				.and().exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)
+				.authenticationEntryPoint(restAuthenticationEntryPoint)
+				.and().authenticationProvider(restAuthenticationProvider);
 		//默认都会产生一个hiden标签 里面有安全相关的验证 防止请求伪造 这边我们暂时不需要 可禁用掉
 		http.csrf().disable();
 //		http.authorizeRequests().anyRequest().permitAll();
@@ -69,5 +84,16 @@ public class SecurityConfig<S extends Session> extends WebSecurityConfigurerAdap
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService).passwordEncoder(passwdEncoder);
+	}
+
+	@Bean
+	RestUsernamePasswordAuthenticationFilter restUsernamePasswordAuthenticationFilter
+			(RestAuthenticationSuccessHandler restAuthenticationSuccessHandler,
+			 RestAuthenticationFailureHandler restAuthenticationFailureHandler) throws Exception {
+
+		RestUsernamePasswordAuthenticationFilter tokenProcessingFilter
+				= new RestUsernamePasswordAuthenticationFilter(restAuthenticationSuccessHandler, restAuthenticationFailureHandler);
+		tokenProcessingFilter.setAuthenticationManager(super.authenticationManager());
+		return tokenProcessingFilter;
 	}
 }

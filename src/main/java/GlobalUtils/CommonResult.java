@@ -2,22 +2,23 @@ package GlobalUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class CommonResult {
-	int state;
+public class CommonResult<T> {
+	SystemCode state;
 	String msg;
-	Object data;
+	T data;
 
-	public CommonResult(boolean state, String msg, Object data) {
-		this.state = state ? 1 : 0;
+	public CommonResult(SystemCode state, String msg, T data) {
+		this.state = state;
 		this.msg = msg;
 		this.data = data;
 	}
 
+
 	public int getState() {
-		return state;
+		return state.getCode();
 	}
 
-	public void setState(int state) {
+	public void setState(SystemCode state) {
 		this.state = state;
 	}
 
@@ -32,11 +33,11 @@ public class CommonResult {
 		this.msg = msg;
 	}
 
-	public Object getData() {
+	public T getData() {
 		return data;
 	}
 
-	public void setData(Object data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 
