@@ -46,6 +46,7 @@ public class SecurityConfig<S extends Session> extends WebSecurityConfigurerAdap
 		this.restAuthenticationFailureHandler = restAuthenticationFailureHandler;
 		this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
 		this.restAuthenticationProvider = restAuthenticationProvider;
+		this.restLogoutSuccessHandler = restLogoutSuccessHandler;
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class SecurityConfig<S extends Session> extends WebSecurityConfigurerAdap
 //				.loginProcessingUrl("/user/login")
 				.failureHandler(restAuthenticationFailureHandler).permitAll()
 //				.defaultSuccessUrl("/")
-				.and().logout().logoutUrl("/user/logout").logoutSuccessUrl("/login.html").clearAuthentication(true).permitAll()
+				.and().logout().logoutUrl("/user/logout").logoutSuccessHandler(restLogoutSuccessHandler).clearAuthentication(true).permitAll()
 				.and().exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)
 				.authenticationEntryPoint(restAuthenticationEntryPoint)
 				.and().authenticationProvider(restAuthenticationProvider);
