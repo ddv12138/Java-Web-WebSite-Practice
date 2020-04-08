@@ -85,6 +85,7 @@ public class ResourceControllerTest {
 		resource.setName("what-if-2");
 		resource.setId(36);
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/resource")
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(JSON.toJSONString(resource))
 		);
