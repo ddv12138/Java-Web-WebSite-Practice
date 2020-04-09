@@ -96,6 +96,7 @@ public class RoleControllerTest {
 
 		role.setId(75);
 		actions = mvc.perform(MockMvcRequestBuilders.delete("/role")
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
 				.content(JSON.toJSONString(role))
 		);
@@ -138,6 +139,7 @@ public class RoleControllerTest {
 		Integer[] roleids = new Integer[]{1, 2, 3, 4, 5, 6};
 		object.put("roleids", roleids);
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.put("/role/byuser")
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(object.toJSONString())
 				.accept(MediaType.APPLICATION_JSON)
 		);

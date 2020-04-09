@@ -31,6 +31,7 @@ public class SpittrController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getSpittr(@PathVariable("id") int id, Model model) {
+		String json = "{\"content\":\"pkqlnYU7QdomwW20wXEd7O8ZRoL0Q7qwaL6Dx1D33WkHGHYQYjmKp1nblRU8NdrTw2LkayD5TLkkn1SJP4brUgGiifcfgEpZpRUN5x0kfr0eRDxt9KsSBA9PwnC4WhYPfK4WgEOcE1LmpmQersgVVXXoSFbSv5N8Tl8GIbM46QNKzWjKWiNoBC3HxQDbm5rJnMTEnJVPflZFJNz5fR5Mrj7Qs0T2XvRAjEgmDfgNM7IZnx7kaI6VAebEPCWw0c1\",\"createtime\":1420068210000,\"id\":0,\"userid\":0,\"username\":\"Nate Shaw\"}";
 		model.addAttribute("spittr", spittrService.selectOne(id));
 		model.addAttribute("view", true);
 		return "spittrviews/spittrinfo";
