@@ -1,11 +1,11 @@
-import GlobalUtils.Application;
-import GlobalUtils.Global;
-import ORM.POJO.City;
-import ORM.POJO.Community;
-import WebComponent.Service.Services.CityService;
-import WebComponent.Service.Services.CommunityService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import ddvudo.Application;
+import ddvudo.GlobalUtils.Global;
+import ddvudo.ORM.POJO.City;
+import ddvudo.ORM.POJO.Community;
+import ddvudo.WebComponent.Service.Services.CityService;
+import ddvudo.WebComponent.Service.Services.CommunityService;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
