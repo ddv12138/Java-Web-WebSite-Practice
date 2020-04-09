@@ -1,4 +1,5 @@
-$.get("/resource?pid=1", function (arg) {
+sa.ajax2("/resource?pid=1", null, function (arg) {
+    console.log(arg);
     if (!arg || !arg.state) {
         return;
     } else {
@@ -22,4 +23,4 @@ $.get("/resource?pid=1", function (arg) {
     if (sp) {
         sp.setMenuList(arg);
     }
-});
+}, {type: "get"});

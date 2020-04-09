@@ -14,7 +14,7 @@
         <RollingFile name="RollingFileDebug" fileName="./logs/debug.log"
                      filePattern="logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz">
             <Filters>
-                <ThresholdFilter level="DEBUG"/>
+                <!--<ThresholdFilter level="DEBUG"/>-->
                 <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
             </Filters>
             <PatternLayout

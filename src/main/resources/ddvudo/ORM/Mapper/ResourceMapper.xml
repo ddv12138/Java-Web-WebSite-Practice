@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ddvudo.ORM.Mapper.ResourceMapper">
+    <resultMap id="resourceModel" type="ddvudo.ORM.POJO.Resource">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <result column="pid" property="pid"/>
+        <result column="order" property="order"/>
+        <result column="level_id" property="levelId"/>
+        <result column="level" property="level"/>
+        <result column="icon" property="icon"/>
+    </resultMap>
+    <resultMap id="subResourceModel" type="ddvudo.ORM.POJO.Resource" extends="resourceModel">
+        <collection property="childList" javaType="java.util.ArrayList" column="{pid=id,userid=userid}"
+                    select="selectResourceList"
+                    ofType="ddvudo.ORM.POJO.Resource">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="url" property="url"/>
+            <result column="pid" property="pid"/>
+            <result column="order" property="order"/>
+            <result column="level_id" property="levelId"/>
+            <result column="level" property="level"/>
+            <result column="icon" property="icon"/>
+        </collection>
+    </resultMap>
+    <resultMap id="subResourceModel_All" type="ddvudo.ORM.POJO.Resource" extends="resourceModel">
+        <collection property="childList" javaType="java.util.ArrayList" column="{pid=id}"
+                    select="selectAllResourceList"
+                    ofType="ddvudo.ORM.POJO.Resource">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="url" property="url"/>
+            <result column="pid" property="pid"/>
+            <result column="order" property="order"/>
+            <result column="level_id" property="levelId"/>
+            <result column="level" property="level"/>
+            <result column="icon" property="icon"/>
+        </collection>
+    </resultMap>
+    <select id="selectAllResourceList" resultMap="subResourceModel_All">
+        select *
+        From resource r
+        where pid = #{pid}
+        order by "order"
+    </select>
+    <select id="selectResourceList" resultMap="subResourceModel">
+        select *, #{userid} as userid
+        From resource r
+        where pid = #{pid}
+        and EXISTS
+        (select 1
+        from role_res_map rrm
+        INNER JOIN roletable ro on ro.id = rrm.roleid
+        inner join user_role_map urm on urm.roleid = ro.id
+        inner join usertable u on u.id = urm.userid
+        where rrm.resid = r.id
+        and u.id = #{userid})
+        order by "order"
+    </select>
+    <select id="selectResourceListByRole" parameterType="ddvudo.ORM.POJO.Role" resultMap="resourceModel">
+        select res.*
+        From resource res
+                 INNER JOIN role_res_map m on m.resid = res.id
+        where m.roleid = #{role.id}
+        ORDER BY "order"
+    </select>
+    <insert id="addOne" parameterType="ddvudo.ORM.POJO.Resource" useGeneratedKeys="true">
+        insert into resource (name, url, pid, "order", level, level_id, icon)
+        values (#{name}, #{url}, #{pid}, #{order}, #{level}, #{levelId}, #{icon})
+    </insert>
+    <select id="selectMaxOrder" resultType="Integer">
+        select max("order")
+        from resource;
+    </select>
+    <delete id="deleteOne" parameterType="ddvudo.ORM.POJO.Resource">
+        delete
+        From resource
+        where (level_id like CONCAT(SUBSTR((select level_id from (select level_id from resource where id = #{id}) a), 1,
+                                           (select level * 2 from (select level from resource where id = #{id}) b)),
+                                    '%'))
+    </delete>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="resourceModel">
+        select *
+        from resource
+        where id = #{id}
+    </select>
+    <select id="selectMaxLastLevel" parameterType="ddvudo.ORM.POJO.Resource" resultType="String">
+        select max(level_id) as level
+        from resource
+        where level_id like CONCAT(
+                SUBSTR((select level_id from resource where id = #{id}), 0,
+                       (select level * 2 + 1 from resource where id = #{id})),
+                '%')
+    </select>
+    <update id="updateOne" parameterType="ddvudo.ORM.POJO.Resource">
+        update resource
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null!=name">name=#{name},</if>
+            <if test="null!=url">url=#{url},</if>
+            <if test="null!=icon">icon=#{icon},</if>
+        </trim>
+        where id=#{id}
+    </update>
+</mapper>

@@ -8,8 +8,8 @@
     <properties resource="application.properties"></properties>
 
     <!-- 指定数据库驱动的jdbc驱动jar包的位置 -->
-    <classPathEntry
-            location="C:\Users\admin-user\.m2\repository\org\postgresql\postgresql\42.2.8\postgresql-42.2.8.jar"/>
+    <!--<classPathEntry
+            location="C:\Users\admin-user\.m2\repository\org\postgresql\postgresql\42.2.8\postgresql-42.2.8.jar"/>-->
 
     <!-- context 是逆向工程的主要配置信息 -->
     <!-- id：起个名字 -->
@@ -40,7 +40,7 @@
 
         <!-- targetPackage：生成的实体类所在的包 -->
         <!-- targetProject：生成的实体类所在的硬盘位置 -->
-        <javaModelGenerator targetPackage="ORM.POJO" targetProject="./src/main/java">
+        <javaModelGenerator targetPackage="ddvudo.ORM.POJO" targetProject="./src/main/java">
             <!-- 是否允许子包 -->
             <property name="enableSubPackages" value="false"/>
             <!-- 是否对modal添加构造函数 -->
@@ -52,7 +52,7 @@
         </javaModelGenerator>
 
         <!-- targetPackage 和 targetProject：生成的 mapper 文件的包和位置 -->
-        <sqlMapGenerator targetPackage="ORM.Mapper"
+        <sqlMapGenerator targetPackage="ddvudo.ORM.Mapper"
                          targetProject="./src/main/resources">
             <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false"/>
@@ -63,7 +63,7 @@
             MIXEDMAPPER:XML和注解的混合形式
             XMLMAPPER:所有的方法都在XML中，接口调用依赖XML文件 -->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="ORM.Mapper" targetProject="./src/main/java">
+                             targetPackage="ddvudo.ORM.Mapper" targetProject="./src/main/java">
             <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
