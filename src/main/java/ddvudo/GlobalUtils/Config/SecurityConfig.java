@@ -18,7 +18,8 @@ import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig<S extends Session> extends WebSecurityConfigurerAdapter {
+public class SecurityConfig<S extends Session>
+		extends WebSecurityConfigurerAdapter {
 	RedisIndexedSessionRepository redisIndexedSessionRepository;
 	UserService userService;
 	PasswdEncoder passwdEncoder;

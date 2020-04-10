@@ -19,7 +19,8 @@ import java.time.Duration;
 
 @Configuration
 @EnableCaching
-class CacheConfig extends CachingConfigurerSupport {
+class CacheConfig
+		extends CachingConfigurerSupport {
 	final
 	RedisConnectionFactory redisConnectionFactory;
 
