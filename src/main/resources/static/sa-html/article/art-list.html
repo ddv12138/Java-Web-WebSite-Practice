@@ -117,7 +117,7 @@
         methods: {
             // 数据刷新
             f5: function () {
-                sa.ajax2('/VocArticle/getList', this.p, function (res) {
+                sa.post('/VocArticle/getList', this.p, function (res) {
                     // this.dataList = res.data;	// 数据
                     // this.page = res.page;		// 分页
                 }.bind(this));

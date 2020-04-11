@@ -111,19 +111,9 @@
             },
             normalSubmit(arg) {
                 let data = new FormData($("#normalForm")[0]);
-                $.ajax({
-                    url: "/uploadfile",//后台的接口地址
-                    type: "post",//post请求方式
-                    data: data,//参数
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                    }, error: function () {
-                        alert("操作失败~");
-                    }
+                sa.post("/uploadfile", data, function (data) {
 
-                });
+                })
             },
             handleAvatarSuccess(res, file) {
                 this.imageUrl = URL.createObjectURL(file.raw);

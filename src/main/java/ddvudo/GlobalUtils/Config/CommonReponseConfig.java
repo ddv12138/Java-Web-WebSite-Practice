@@ -4,8 +4,6 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import ddvudo.GlobalUtils.CommonMethodReturnHanlder;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -19,20 +17,15 @@ import java.util.List;
 import java.util.Objects;
 
 @Configuration
-public class CommonReponseConfig
-		implements ApplicationContextAware {
+public class CommonReponseConfig {
 	@Bean
-	public CommonMethodReturnHanlder CommonMethodReturnHanlder(List<HttpMessageConverter<?>> converters) {
-		return new CommonMethodReturnHanlder(converters);
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		RequestMappingHandlerAdapter handlerAdapter = applicationContext.getBean(RequestMappingHandlerAdapter.class);
+	public CommonMethodReturnHanlder CommonMethodReturnHanlder(RequestMappingHandlerAdapter requestMappingHandlerAdapter, List<HttpMessageConverter<?>> converters) {
+		CommonMethodReturnHanlder commonMethodReturnHanlder = new CommonMethodReturnHanlder(converters);
 		List<HandlerMethodReturnValueHandler> handlers = new ArrayList<>();
-		handlers.add(applicationContext.getBean(CommonMethodReturnHanlder.class));
-		handlers.addAll(Objects.requireNonNull(handlerAdapter.getReturnValueHandlers()));
-		handlerAdapter.setReturnValueHandlers(handlers);
+		handlers.add(commonMethodReturnHanlder);
+		handlers.addAll(Objects.requireNonNull(requestMappingHandlerAdapter.getReturnValueHandlers()));
+		requestMappingHandlerAdapter.setReturnValueHandlers(handlers);
+		return commonMethodReturnHanlder;
 	}
 
 	@Bean

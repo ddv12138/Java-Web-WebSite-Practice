@@ -1,6 +1,6 @@
 function loadlayer() {
     var colors = {};
-    sa.ajax2("/ncov/world", null, function (arg) {
+    sa.get("/ncov/world", null, function (arg) {
         if (arg && arg.state) {
             let data = arg.data;
             console.log(data);
@@ -106,8 +106,6 @@ function loadlayer() {
 
             window.map.add(disWorld);
         }
-    }, {
-        type: "get"
     });
 }
 

@@ -115,7 +115,7 @@
         methods: {
             // 数据刷新
             f5: function () {
-                sa.ajax2("/user/list", {
+                sa.get("/user/list", {
                     pagesize: this.page.pageSize,
                     pagenum: this.page.pageNum
                 }, function (res) {
@@ -123,7 +123,7 @@
                         this.dataList = res.data.data;
                         this.page.count = res.data.count;
                     }
-                }.bind(this), {type: "get"})
+                }.bind(this))
             },
             newUser: function () {
                 layer.open({
@@ -147,34 +147,34 @@
             // 删除
             del: function (data) {
                 layer.confirm('是否删除，此操作不可撤销', {}, function () {
-                    sa.ajax2('/user', JSON.stringify(data), function (res) {
+                    sa.delete('/user', JSON.stringify(data), function (res) {
                         if (res && res.state && res.data) {
                             layer.msg('删除成功');
                             this.f5();
                         }
-                    }.bind(this), {type: "delete"})
+                    }.bind(this))
                 }.bind(this));
             },
             // 账号冻结
             dongjie: function (data) {
                 layer.confirm('冻结此用户？', {}, function () {
-                    sa.ajax2('/user/ban', JSON.stringify(data), function (res) {
+                    sa.put('/user/ban', JSON.stringify(data), function (res) {
                         if (res && res.state && res.data) {
                             layer.msg('冻结成功');
                             this.f5();
                         }
-                    }.bind(this), {type: "put"})
+                    }.bind(this))
                 }.bind(this));
             },
             // 解禁
             jiejin: function (data) {
                 layer.confirm('解禁此用户？', {}, function () {
-                    sa.ajax2('/user/unban', JSON.stringify(data), function (res) {
+                    sa.put('/user/unban', JSON.stringify(data), function (res) {
                         if (res && res.state && res.data) {
                             layer.msg('解禁成功');
                             this.f5();
                         }
-                    }.bind(this), {type: "put"})
+                    }.bind(this))
                 }.bind(this));
             },
             //管理角色

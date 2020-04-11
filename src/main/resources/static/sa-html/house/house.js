@@ -14,7 +14,7 @@ window.onload = function () {
         },
         mounted: function () {
             loadCityData(this.currentcity);
-            sa.ajax2("/city/avaliable", null, function (res) {
+            sa.get("/city/avaliable", null, function (res) {
                 if (res && res.state && res.data) {
                     console.log(res);
                     this.cityList = JSON.parse(JSON.stringify(res.data));
@@ -27,7 +27,7 @@ window.onload = function () {
 function loadCityData(cityStr) {
     window.countScale = 25;
     let viewMode = '3D';
-    $.post("/city/getCityInfo", {cityName: cityStr}, function (cityData, status) {
+    $.get("/city/getCityInfo", {cityName: cityStr}, function (cityData, status) {
         cityData = JSON.parse(cityData.data).results[0];
         if (!window.map) {
             const map = new AMap.Map("container", {

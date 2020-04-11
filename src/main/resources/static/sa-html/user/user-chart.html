@@ -104,7 +104,7 @@
         methods: {
             // 数据刷新
             f5: function () {
-                sa.ajax2('/url', this.p, function (res) {
+                sa.get('/url', this.p, function (res) {
                     this.updateEchartsType();
                     this.updateEchartsMonth();
                 }.bind(this));

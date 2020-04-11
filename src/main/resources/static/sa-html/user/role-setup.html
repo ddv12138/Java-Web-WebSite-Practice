@@ -66,7 +66,7 @@
                 this.multipleSelection.forEach(function (role) {
                     roleids.push(role.id);
                 });
-                sa.ajax2('/role/byuser', JSON.stringify({userid: userid, roleids: roleids}), function (res) {
+                sa.put('/role/byuser', JSON.stringify({userid: userid, roleids: roleids}), function (res) {
                     if (res && res.state && res.data) {
                         layer.alert('成功', {}, function () {
                             if (parent != window) {
@@ -75,42 +75,36 @@
                             layer.closeAll();
                         });
                     }
-                }.bind(this), {
-                    type: "put"
-                });
+                }.bind(this));
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             }
         },
         created: function () {
-            sa.ajax2('/role', {}, function (res2) {
+            sa.get('/role', {}, function (res2) {
                 if (res2 && res2.state) {
                     console.log(res2.data);
                     let data = JSON.parse(JSON.stringify(res2.data));
                     this.tableData = data;
                 }
-            }.bind(this), {
-                type: "get"
-            });
+            }.bind(this));
         },
         mounted: function () {
-            sa.ajax2('/role/byuser', {userid: userid}, function (res) {
+            sa.get('/role/byuser', {userid: userid}, function (res) {
                 if (res && res.state) {
                     let checked = res.data;
                     if (checked) {
                         checked.forEach(function (row) {
                             this.tableData.forEach(function (trow) {
-                                if (trow.id == row.id) {
+                                if (trow.id === row.id) {
                                     this.$refs.multipleTable.toggleRowSelection(trow, true);
                                 }
                             }.bind(this))
                         }.bind(this))
                     }
                 }
-            }.bind(this), {
-                type: "get"
-            });
+            }.bind(this));
         }
     });
 </script>

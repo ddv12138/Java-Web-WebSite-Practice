@@ -137,25 +137,21 @@
         methods: {
             // 刷新
             f5: function () {
-                sa.ajax2('/role', {}, function (res) {
+                sa.get('/role', {}, function (res) {
                     if (res && res.state) {
                         this.dataList = sa.$util.listAU(res.data);
                     }
-                }.bind(this), {
-                    type: "get"
-                });
+                }.bind(this));
             },
             // 修改
             update: function (data) {
-                sa.ajax2('/role', JSON.stringify(data), function (res) {
+                sa.put('/role', JSON.stringify(data), function (res) {
                     if (res && res.state && res.state) {
                         layer.alert('修改成功', {}, function () {
                             this.f5();
                             layer.closeAll();
                         }.bind(this));
                     }
-                }.bind(this), {
-                    type: "PUT"
                 })
             },
             // 删除
@@ -164,22 +160,20 @@
                     return layer.alert('此角色是维持系统正常运行的重要角色，已被锁定，不可删除');
                 }
                 layer.confirm('是否删除，此操作不可撤销', {}, function () {
-                    sa.ajax2('/role', JSON.stringify(data), function (res) {
+                    sa.delete('/role', JSON.stringify(data), function (res) {
                         if (res && res.state && res.state) {
                             layer.alert('删除成功', {}, function () {
                                 this.f5();
                                 layer.closeAll();
                             }.bind(this));
                         }
-                    }.bind(this), {
-                        type: "delete"
-                    })
+                    }.bind(this))
                 }.bind(this))
             },
             // 添加
             add: function (arg) {
                 let data = sa.$util.copyJSON(this.addData);
-                sa.ajax2('/role', data, function (res) {
+                sa.post('/role', data, function (res) {
                     if (res && res.state && res.data) {
                         layer.alert('添加成功', {}, function () {
                             this.f5();
