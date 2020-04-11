@@ -58,7 +58,7 @@
         },
         created: function () {
             // 全部
-            sa.ajax2('/SysMenu/getList', this.p, function (res) {
+            sa.get('/SysMenu/getList', this.p, function (res) {
                 menuList = arrayToTree(menuList);	// 一维转tree
                 menuList = refMenuList(menuList);	// 属性处理
                 this.dataList = menuList;	// 数据

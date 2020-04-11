@@ -207,8 +207,8 @@
         methods: {
             // 刷新
             f5: function () {
-                var pageStr = (this.page.pageNo == undefined ? '' : '?pageNo=' + this.page.pageNo + '&pageSize=' + this.page.pageSize);	// 拼接分页
-                sa.ajax2('/SysSwiper/getList' + pageStr, this.p, function (res) {
+                const pageStr = (this.page.pageNo === undefined ? '' : '?pageNo=' + this.page.pageNo + '&pageSize=' + this.page.pageSize);	// 拼接分页
+                sa.get('/SysSwiper/getList' + pageStr, this.p, function (res) {
                     // this.dataList = sa.$util.listAU(res.data);	// 数据
                     // this.page = res.page;		// 分页
                     this.dataList = dataList;
@@ -216,7 +216,7 @@
             },
             // 保存
             add: function () {
-                sa.ajax2('/SysSwiper/add', this.addData, function (res) {
+                sa.post('/SysSwiper/add', this.addData, function (res) {
                     layer.alert('添加成功', {}, function () {
                         app.dataList.push(sa.$util.copyJSON(app.addData));
                         layer.closeAll();
@@ -227,7 +227,7 @@
             update: function (data) {
                 var data2 = sa.$util.copyJSON(data);
                 data2.create_time = undefined;
-                sa.ajax2('/SysSwiper/update', data2, function (res) {
+                sa.put('/SysSwiper/update', data2, function (res) {
                     layer.msg('修改成功');
                     data.is_update = false;
                 })
@@ -235,7 +235,7 @@
             // 删除
             del: function (data) {
                 layer.confirm('是否删除，此操作不可撤销', {}, function () {
-                    sa.ajax2('/SysSwiper/delete', {id: data.id}, function (res) {
+                    sa.delete('/SysSwiper/delete', {id: data.id}, function (res) {
                         layer.msg('删除成功');
                         sa.$util.arrayDelete(this.dataList, data);
                     }.bind(this))

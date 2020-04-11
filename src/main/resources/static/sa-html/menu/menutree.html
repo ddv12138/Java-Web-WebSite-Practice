@@ -44,6 +44,7 @@
 	<script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>
 	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+	<script src="/res/sa.js"></script>
 	<script type="module">
         let parseDataTooTree = function (arg) {
             for (let i = 0; i < arg.length; i++) {
@@ -71,7 +72,7 @@
             });
         };
         window.loadTreeData = function () {
-            $.get("/resource", function (arg) {
+            sa.get("/resource", null, function (arg) {
                 if (!arg || !arg.state) {
                     return;
                 } else {
@@ -113,14 +114,18 @@
                         remove(node, data) {
                             layer.confirm("该操作将会删除该节点及其所有子节点，确认要删除吗？", function (arg) {
                                 if (arg === 1) {
-                                    $.ajax({
-                                        url: '/resource/' + data.id,
-                                        type: 'DELETE',
-                                        success: function (result) {
-                                            layer.alert("删除成功");
-                                            refreshTreeData();
-                                        }
-                                    });
+                                    // $.ajax({
+                                    //     url: '/resource/' + data.id,
+                                    //     type: 'DELETE',
+                                    //     success: function (result) {
+                                    //         layer.alert("删除成功");
+                                    //         refreshTreeData();
+                                    //     }
+                                    // });
+                                    sa.delete('/resource/' + data.id, null, function () {
+                                        layer.alert("删除成功");
+                                        refreshTreeData();
+                                    })
                                 }
                             })
                         },

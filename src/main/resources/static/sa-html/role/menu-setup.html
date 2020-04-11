@@ -101,15 +101,13 @@
                     roleid: role_id,
                     resids: str
                 };
-                sa.ajax2("/role/updateresource", JSON.stringify(data), function (res) {
+                sa.put("/role/updateresource", JSON.stringify(data), function (res) {
                     layer.alert('成功', {}, function () {
                         if (parent != window) {
                             parent.layer.closeAll('iframe');
                         }
                         layer.closeAll();
                     });
-                }, {
-                    type: "put"
                 })
             },
             // 点击回调, 处理其子节点跟随父节点的选中
@@ -130,7 +128,7 @@
 
 
             //当前有权限的节点
-            sa.ajax2('/resource/byrole/' + role_id, null, function (res) {
+            sa.get('/resource/byrole/' + role_id, null, function (res) {
                 if (res && res.state) {
                     let data = res.data;
                     for (let i = 0; i < data.length; i++) {
@@ -138,7 +136,7 @@
                     }
                     console.log(this.select_list);
                     // 全部
-                    sa.ajax2('/resource', null, function (arg) {
+                    sa.get('/resource', null, function (arg) {
                         if (!arg || !arg.state) {
                             return;
                         } else {
@@ -146,12 +144,8 @@
                         }
                         parseDataTooTree(arg);
                         this.dataList = arg;	// 数据
-                    }.bind(this), {
-                        type: "get"
                     });
                 }
-            }.bind(this), {
-                type: "get"
             });
 
 
