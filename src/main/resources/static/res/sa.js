@@ -1,7 +1,7 @@
-var sa = {};
+const sa = {};
 $.fn.serializeObject = function () {
-    var ct = this.serializeArray();
-    var obj = {};
+    const ct = this.serializeArray();
+    const obj = {};
     $.each(ct, function () {
         if (obj[this.name] !== undefined) {
             if (!obj[this.name].push) {
@@ -20,19 +20,19 @@ $.fn.serializeObject = function () {
 (function () {
 
     // 公司开发环境
-    var cfg_dev = {
+    const cfg_dev = {
         api_url: 'http://localhost:8091',
         web_url: 'http://www.baidu.com'
     };
 
     // 服务器测试环境
-    var cfg_test = {
+    const cfg_test = {
         api_url: 'http://www.baidu.com',
         web_url: 'http://www.baidu.com'
     };
 
     // 服务器正式环境
-    var cfg_prod = {
+    const cfg_prod = {
         api_url: 'http://www.baidu.com',
         web_url: 'http://www.baidu.com'
     };
@@ -50,21 +50,14 @@ $.fn.serializeObject = function () {
  * ajax的再封装,
  * @param {Object} url 请求地址
  * @param {Object} data
- * @param {Object} success200
- * @param {Object} 其它配置，可配置项有：
+ * @param type
+ * @param callback
  * （success500=状态码500函数，errorfn=请求异常函数，async=是否异步）
  */
-sa.ajax2 = function (url, data, success200, cfg) {
-
-    // 如果是简写模式
-    if (typeof data === 'function') {
-        cfg = success200;
-        success200 = data;
-        data = {};
-    }
-
+sa.ajax = function (url, data, type, callback) {
+    let load = 0;
     // 默认配置
-    var defaultCfg = {
+    const defaultCfg = {
         msg: '努力加载中...',	// 提示语
         // baseUrl: (url.indexOf('/') == 0 ? sa.cfg.api_url : ''),// 父url，拼接在url前面
         baseUrl: url,// 父url，拼接在url前面
@@ -93,35 +86,30 @@ sa.ajax2 = function (url, data, success200, cfg) {
         },
         // ajax发生异常时的默认处理函数
         errorfn: function (xhr, type, errorThrown) {
-            if (xhr.status == 0) {
+            if (xhr.status === 0) {
                 return layer.alert('无法连接到服务器，请检查网络');
             }
             return layer.alert("异常：" + JSON.stringify(xhr));
         },
         // 成功失败都执行
         complete: function (XHR, TS) {
-
+            layer.close(load);
         }
     };
-
-    // 加载用户配置
-    cfg = sa.$util.extendJson(cfg, defaultCfg);
-
     // 日志
-    console.log("请求地址：" + url);
-    console.log("请求参数：" + JSON.stringify(data));
-    console.log("请求类型：" + cfg.type ? cfg.type : "post");
+    // console.trace("请求地址：" + url);
+    // console.trace("请求参数：" + JSON.stringify(data));
+    // console.trace("请求类型：" + type);
 
     //
     // 开始ajax
-    var load = 0;
-    if (cfg.msg != null) {
-        load = layer.msg(cfg.msg, {icon: 16, shade: 0.01, time: 1000 * 20, skin: 'ajax-layer-load'});
+    if (defaultCfg.msg != null) {
+        load = layer.msg(defaultCfg.msg, {icon: 16, shade: 0.01, time: 1000 * 20, skin: 'ajax-layer-load'});
     }
 
     return $.ajax({
         url: url,
-        type: cfg.type ? cfg.type : "post",
+        type: type,
         data: data,
         dataType: 'json',
         contentType: "application/json",
@@ -135,24 +123,34 @@ sa.ajax2 = function (url, data, success200, cfg) {
         success: function (res) {
             layer.close(load);
             // 业务成功的函数
-            if (res.state == 1) {
-                return success200(res);
+            if (res.state === 1) {
+                return callback(res);
             }
             // 如果相应的处理函数存在
-            if (cfg['success' + res.state] != undefined) {
-                return cfg['success' + res.state](res);
+            if (defaultCfg['success' + res.state] !== undefined) {
+                return defaultCfg['success' + res.state](res);
             }
             layer.alert('未知状态码：' + JSON.stringify(res));
         },
         error: function (xhr, type, errorThrown) {
-            layer.close(load);
-            return cfg.errorfn(xhr, type, errorThrown);
+            return defaultCfg.errorfn(xhr, type, errorThrown);
         },
-        complete: cfg.complete
+        complete: defaultCfg.complete
     });
 
 };
-
+sa.get = function (url, data, callback) {
+    sa.ajax(url, data, "GET", callback);
+};
+sa.post = function (url, data, callback) {
+    sa.ajax(url, data, "POST", callback);
+};
+sa.put = function (url, data, callback) {
+    sa.ajax(url, data, "PUT", callback);
+};
+sa.delete = function (url, data, callback) {
+    sa.ajax(url, data, "DELETE", callback);
+};
 
 // ===========================  弹窗相关   =======================================
 
@@ -173,483 +171,296 @@ sa.ajax2 = function (url, data, success200, cfg) {
 (function () {
 
     // 超级对象
-    var me = {};
+    const me = {};
     sa.$util = me;
 
 
     // ===========================  常用util函数封装   =======================================
-    if (true) {
-
-        // 判断一个变量是否为null
-        // 返回true或false，如果return_obj有值，则在true的情况下返回return_obj
-        me.isNull = function (obj, return_obj) {
-            var flag = [null, undefined, '', 'null', 'undefined'].indexOf(obj) != -1;
-            if (return_obj === undefined) {
-                return flag;
+    // 判断一个变量是否为null
+    me.isNull = function (obj, return_obj) {
+        const flag = [null, undefined, '', 'null', 'undefined'].indexOf(obj) !== -1;
+        if (return_obj === undefined) {
+            return flag;
+        } else {
+            if (flag) {
+                return return_obj;
             } else {
-                if (flag) {
-                    return return_obj;
-                } else {
-                    return obj;
-                }
+                return obj;
             }
-        };
+        }
+    };
+    me.forDate = function (inputTime, way) {
+        if (me.isNull(inputTime) === true) {
+            return "";
+        }
+        const date = new Date(inputTime);
+        const y = date.getFullYear();
+        let m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        let d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        let h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        if (way === 2) {
+            return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+        }
+        return y + '-' + m + '-' + d;
+    };
+    me.forDate2 = function (d) {
 
+        let hou = "前";
 
-        // 将时间戳转化为指定时间
-        // way：方式（1=年月日，2=年月日时分秒）默认1
-        me.forDate = function (inputTime, way) {
-            if (me.isNull(inputTime) == true) {
-                return "";
+        if (d == null || d === '') {
+            return '';
+        }
+        const timestamp = new Date(d).getTime() - 1000;
+        let mistiming = Math.round((Date.now() - timestamp) / 1000);
+        if (mistiming < 0) {
+            mistiming = 0 - mistiming;
+            hou = '后'
+        }
+        const arrr = ['年', '月', '周', '天', '小时', '分钟', '秒'];
+        const arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1];
+        for (let i = 0; i < arrn.length; i++) {
+            const inm = Math.floor(mistiming / arrn[i]);
+            if (inm !== 0) {
+                return inm + arrr[i] + hou;
             }
-            var date = new Date(inputTime);
-            var y = date.getFullYear();
-            var m = date.getMonth() + 1;
-            m = m < 10 ? ('0' + m) : m;
-            var d = date.getDate();
-            d = d < 10 ? ('0' + d) : d;
-            var h = date.getHours();
-            h = h < 10 ? ('0' + h) : h;
-            var minute = date.getMinutes();
-            var second = date.getSeconds();
-            minute = minute < 10 ? ('0' + minute) : minute;
-            second = second < 10 ? ('0' + second) : second;
-            if (way == 2) {
-                return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+        }
+    };
+    me.JSONParse = function (obj, default_obj) {
+        try {
+            return JSON.parse(obj) || default_obj;
+        } catch (e) {
+            return default_obj || {};
+        }
+    };
+    me.maxLength = function (str, length) {
+        length = length || 50;
+        if (!str) {
+            return "";
+        }
+        return (str.length > length) ? str.substr(0, length) + ' ... ' : str;
+    };
+
+    // 过滤掉标签
+    me.text = function (str) {
+        if (!str) {
+            return "";
+        }
+        return str.replace(/<[^>]+>/g, "");
+    };
+    me.listAU = function (list) {
+        return list;
+    };
+    me.getSrcList = function (str) {
+        try {
+            const imgReg = /<img.*?(?:>|\/>)/gi;	//匹配图片（g表示匹配所有结果i表示区分大小写）
+            const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;	//匹配src属性
+            const arr = str.match(imgReg);	// 图片数组
+            const srcList = [];
+            for (let i = 0; i < arr.length; i++) {
+                const src = arr[i].match(srcReg);
+                srcList.push(src[1]);
             }
-            return y + '-' + m + '-' + d;
-        };
+            return srcList;
+        } catch (e) {
+            return [];
+        }
+    };
+    me.accMul = function (arg1, arg2) {
+        var m = 0,
+            s1 = arg1.toString(),
+            s2 = arg2.toString(),
+            t;
 
-        // 将时间转化为 个性化 如：3小时前
-        me.forDate2 = function (d) {
-
-            var hou = "前";
-
-            if (d == null || d == '') {
-                return '';
-            }
-            var timestamp = new Date(d).getTime() - 1000;
-            var mistiming = Math.round((Date.now() - timestamp) / 1000);
-            if (mistiming < 0) {
-                mistiming = 0 - mistiming;
-                hou = '后'
-            }
-            var arrr = ['年', '月', '周', '天', '小时', '分钟', '秒'];
-            var arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1];
-            for (var i = 0; i < arrn.length; i++) {
-                var inm = Math.floor(mistiming / arrn[i]);
-                if (inm != 0) {
-                    return inm + arrr[i] + hou;
-                }
-            }
-        };
-
-        // 转化json，出错返回默认值
-        me.JSONParse = function (obj, default_obj) {
-            try {
-                return JSON.parse(obj) || default_obj;
-            } catch (e) {
-                return default_obj || {};
-            }
-        };
-
-        // 截取指定长度字符，默认50
-        me.maxLength = function (str, length) {
-            length = length || 50;
-            if (!str) {
-                return "";
-            }
-            return (str.length > length) ? str.substr(0, length) + ' ... ' : str;
-        },
-
-            // 过滤掉标签
-            me.text = function (str) {
-                if (!str) {
-                    return "";
-                }
-                return str.replace(/<[^>]+>/g, "");
-            };
-
-        // 为指定集合的每一项元素添加上is_update属性
-        me.listAU = function (list) {
-            return list;
-        };
-
-        // 获得一段文字中所有图片的路径
-        me.getSrcList = function (str) {
-            try {
-                var imgReg = /<img.*?(?:>|\/>)/gi;	//匹配图片（g表示匹配所有结果i表示区分大小写）
-                var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;	//匹配src属性
-                var arr = str.match(imgReg);	// 图片数组
-                var srcList = [];
-                for (var i = 0; i < arr.length; i++) {
-                    var src = arr[i].match(srcReg);
-                    srcList.push(src[1]);
-                }
-                return srcList;
-            } catch (e) {
-                return [];
-            }
-        };
-
-        // 无精度损失的乘法
-        me.accMul = function (arg1, arg2) {
-            var m = 0,
-                s1 = arg1.toString(),
-                s2 = arg2.toString(),
-                t;
-
-            t = s1.split(".");
-            // 判断有没有小数位，避免出错
-            if (t[1]) {
-                m += t[1].length
-            }
-
-            t = s2.split(".");
-            if (t[1]) {
-                m += t[1].length
-            }
-
-            return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+        t = s1.split(".");
+        // 判断有没有小数位，避免出错
+        if (t[1]) {
+            m += t[1].length
         }
 
+        t = s2.split(".");
+        if (t[1]) {
+            m += t[1].length
+        }
 
-        // == if 结束
+        return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
     }
 
 
     // ===========================  数组操作   =======================================
-    if (true) {
-
-
-        // 从数组里获取数据,根据指定数据
-        me.arrayGet = function (arr, prop, value) {
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i][prop] == value) {
-                    return arr[i];
-                }
+    // 从数组里获取数据,根据指定数据
+    me.arrayGet = function (arr, prop, value) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i][prop] === value) {
+                return arr[i];
             }
-            return null;
-        };
-
-        // 从数组删除指定记录
-        me.arrayDelete = function (arr, item) {
-            var index = arr.indexOf(item);
-            if (index > -1) {
-                arr.splice(index, 1);
-            }
-        };
-
-        // 从数组删除指定id的记录
-        me.arrayDeleteById = function (arr, id) {
-            var item = me.arrayGet(arr, 'id', id);
-            me.arrayDelete(arr, item);
-        };
-
-        // 将数组B添加到数组A的开头
-        me.unshiftArray = function (arrA, arrB) {
-            if (arrB) {
-                arrB.reverse().forEach(function (ts) {
-                    arrA.unshift(ts);
-                })
-            }
-            return arrA;
-        };
-
-        // 将数组B添加到数组A的末尾
-        me.pushArray = function (arrA, arrB) {
-            if (arrB) {
-                arrB.forEach(function (ts) {
-                    arrA.push(ts);
-                })
-            }
-            return arrA;
         }
-
-        // == if 结束
+        return null;
+    };
+    me.arrayDelete = function (arr, item) {
+        const index = arr.indexOf(item);
+        if (index > -1) {
+            arr.splice(index, 1);
+        }
+    };
+    me.arrayDeleteById = function (arr, id) {
+        const item = me.arrayGet(arr, 'id', id);
+        me.arrayDelete(arr, item);
+    };
+    me.unshiftArray = function (arrA, arrB) {
+        if (arrB) {
+            arrB.reverse().forEach(function (ts) {
+                arrA.unshift(ts);
+            })
+        }
+        return arrA;
+    };
+    me.pushArray = function (arrA, arrB) {
+        if (arrB) {
+            arrB.forEach(function (ts) {
+                arrA.push(ts);
+            })
+        }
+        return arrA;
     }
 
 
     // ===========================  浏览器相关   =======================================
-    if (true) {
-
-        // set cookie 值
-        me.setCookie = function setCookie(cname, cvalue, exdays) {
-            exdays = exdays || 30;
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toGMTString();
-            document.cookie = cname + "=" + escape(cvalue) + "; " + expires + "; path=/";
-        };
-
-        // get cookie 值
-        me.getCookie = function (objName) {
-            var arrStr = document.cookie.split("; ");
-            for (var i = 0; i < arrStr.length; i++) {
-                var temp = arrStr[i].split("=");
-                if (temp[0] == objName) {
-                    return unescape(temp[1])
-                }
+    // set cookie 值
+    me.setCookie = function setCookie(cname, cvalue, exdays) {
+        exdays = exdays || 30;
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + escape(cvalue) + "; " + expires + "; path=/";
+    };
+    me.getCookie = function (objName) {
+        const arrStr = document.cookie.split("; ");
+        for (let i = 0; i < arrStr.length; i++) {
+            const temp = arrStr[i].split("=");
+            if (temp[0] === objName) {
+                return unescape(temp[1])
             }
-            return "";
-        };
-
-        // 获得url指定参数值
-        me.getUrlArgs = function (name, defaultValue) {
-            var query = window.location.search.substring(1);
-            var vars = query.split("&");
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                if (pair[0] == name) {
-                    return pair[1];
-                }
-            }
-            return (defaultValue == undefined ? null : defaultValue);
-        };
-
-        // 复制指定文本
-        me.copyText = function (str) {
-            var oInput = document.createElement('input');
-            oInput.value = str;
-            document.body.appendChild(oInput);
-            oInput.select(); // 选择对象
-            document.execCommand("Copy"); // 执行浏览器复制命令
-            oInput.className = 'oInput';
-            oInput.style.display = 'none';
-        };
-
-        // jquery序列化表单增强版： 排除空值
-        me.serializeNotNull = function (selected) {
-            var serStr = $(selected).serialize();
-            return serStr.split("&").filter(function (str) {
-                return !str.endsWith("=")
-            }).join("&");
-        };
-
-        // 将cookie序列化为k=v形式
-        me.strCookie = function () {
-            return document.cookie.replace(/; /g, "&");
         }
-
-        // == if 结束
+        return "";
+    };
+    me.getUrlArgs = function (name, defaultValue) {
+        const query = window.location.search.substring(1);
+        const vars = query.split("&");
+        for (let i = 0; i < vars.length; i++) {
+            const pair = vars[i].split("=");
+            if (pair[0] === name) {
+                return pair[1];
+            }
+        }
+        return (defaultValue === undefined ? null : defaultValue);
+    };
+    me.copyText = function (str) {
+        const oInput = document.createElement('input');
+        oInput.value = str;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display = 'none';
+    };
+    me.serializeNotNull = function (selected) {
+        const serStr = $(selected).serialize();
+        return serStr.split("&").filter(function (str) {
+            return !str.endsWith("=")
+        }).join("&");
+    };
+    me.strCookie = function () {
+        return document.cookie.replace(/; /g, "&");
     }
 
 
     // =========================== javascript对象操作   =======================================
-    if (true) {
-        // 去除json对象中的空值
-        me.removeNull = function (obj) {
-            var newObj = {};
-            if (obj != undefined && obj != null) {
-                for (var key in obj) {
-                    if (obj[key] === undefined || obj[key] === null || obj[key] == '') {
-                        //
-                    } else {
-                        newObj[key] = obj[key];
-                    }
+    // 去除json对象中的空值
+    me.removeNull = function (obj) {
+        var newObj = {};
+        if (obj !== undefined && obj !== null) {
+            for (const key in obj) {
+                if (obj[key] === undefined || obj[key] === null || obj[key] === '') {
+                    //
+                } else {
+                    newObj[key] = obj[key];
                 }
             }
-            return newObj;
-        };
-
-        // JSON 浅拷贝, 返回拷贝后的obj
-        me.copyJSON = function (obj) {
-            if (obj === null || obj === undefined) {
-                return obj;
-            }
-            var new_obj = {};
-            for (var key in obj) {
-                new_obj[key] = obj [key];
-            }
-            return new_obj;
-        };
-
-        // json合并, 将 defaulet配置项 转移到 user配置项里 并返回 user配置项
-        me.extendJson = function (userOption, defaultOption) {
-            if (!userOption) {
-                return defaultOption;
-            }
-            for (var key in defaultOption) {
-                if (userOption[key] === undefined) {
-                    userOption[key] = defaultOption[key];
-                } else if (userOption[key] == null) {
-
-                } else if (typeof userOption[key] == "object") {
-                    me.extendJson(userOption[key], defaultOption[key]); //深度匹配
-                }
-            }
-            return userOption;
         }
+        return newObj;
+    };
+    me.copyJSON = function (obj) {
+        if (obj === null || obj === undefined) {
+            return obj;
+        }
+        var new_obj = {};
+        for (var key in obj) {
+            new_obj[key] = obj [key];
+        }
+        return new_obj;
+    };
+    me.extendJson = function (userOption, defaultOption) {
+        if (!userOption) {
+            return defaultOption;
+        }
+        for (const key in defaultOption) {
+            if (userOption[key] === undefined) {
+                userOption[key] = defaultOption[key];
+            } else if (userOption[key] == null) {
 
-        // == if 结束
+            } else if (typeof userOption[key] == "object") {
+                me.extendJson(userOption[key], defaultOption[key]); //深度匹配
+            }
+        }
+        return userOption;
     }
 
 
     // ===========================  本地集合存储   =======================================
-    if (true) {
-
-        // 获取指定key的list
-        // KL_art_zan=文章赞，KL_art_ct=文章评论，KL_ct_zan=评论赞
-        me.keyListGet = function (key, a) {
-            try {
-                var str = localStorage.getItem('list_' + key);
-                if (str == undefined || str == null || str == '' || str == 'undefined' || typeof (JSON.parse(str)) == 'string') {
-                    //alert('key' + str);
-                    str = '[]';
-                }
-                return JSON.parse(str);
-            } catch (e) {
-                return [];
+    // 获取指定key的list
+    me.keyListGet = function (key, a) {
+        try {
+            let str = localStorage.getItem('list_' + key);
+            if (str === undefined || str == null || str === '' || str === 'undefined' || typeof (JSON.parse(str)) == 'string') {
+                //alert('key' + str);
+                str = '[]';
             }
+            return JSON.parse(str);
+        } catch (e) {
+            return [];
+        }
+    },
+
+        me.keyListSet = function (key, list) {
+            localStorage.setItem('list_' + key, JSON.stringify(list));
         },
 
-            me.keyListSet = function (key, list) {
-                localStorage.setItem('list_' + key, JSON.stringify(list));
-            },
+        me.keyListHas = function (key, id) {
+            const arr2 = me.keyListGet(key);
+            return arr2.indexOf(parseInt(id)) !== -1;
+        },
 
-            me.keyListHas = function (key, id) {
-                var arr2 = me.keyListGet(key);
-                return arr2.indexOf(parseInt(id)) != -1;
-            },
+        me.keyListAdd = function (key, id) {
+            var arr = me.keyListGet(key);
+            arr.push(parseInt(id));
+            me.keyListSet(key, arr);
+        },
 
-            me.keyListAdd = function (key, id) {
-                var arr = me.keyListGet(key);
-                arr.push(parseInt(id));
-                me.keyListSet(key, arr);
-            },
-
-            me.keyListRemove = function (key, id) {
-                var arr = me.keyListGet(key);
-                var index = arr.indexOf(parseInt(id));
-                if (index > -1) {
-                    arr.splice(index, 1);
-                }
-                me.keyListSet(key, arr);
+        me.keyListRemove = function (key, id) {
+            var arr = me.keyListGet(key);
+            var index = arr.indexOf(parseInt(id));
+            if (index > -1) {
+                arr.splice(index, 1);
             }
-
-        // == if 结束
-    }
-
-
-})();
-
-
-// ===========================  $fast 对layer框架，以及一些快速crud的一些常用操作的封装  =======================================
-(function () {
-
-    // 超级对象
-    var me = {};
-    sa.$fast = me;
-
-    if (true) {
-
-        // 封装layer的放大预览img
-        me.showImage = function (src, w, h) {
-            w = w || '80%';
-            h = h || '80%';
-            var content = '<div style="height: 100%; overflow: hidden !important;">' +
-                '<img src="' + src + ' " style="width: 100%; height: 100%;" />' +
-                '</div>';
-            layer.open({
-                type: 1,
-                title: false,
-                shadeClose: true,
-                closeBtn: 0,
-                area: [w, h], //宽高
-                content: content
-            });
-        };
-
-        // 封装 layer的 弹出式iframe窗口
-        // 标题，地址，宽，高
-        me.showIframe = function (title, url, w, h) {
-            // 参数修正
-            w = w || '95%';
-            h = h || '95%';
-            // 弹出面板
-            layer.open({
-                type: 2,
-                title: title,	// 标题
-                // shadeClose: true,	// 是否点击遮罩关闭
-                maxmin: true, // 显示最大化按钮
-                shade: 0.8,		// 遮罩透明度
-                scrollbar: false,	// 屏蔽掉外层的滚动条
-                moveOut: true,		// 是否可拖动到外面
-                area: ['95%', '95%'],	// 大小
-                content: url	// 传值
-            });
-        };
-
-
-        // 返回一个 初始化的 Page 对象
-        me.getPage = function () {
-            return {
-                pageNo: 1,	// 当前页
-                pageSize: 10,	// 页大小
-                count: 10			// 数据总数
-            }
-        };
-
-        // 封装的f5函数，接受一个符合sa-admin标准的curd型 Vue对象
-        // vue对象，拉取数据的接口地址 , 是否初始化pageNo
-        me.fast_f5 = function (app, api_url, isPage) {
-            // 参数去空、拼接分页
-            var p = sa.$util.removeNull(app.p);
-            if (app.page) {
-                if (isPage == true) {
-                    p.pageNo = app.page.pageNo;
-                }
-                p.pageSize = app.page.pageSize;
-            }
-            // 开始请求，并赋值
-            sa.ajax2(api_url, p, function (res) {
-                app.dataList = sa.$util.listAU(res.data);	// 数据
-                app.page = res.page;		// 分页
-            }, {msg: '正在刷新...'});
-        };
-
-        // 封装数据表格中，标准流程的数据删除（先询问，再删除）
-        // 接口地址，要删除的集合，要删除的元素
-        me.fastDelete = function (api_url, dataList, data) {
-            layer.confirm('是否删除，此操作不可撤销', {}, function () {
-                sa.ajax2(api_url, function (res) {
-                    sa.$util.arrayDelete(dataList, data);
-                    layer.msg('删除成功');
-                });
-            });
-        };
-
-        // 封装数据表格中，标准流程数据修改
-        // 接口地址，要提交的数据，需要剔除的属性数组（一般剔除create_time）
-        me.fastUpdate = function (api_url, data, delFieldList) {
-            // 复制一份，以免影响到原来的属性
-            var data2 = sa.$util.copyJSON(data);
-            if (delFieldList) {
-                delFieldList.forEach(function (field) {
-                    data2[field] = undefined;
-                })
-            }
-            // 开始提交
-            sa.ajax2(api_url, data2, function (res) {
-                layer.msg('修改成功');
-                data.is_update = false;
-            })
-        };
-
-        // 封装数据表格中，标准流程数据添加
-        // 接口地址，要提交的数据，添加完成的回调函数
-        me.fastAdd = function (api_url, data, callFn) {
-            sa.ajax2(api_url, data, function (res) {
-                layer.alert('添加成功', {}, function () {
-                    if (callFn) {
-                        callFn();
-                    }
-                });
-            })
+            me.keyListSet(key, arr);
         }
-
-
-    }
 
 
 })();
@@ -661,7 +472,7 @@ sa.ajax2 = function (url, data, success200, cfg) {
 (function () {
 
     // 超级对象
-    var me = {};
+    const me = {};
     sa.$sys = me;
 
 
@@ -672,8 +483,8 @@ sa.ajax2 = function (url, data, success200, cfg) {
 
     // 获得当前已登陆用户信息
     me.getCurrUser = function () {
-        var user = localStorage.getItem("currUser");
-        if (user == undefined || user == null || user == 'null' || user == '' || user == '{}' || user.length < 10) {
+        let user = localStorage.getItem("currUser");
+        if (user === undefined || user == null || user === 'null' || user === '' || user === '{}' || user.length < 10) {
             user = {
                 id: '0',
                 username: '未登录',
@@ -694,7 +505,7 @@ sa.ajax2 = function (url, data, success200, cfg) {
 (function () {
 
     // 超级对象
-    var me = {};
+    const me = {};
     sa.$page = me;
 
 

@@ -72,6 +72,7 @@ public class ResourceControllerTest {
 	@Test
 	public void deleteOne() throws Exception {
 		ResultActions actions = mvc.perform(MockMvcRequestBuilders.delete("/resource/2")
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");

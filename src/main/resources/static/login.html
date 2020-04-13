@@ -84,13 +84,10 @@
         }
     });
     $("#login_btn").bind("click", function () {
-        console.log(1);
-        sa.ajax2("/user/login", JSON.stringify($("#login_form").serializeObject()), function (arg) {
-			if (arg && arg.state) {
-				window.location.href = '/';
-			}
-		}, {
-            type: "post"
+        sa.post("/user/login", JSON.stringify($("#login_form").serializeObject()), function (arg) {
+            if (arg && arg.state) {
+                window.location.href = '/';
+            }
         })
     })
 

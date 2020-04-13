@@ -154,7 +154,7 @@
                                     //         }
                                     //     }
                                     // });
-                                    sa.ajax2('/resource', JSON.stringify(this.$refs[formName].model), function (data) {
+                                    sa.put('/resource', JSON.stringify(this.$refs[formName].model), function (data) {
                                         if (data && data.state) {
                                             layer.alert('更新成功', {icon: 1}, function (index) {
                                                 layer.close(index);
@@ -163,8 +163,6 @@
                                                 parent.refreshTreeData();
                                             });
                                         }
-                                    }, {
-                                        type: "put"
                                     })
                                 }
                             } else {
@@ -188,7 +186,7 @@
                         if (this.icon.pagenum >= (this.icon.count / this.icon.pagesize) + 1) {
                             return;
                         }
-                        sa.ajax2("/icon/list", {
+                        sa.get("/icon/list", {
                             pagesize: this.icon.pagesize,
                             pagenum: this.icon.pagenum
                         }, function (res) {
@@ -200,7 +198,7 @@
                                     this.icon.pagenum += 1;
                                 }
                             }
-                        }.bind(this), {type: "get"})
+                        }.bind(this))
                     }
                 }
             })

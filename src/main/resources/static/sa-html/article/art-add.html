@@ -157,14 +157,14 @@
             // 提交
             ok: function () {
                 // 开始增加或修改
-                if (this.id == 0) {
-                    sa.ajax2('/url/api', this.m, function (res) {
+                if (this.id === 0) {
+                    sa.post('/url/api', this.m, function (res) {
                         layer.alert('增加成功');
                         this.m = create_m();
                         editor.txt.html("");	// 图文介绍
                     }.bind(this));
                 } else {
-                    sa.ajax2('/url/api', this.m, function (res) {
+                    sa.post('/url/api', this.m, function (res) {
                         layer.alert('修改成功', {}, function () {
                             parent.app.f5();
                             parent.layer.closeAll('iframe');
@@ -177,12 +177,12 @@
         mounted: function () {
 
             // 如果是添加
-            if (this.id == 0) {
+            if (this.id === 0) {
                 create_editor(this.m.content);		// 创建富文本编辑器
             } else {
                 // id 非 0 代表 是要修改
                 dataList.forEach(function (item) {
-                    if (item.id == this.id) {
+                    if (item.id === this.id) {
                         this.m = item;
                     }
                 }.bind(this));

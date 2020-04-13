@@ -4,12 +4,10 @@ import ddvudo.ORM.POJO.Resource;
 import ddvudo.ORM.POJO.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
-@Repository
 public interface ResourceMapper {
 	List<Resource> selectResourceList(@Param("pid") Integer pid, @Param("userid") Integer userid);
 

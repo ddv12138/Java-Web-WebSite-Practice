@@ -95,14 +95,14 @@ public class RoleControllerTest {
 		actions.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 				.andDo(MockMvcResultHandlers.print());
 
-		role.setId(75);
+		role.setId(2);
 		actions = mvc.perform(MockMvcRequestBuilders.delete("/role")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
 				.content(JSON.toJSONString(role))
 		);
 		actions.andReturn().getResponse().setCharacterEncoding("UTF-8");
-		actions.andExpect(MockMvcResultMatchers.status().isOk())
+		actions.andExpect(MockMvcResultMatchers.status().isInternalServerError())
 				.andDo(MockMvcResultHandlers.print());
 	}
 
