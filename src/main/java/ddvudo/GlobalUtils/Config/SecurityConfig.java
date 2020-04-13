@@ -3,6 +3,7 @@ package ddvudo.GlobalUtils.Config;
 import ddvudo.GlobalUtils.PasswdEncoder;
 import ddvudo.GlobalUtils.SecurityHandlers.*;
 import ddvudo.WebComponent.Service.Services.UserService;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -53,6 +54,7 @@ public class SecurityConfig<S extends Session>
 		http.authorizeRequests()
 				.antMatchers("/user/login", "/").permitAll()
 				.regexMatchers(".*(css|js|ico|png|jpg|html)\\??[^/\\\\]*").permitAll()
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.addFilterAt(restUsernamePasswordAuthenticationFilter(restAuthenticationSuccessHandler, restAuthenticationFailureHandler), UsernamePasswordAuthenticationFilter.class)
