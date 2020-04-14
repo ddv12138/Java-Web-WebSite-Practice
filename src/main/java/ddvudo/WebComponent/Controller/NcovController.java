@@ -28,4 +28,9 @@ public class NcovController {
 		}
 		return ncovService.getWorldNcovDataByDate(ymd.parse(datestr));
 	}
+
+	@GetMapping("/updatetime")
+	public Long getLastUpdateTime() throws ParseException {
+		return ncovService.getLastUpdateTime().getTime();
+	}
 }

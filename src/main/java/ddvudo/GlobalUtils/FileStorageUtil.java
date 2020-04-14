@@ -4,7 +4,7 @@ import ddvudo.ORM.POJO.UploadFile;
 import ddvudo.ORM.POJO.User;
 import io.minio.MinioClient;
 import io.minio.errors.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -12,9 +12,13 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+@Component
 public class FileStorageUtil {
-	@Autowired
 	MinioClient minioClient;
+
+	public FileStorageUtil(MinioClient minioClient) {
+		this.minioClient = minioClient;
+	}
 
 	public Boolean saveOne(MultipartFile part, UploadFile file, User user) throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InvalidResponseException, InternalException, NoResponseException, InvalidBucketNameException, XmlPullParserException, ErrorResponseException, InvalidArgumentException, RegionConflictException {
 		if (!minioClient.bucketExists(user.getName())) {

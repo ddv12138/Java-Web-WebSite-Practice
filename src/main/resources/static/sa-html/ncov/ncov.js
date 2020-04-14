@@ -3,15 +3,14 @@ function loadlayer() {
     sa.get("/ncov/world", null, function (arg) {
         if (arg && arg.state) {
             let data = arg.data;
-            console.log(data);
-            var gradient = ["#ccc", "#ffe4d9", "#ffcab3", "#ffaa85",
+            if (!data) return;
+            const gradient = ["#ccc", "#ffe4d9", "#ffcab3", "#ffaa85",
                 "#ff7b69", "#cc2929", "#8c0d0d", "#660208"];
-            console.log(gradient);//控制台输出
             let dataMap = {};
             let dataSet = {};
             for (let i = 0; i < data.length; i++) {
                 let color = gradient[0];
-                let count = parseInt(data[i].confirmed);
+                let count = parseInt(data[i].confirmed) - parseInt(data[i].cured);
                 if (count <= 9) {
                     color = gradient[1];
                 } else if (count <= 49) {
@@ -98,6 +97,7 @@ function loadlayer() {
                 document.getElementById('name').innerText = props.NAME_CHN;
                 document.getElementById('eng-name').innerText = props.NAME_ENG;
                 document.getElementById('soc').innerText = props.SOC;
+                document.getElementById('illnow').innerText = data ? parseInt(data.confirmed) - parseInt(data.cured) : "暂无数据";
                 document.getElementById('confirmed').innerText = data ? data.confirmed : "暂无数据";
                 document.getElementById('suspected').innerText = data ? data.suspected : "暂无数据";
                 document.getElementById('cured').innerText = data ? data.cured : "暂无数据";
@@ -105,6 +105,12 @@ function loadlayer() {
             }
 
             window.map.add(disWorld);
+        }
+    });
+    sa.get("/ncov/updatetime", null, function (arg) {
+        if (arg && arg.state) {
+            let date = new Date(arg.data).toLocaleString("chinese", {hour12: false});
+            document.getElementById('lastupdatetime').innerText = date;
         }
     });
 }

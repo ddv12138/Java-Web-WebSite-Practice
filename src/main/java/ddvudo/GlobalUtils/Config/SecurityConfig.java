@@ -11,17 +11,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
-import org.springframework.session.data.redis.RedisIndexedSessionRepository;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig<S extends Session>
 		extends WebSecurityConfigurerAdapter {
-	RedisIndexedSessionRepository redisIndexedSessionRepository;
 	UserService userService;
 	PasswdEncoder passwdEncoder;
 	RestAccessDeniedHandler restAccessDeniedHandler;
@@ -32,7 +28,7 @@ public class SecurityConfig<S extends Session>
 	RestLogoutSuccessHandler restLogoutSuccessHandler;
 
 	public SecurityConfig(UserService userService, PasswdEncoder passwdEncoder,
-						  RedisIndexedSessionRepository redisIndexedSessionRepository, RestAccessDeniedHandler restAccessDeniedHandler,
+						  RestAccessDeniedHandler restAccessDeniedHandler,
 						  RestAuthenticationSuccessHandler restAuthenticationSuccessHandler,
 						  RestAuthenticationFailureHandler restAuthenticationFailureHandler,
 						  RestLoginAuthenticationEntryPoint restAuthenticationEntryPoint,
@@ -40,7 +36,6 @@ public class SecurityConfig<S extends Session>
 						  RestLogoutSuccessHandler restLogoutSuccessHandler) {
 		this.userService = userService;
 		this.passwdEncoder = passwdEncoder;
-		this.redisIndexedSessionRepository = redisIndexedSessionRepository;
 		this.restAccessDeniedHandler = restAccessDeniedHandler;
 		this.restAuthenticationSuccessHandler = restAuthenticationSuccessHandler;
 		this.restAuthenticationFailureHandler = restAuthenticationFailureHandler;
@@ -74,14 +69,14 @@ public class SecurityConfig<S extends Session>
 //		http.authorizeRequests().anyRequest().permitAll();
 		http.headers().frameOptions().disable();
 		//spring session配置
-		http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
+//		http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 	}
 
-	@Bean
-	public SpringSessionBackedSessionRegistry<S> sessionRegistry() {
-		return new SpringSessionBackedSessionRegistry<S>(
-				(FindByIndexNameSessionRepository<S>) this.redisIndexedSessionRepository);
-	}
+//	@Bean
+//	public SpringSessionBackedSessionRegistry<S> sessionRegistry() {
+//		return new SpringSessionBackedSessionRegistry<S>(
+//				(FindByIndexNameSessionRepository<S>) this.redisIndexedSessionRepository);
+//	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
