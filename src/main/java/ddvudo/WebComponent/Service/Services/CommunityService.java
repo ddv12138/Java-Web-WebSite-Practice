@@ -22,4 +22,6 @@ public interface CommunityService {
 
 	int updateOneLoc(Community community);
 
+	void setLastUpdateTime();
+
 }

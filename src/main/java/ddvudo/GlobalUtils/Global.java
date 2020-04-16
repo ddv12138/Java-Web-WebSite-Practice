@@ -49,6 +49,7 @@ public class Global {
 				result = sbf.toString();
 			}
 		} catch (Exception e) {
+			Global.Logger(Global.class).error(e);
 			e.printStackTrace();
 		} finally {
 			// 关闭资源
