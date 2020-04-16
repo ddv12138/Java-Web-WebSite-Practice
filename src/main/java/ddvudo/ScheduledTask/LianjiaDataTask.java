@@ -54,6 +54,5 @@ public class LianjiaDataTask {
 				Global.Logger(this).info(communities.size() + "/" + communities.indexOf(community));
 			}
 		}
-		communityService.setLastUpdateTime();
 	}
 }

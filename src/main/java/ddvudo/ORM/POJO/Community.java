@@ -107,4 +107,37 @@ public class Community {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"unit_price\":")
+				.append(unit_price);
+		sb.append(",\"count\":")
+				.append(count);
+		sb.append(",\"uuid\":")
+				.append(uuid);
+		sb.append(",\"name\":\"")
+				.append(name).append('\"');
+		sb.append(",\"district_name\":\"")
+				.append(district_name).append('\"');
+		sb.append(",\"city_name\":\"")
+				.append(city_name).append('\"');
+		sb.append(",\"longitude\":\"")
+				.append(longitude).append('\"');
+		sb.append(",\"latitude\":\"")
+				.append(latitude).append('\"');
+		sb.append(",\"id\":\"")
+				.append(id).append('\"');
+		sb.append(",\"district_id\":\"")
+				.append(district_id).append('\"');
+		sb.append(",\"city_id\":\"")
+				.append(city_id).append('\"');
+		sb.append(",\"gaode_lng\":\"")
+				.append(gaode_lng).append('\"');
+		sb.append(",\"gaode_lat\":\"")
+				.append(gaode_lat).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
 }
