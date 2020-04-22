@@ -1,6 +1,8 @@
 package ddvudo.GlobalUtils;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.DigestUtils;
@@ -9,12 +11,72 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 public class Global {
 
 
 	public static Logger Logger(Object obj) {
 		return LogManager.getLogger(obj);
+	}
+
+	public static String postHTTPRequest(String linkUrl, HashMap<String, String> headers, int retry) {
+		HttpURLConnection connection = null;
+		try {
+			URL url = new URL(linkUrl);
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setDoOutput(true);
+			connection.setDoInput(true);
+			connection.setRequestMethod("GET");
+			connection.setConnectTimeout(5000);
+			connection.setReadTimeout(5000);
+			connection.setUseCaches(false);
+			for (String key : headers.keySet()) {
+				connection.setRequestProperty(key, headers.get(key));
+			}
+//			connection.setRequestProperty("Cookie", cookie);
+			connection.connect();
+			String result = null;
+			if (connection.getResponseCode() == 200) {
+				try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+					StringBuilder sb = new StringBuilder();
+					String tmp;
+					while (null != (tmp = br.readLine())) {
+						sb.append(tmp);
+					}
+					result = sb.toString();
+				}
+			}
+			assert result != null;
+			String resStr = result.substring(result.indexOf("{"), result.lastIndexOf(")"));
+			JSONObject res = JSON.parseObject(resStr);
+			if (null != res && !res.isEmpty() && res.getIntValue("errno") == 10001 && res.getString("error").contains("data")) {
+				Global.Logger(Global.class).error("被封ip");
+				if (retry > 0) {
+					Global.Logger(Global.class).error("重新连接");
+					retry = retry - 1;
+					postHTTPRequest(linkUrl, headers, retry);
+				}
+			}
+			return resStr;
+		} catch (Exception e) {
+			Global.Logger(Global.class).error(e);
+			Global.Logger(Global.class).info("连接失败");
+			if (null != connection) {
+				connection.disconnect();
+				connection = null;
+			}
+			if (retry > 0) {
+				Global.Logger(Global.class).error("重新连接");
+				retry = retry - 1;
+				return postHTTPRequest(linkUrl, headers, retry);
+			}
+		} finally {
+			if (null != connection) {
+				connection.disconnect();
+			}
+		}
+		return null;
 	}
 
 	public static String doGetHttpRequest(String httpUrl) {
@@ -77,11 +139,6 @@ public class Global {
 
 	/**
 	 * 从网络Url中下载文件
-	 *
-	 * @param urlStr
-	 * @param fileName
-	 * @param savePath
-	 * @throws IOException
 	 */
 	public static void downLoadFromUrl(String urlStr, String fileName, String savePath) throws IOException {
 		URL url = new URL(urlStr);
@@ -97,7 +154,9 @@ public class Global {
 			//文件保存位置
 			File saveDir = new File(savePath);
 			if (!saveDir.exists()) {
-				saveDir.mkdir();
+				if (!saveDir.mkdir()) {
+					throw new IOException("文件夹创建失败");
+				}
 			}
 			File file = new File(saveDir + File.separator + fileName);
 			try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -110,13 +169,10 @@ public class Global {
 	/**
 	 * 从输入流中获取字节数组
 	 *
-	 * @param inputStream
-	 * @return
-	 * @throws IOException
 	 */
 	public static byte[] readInputStream(InputStream inputStream) throws IOException {
 		byte[] buffer = new byte[1024];
-		int len = 0;
+		int len;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		while ((len = inputStream.read(buffer)) != -1) {
 			bos.write(buffer, 0, len);

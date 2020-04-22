@@ -1,6 +1,8 @@
 import ddvudo.Application;
+import ddvudo.ORM.POJO.City;
 import ddvudo.WebComponent.Service.Services.CityService;
 import ddvudo.WebComponent.Service.Services.CommunityService;
+import ddvudo.WebComponent.Service.Services.DistrictService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,15 @@ public class DataTest {
 	CityService cityService;
 	@Autowired
 	CommunityService communityService;
+	@Autowired
+	DistrictService districtService;
 
 	@Test
 	public void insertGaoDeLngAngLat() {
-		return;
-//		String citystr = "厦门";
-//		City city = cityService.selectByName(citystr);
+		String citystr = "厦门";
+		City city = cityService.selectByName(citystr);
+//		List<District> districtList = districtService.selectByCity(city);
+//		Global.Logger(this).info(communityService.fetchCommunityDataByDistrictFromLianJia(districtList.get(0)));
 //		List<Community> communities = communityService.selectHetMapDataByCity(city);
 //		for (Community community : communities) {
 //			String url = "https://restapi.amap.com/v3/assistant/coordinate/convert?" +

@@ -91,4 +91,30 @@ public class District {
 		this.unit_price = unit_price;
 	}
 
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"uuid\":")
+				.append(uuid);
+		sb.append(",\"id\":\"")
+				.append(id).append('\"');
+		sb.append(",\"count\":\"")
+				.append(count).append('\"');
+		sb.append(",\"border\":\"")
+				.append(border).append('\"');
+		sb.append(",\"latitude\":\"")
+				.append(latitude).append('\"');
+		sb.append(",\"longitude\":\"")
+				.append(longitude).append('\"');
+		sb.append(",\"name\":\"")
+				.append(name).append('\"');
+		sb.append(",\"unit_price\":\"")
+				.append(unit_price).append('\"');
+		sb.append(",\"city_id\":\"")
+				.append(city_id).append('\"');
+		sb.append(",\"city_name\":\"")
+				.append(city_name).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
 }

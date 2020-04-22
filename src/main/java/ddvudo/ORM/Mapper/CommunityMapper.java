@@ -27,4 +27,8 @@ public interface CommunityMapper {
 	List<Community> selectHetMapDataByCity(City city);
 
 	int updateOneLoc(Community community);
+
+	int bathInsertList(List<Community> communities);
+
+	int deleteByDistrict(District district);
 }

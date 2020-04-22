@@ -22,6 +22,6 @@ public interface CommunityService {
 
 	int updateOneLoc(Community community);
 
-	void setLastUpdateTime();
+	List<Community> fetchCommunityDataByDistrictFromLianJia(District district);
 
 }
