@@ -21,7 +21,7 @@ public class LianjiaDataTask {
 	final CommunityService communityService;
 	final DistrictService districtService;
 	final CityService cityService;
-	final String[] cities = {"深圳"};
+	final String[] cities = {"深圳", "武汉"};
 
 	public LianjiaDataTask(CommunityService communityService, CityService cityService, DistrictService districtService) {
 		this.communityService = communityService;
