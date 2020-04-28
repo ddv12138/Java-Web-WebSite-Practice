@@ -10,9 +10,11 @@ import ddvudo.WebComponent.Service.Services.CityService;
 import ddvudo.WebComponent.Service.Services.CommunityService;
 import ddvudo.WebComponent.Service.Services.DistrictService;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -21,12 +23,14 @@ public class LianjiaDataTask {
 	final CommunityService communityService;
 	final DistrictService districtService;
 	final CityService cityService;
+	final RedisTemplate<String, String> redisTemplate;
 	final String[] cities = {"深圳", "武汉"};
 
-	public LianjiaDataTask(CommunityService communityService, CityService cityService, DistrictService districtService) {
+	public LianjiaDataTask(CommunityService communityService, CityService cityService, DistrictService districtService, RedisTemplate<String, String> redisTemplate) {
 		this.communityService = communityService;
 		this.cityService = cityService;
 		this.districtService = districtService;
+		this.redisTemplate = redisTemplate;
 	}
 
 
@@ -38,6 +42,7 @@ public class LianjiaDataTask {
 			for (District district : districtList) {
 				List<Community> communities = communityService.fetchCommunityDataByDistrictFromLianJia(district);
 				for (Community community : communities) {
+					redisTemplate.opsForList().leftPush("community", community.getName() + "__" + LocalDate.now().toString());
 					String url = "https://restapi.amap.com/v3/assistant/coordinate/convert?" +
 							"locations=" + community.getLongitude() + "," + community.getLatitude() + "&" +
 							"coordsys=baidu&" +
@@ -48,7 +53,7 @@ public class LianjiaDataTask {
 					if (res.getIntValue("status") == 1) {
 						community.setGaode_lng(res.getString("locations").split(",")[0]);
 						community.setGaode_lat(res.getString("locations").split(",")[1]);
-						int i = communityService.updateOneLoc(community);
+						communityService.updateOneLoc(community);
 						Global.Logger(this).info(communities.size() + "/" + communities.indexOf(community));
 					}
 				}
