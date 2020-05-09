@@ -49,6 +49,7 @@ public class LianjiaDataTask {
 							"output=json&" +
 							"key=5e842e2d890e0361743c15a6e1ec168a";
 					String resStr = Global.doGetHttpRequest(url);
+					redisTemplate.opsForValue().set("httpres", resStr);
 					JSONObject res = JSON.parseObject(resStr);
 					if (res.getIntValue("status") == 1) {
 						community.setGaode_lng(res.getString("locations").split(",")[0]);
