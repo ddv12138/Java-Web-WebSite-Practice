@@ -183,6 +183,7 @@ public class CommunityServiceImpl implements CommunityService {
 				community.setCity_name(district.getCity_name());
 				community.setDistrict_id(district.getId() + "");
 				community.setDistrict_name(district.getName());
+				getGaoDeLoc(community);
 			}
 			return communityList;
 		} catch (ClassCastException e) {
@@ -199,9 +200,35 @@ public class CommunityServiceImpl implements CommunityService {
 			community.setCity_name(district.getCity_name());
 			community.setDistrict_id(district.getId() + "");
 			community.setDistrict_name(district.getName());
-			communityList.add(community);
+
+			try {
+				getGaoDeLoc(community);
+				communityList.add(community);
+			} catch (Exception e) {
+				Global.Logger(this).error(e);
+				continue;
+			}
 		}
 		return communityList;
+	}
+
+	public void getGaoDeLoc(Community community) {
+		try {
+			String url = "https://restapi.amap.com/v3/assistant/coordinate/convert?" +
+					"locations=" + community.getLongitude() + "," + community.getLatitude() + "&" +
+					"coordsys=baidu&" +
+					"output=json&" +
+					"key=5e842e2d890e0361743c15a6e1ec168a";
+			String resStr = Global.doGetHttpRequest(url);
+			JSONObject httpres = JSON.parseObject(resStr);
+			if (httpres.getIntValue("status") == 1) {
+				community.setGaode_lng(httpres.getString("locations").split(",")[0]);
+				community.setGaode_lat(httpres.getString("locations").split(",")[1]);
+			}
+		} catch (Exception e) {
+			Global.Logger(this).error(e);
+			e.printStackTrace();
+		}
 	}
 
 	public boolean JSONResultCheck(JSONObject res) {

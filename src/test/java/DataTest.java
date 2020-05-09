@@ -21,11 +21,12 @@ public class DataTest {
 	@Test
 	public void insertGaoDeLngAngLat() {
 		return;
-//		String citystr = "武汉";
+//		String citystr = "深圳";
 //		City city = cityService.selectByName(citystr);
 //		List<District> districtList = districtService.selectByCity(city);
-////		Global.Logger(this).info(communityService.fetchCommunityDataByDistrictFromLianJia(districtList.get(0)));
+//////		Global.Logger(this).info(communityService.fetchCommunityDataByDistrictFromLianJia(districtList.get(0)));
 //		List<Community> communities = communityService.selectHetMapDataByCity(city);
+//		int c=0;
 //		for (Community community : communities) {
 //			String url = "https://restapi.amap.com/v3/assistant/coordinate/convert?" +
 //					"locations=" + community.getLongitude() + "," + community.getLatitude() + "&" +
@@ -38,7 +39,7 @@ public class DataTest {
 //				community.setGaode_lng(res.getString("locations").split(",")[0]);
 //				community.setGaode_lat(res.getString("locations").split(",")[1]);
 //				int i = communityService.updateOneLoc(community);
-//				Global.Logger(this).info(communities.size() + "/" + communities.indexOf(community));
+//				Global.Logger(this).info(c+++"/"+communities.size());
 //			}
 //		}
 	}

@@ -9,7 +9,7 @@
         where city_name = #{city_name}
     </select>
     <select id="selectAvaliableCity" resultType="ddvudo.ORM.POJO.City">
-        select city_name
+        select city_id, city_name
         from community
         group by city_name
     </select>
