@@ -11,7 +11,7 @@
     <select id="selectAvaliableCity" resultType="ddvudo.ORM.POJO.City">
         select city_id, city_name
         from community
-        group by city_name
+        group by city_id, city_name
     </select>
     <insert id="initDefaultData" useGeneratedKeys="false">
         insert into City(city_id, city_name, max_lat, min_lat, max_lng, min_lng)
