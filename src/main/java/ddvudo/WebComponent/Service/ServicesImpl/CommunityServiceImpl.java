@@ -220,6 +220,7 @@ public class CommunityServiceImpl implements CommunityService {
 					"output=json&" +
 					"key=5e842e2d890e0361743c15a6e1ec168a";
 			String resStr = Global.doGetHttpRequest(url);
+			redisTemplate.opsForList().leftPush(community.getName(), resStr);
 			JSONObject httpres = JSON.parseObject(resStr);
 			if (httpres.getIntValue("status") == 1) {
 				community.setGaode_lng(httpres.getString("locations").split(",")[0]);

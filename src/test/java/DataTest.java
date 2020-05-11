@@ -21,7 +21,7 @@ public class DataTest {
 	@Test
 	public void insertGaoDeLngAngLat() {
 		return;
-//		String citystr = "武汉";
+//		String citystr = "深圳";
 //		City city = cityService.selectByName(citystr);
 //		List<District> districtList = districtService.selectByCity(city);
 //////		Global.Logger(this).info(communityService.fetchCommunityDataByDistrictFromLianJia(districtList.get(0)));
