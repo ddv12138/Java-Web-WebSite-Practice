@@ -38,10 +38,11 @@
     </update>
     <insert id="bathInsertList" parameterType="java.util.List" useGeneratedKeys="true">
         insert into Community(
-        id,district_id, city_id, unit_price, count,name, district_name, longitude, latitude,city_name) values
+        id,district_id, city_id, unit_price, count,name, district_name, longitude,
+        latitude,gaode_lng,gaode_lat,city_name) values
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.id},#{item.district_id},#{item.city_id},#{item.unit_price}
-            ,#{item.count},#{item.name},#{item.district_name},#{item.longitude},#{item.latitude},#{item.city_name})
+            ,#{item.count},#{item.name},#{item.district_name},#{item.longitude},#{item.latitude},#{item.gaode_lng},#{item.gaode_lat},#{item.city_name})
         </foreach>
     </insert>
     <delete id="deleteByDistrict" parameterType="ddvudo.ORM.POJO.District">
