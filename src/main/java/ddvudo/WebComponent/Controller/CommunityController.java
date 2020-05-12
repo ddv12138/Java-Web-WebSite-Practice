@@ -3,7 +3,7 @@ package ddvudo.WebComponent.Controller;
 import ddvudo.ORM.POJO.City;
 import ddvudo.ORM.POJO.Community;
 import ddvudo.WebComponent.Service.Services.CommunityService;
-import ddvudo.WebComponent.Service.ServicesImpl.CityServiceImpl;
+import ddvudo.WebComponent.Service.CityServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

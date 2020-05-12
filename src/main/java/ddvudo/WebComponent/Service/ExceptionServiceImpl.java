@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import ddvudo.Exceptions.MapperException;
 import ddvudo.Exceptions.ServiceException;

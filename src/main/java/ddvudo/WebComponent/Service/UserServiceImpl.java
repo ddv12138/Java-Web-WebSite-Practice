@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import com.github.pagehelper.PageHelper;
 import ddvudo.Exceptions.UserAleadyExistsException;

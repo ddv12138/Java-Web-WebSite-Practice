@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import ddvudo.ORM.Mapper.ResourceMapper;
 import ddvudo.ORM.POJO.Resource;

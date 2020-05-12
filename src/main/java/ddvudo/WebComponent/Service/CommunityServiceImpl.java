@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import ddvudo.GlobalUtils.FileStorageUtil;
 import ddvudo.ORM.Mapper.UploadFileMapper;

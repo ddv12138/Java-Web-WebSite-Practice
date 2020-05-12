@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import ddvudo.ORM.Mapper.SpittrMapper;
 import ddvudo.ORM.POJO.Spittr;

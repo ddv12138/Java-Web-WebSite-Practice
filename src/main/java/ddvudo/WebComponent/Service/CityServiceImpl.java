@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import ddvudo.ORM.Mapper.CityMapper;
 import ddvudo.ORM.POJO.City;

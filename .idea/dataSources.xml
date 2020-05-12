@@ -5,7 +5,7 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://db.ddvudo.top:5432/how2jdb</jdbc-url>
+      <jdbc-url>jdbc:postgresql://149.129.74.179:5432/how2jdb</jdbc-url>
     </data-source>
   </component>
 </project>

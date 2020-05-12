@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import ddvudo.ORM.Mapper.NcovMapper;
 import ddvudo.ORM.POJO.Ncov;

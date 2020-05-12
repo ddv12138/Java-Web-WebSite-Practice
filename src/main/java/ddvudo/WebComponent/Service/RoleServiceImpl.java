@@ -1,4 +1,4 @@
-package ddvudo.WebComponent.Service.ServicesImpl;
+package ddvudo.WebComponent.Service;
 
 import ddvudo.GlobalUtils.Global;
 import ddvudo.ORM.Mapper.RoleMapper;
