@@ -12,3 +12,5 @@
 /ncovData/
 .idea/*
 /.idea/
+/WebSite-config-server/target/
+/WebSite-web/target/
