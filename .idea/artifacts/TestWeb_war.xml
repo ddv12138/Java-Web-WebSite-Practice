@@ -9,6 +9,12 @@
     </properties>
     <root id="archive" name="TestWeb-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="TestWeb:war exploded" />
+      <element id="javaee-facet-resources" facet="WebSite-config-server/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="WebSite-config-server" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>
