@@ -9,4 +9,4 @@ spring:
         native:
           search-locations: file:///D:/idea-workspace/SpringCloudConfigrepository/website
   application:
-    name: conifg-server
+    name: WebSite-root
