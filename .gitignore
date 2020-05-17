@@ -15,3 +15,4 @@
 /WebSite-config-server/target/
 /WebSite-web/target/
 *.iml
+/WebSite-eureka/target/
