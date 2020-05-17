@@ -11,3 +11,11 @@ spring:
           skip-ssl-validation: true
   application:
     name: WebSite-config
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8002/eureka/
