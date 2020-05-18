@@ -2,12 +2,12 @@ package ddvudo.WebComponent.Service;
 
 import com.github.pagehelper.PageHelper;
 import ddvudo.Exceptions.UserAleadyExistsException;
-import ddvudo.GlobalUtils.Global;
-import ddvudo.GlobalUtils.PasswdEncoder;
 import ddvudo.ORM.Mapper.RoleMapper;
 import ddvudo.ORM.Mapper.UserMapper;
 import ddvudo.ORM.POJO.User;
 import ddvudo.WebComponent.Service.Services.UserService;
+import ddvudo.root.GlobalUtils.Global;
+import ddvudo.root.GlobalUtils.PasswdEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

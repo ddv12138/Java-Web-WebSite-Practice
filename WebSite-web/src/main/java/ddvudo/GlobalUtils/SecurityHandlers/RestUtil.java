@@ -1,9 +1,9 @@
 package ddvudo.GlobalUtils.SecurityHandlers;
 
 import com.alibaba.fastjson.JSON;
-import ddvudo.GlobalUtils.CommonResult;
-import ddvudo.GlobalUtils.Global;
-import ddvudo.GlobalUtils.SystemCode;
+import ddvudo.root.GlobalUtils.CommonResult;
+import ddvudo.root.GlobalUtils.Global;
+import ddvudo.root.GlobalUtils.SystemCode;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

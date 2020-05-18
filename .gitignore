@@ -17,3 +17,5 @@
 *.iml
 /WebSite-eureka/target/
 /WebSite-Root/target/
+/WebSite-config/target/
+/WebSite-lianjia/target/

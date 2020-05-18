@@ -1,6 +1,6 @@
 package ddvudo.GlobalUtils.SecurityHandlers;
 
-import ddvudo.GlobalUtils.SystemCode;
+import ddvudo.root.GlobalUtils.SystemCode;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
 package ddvudo.GlobalUtils.SecurityHandlers;
 
-import ddvudo.GlobalUtils.SystemCode;
 import ddvudo.ORM.POJO.User;
 import ddvudo.WebComponent.Service.Services.UserService;
+import ddvudo.root.GlobalUtils.SystemCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.stereotype.Component;

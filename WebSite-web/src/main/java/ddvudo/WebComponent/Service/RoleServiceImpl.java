@@ -1,11 +1,11 @@
 package ddvudo.WebComponent.Service;
 
-import ddvudo.GlobalUtils.Global;
 import ddvudo.ORM.Mapper.RoleMapper;
 import ddvudo.ORM.Mapper.UserMapper;
 import ddvudo.ORM.POJO.Role;
 import ddvudo.ORM.POJO.User;
 import ddvudo.WebComponent.Service.Services.RoleService;
+import ddvudo.root.GlobalUtils.Global;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;

@@ -1,7 +1,7 @@
 package ddvudo.GlobalUtils.SecurityHandlers;
 
 import com.alibaba.fastjson.JSON;
-import ddvudo.GlobalUtils.Global;
+import ddvudo.root.GlobalUtils.Global;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
