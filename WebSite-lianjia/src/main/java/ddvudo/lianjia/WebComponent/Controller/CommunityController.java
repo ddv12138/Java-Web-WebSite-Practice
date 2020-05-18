@@ -1,9 +1,9 @@
 package ddvudo.lianjia.WebComponent.Controller;
 
-import ddvudo.ORM.POJO.City;
-import ddvudo.ORM.POJO.Community;
-import ddvudo.WebComponent.Service.CityServiceImpl;
-import ddvudo.WebComponent.Service.Services.CommunityService;
+import ddvudo.lianjia.ORM.POJO.City;
+import ddvudo.lianjia.ORM.POJO.Community;
+import ddvudo.lianjia.WebComponent.Service.CityServiceImpl;
+import ddvudo.lianjia.WebComponent.Service.Services.CommunityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -1,8 +1,8 @@
 package ddvudo.lianjia.WebComponent.Service;
 
-import ddvudo.ORM.Mapper.HouseMapper;
-import ddvudo.ORM.POJO.House;
-import ddvudo.WebComponent.Service.Services.HouseService;
+import ddvudo.lianjia.ORM.Mapper.HouseMapper;
+import ddvudo.lianjia.ORM.POJO.House;
+import ddvudo.lianjia.WebComponent.Service.Services.HouseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

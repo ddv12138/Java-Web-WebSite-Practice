@@ -1,9 +1,9 @@
 package ddvudo.lianjia.WebComponent.Service;
 
-import ddvudo.ORM.Mapper.DistrictMapper;
-import ddvudo.ORM.POJO.City;
-import ddvudo.ORM.POJO.District;
-import ddvudo.WebComponent.Service.Services.DistrictService;
+import ddvudo.lianjia.ORM.Mapper.DistrictMapper;
+import ddvudo.lianjia.ORM.POJO.City;
+import ddvudo.lianjia.ORM.POJO.District;
+import ddvudo.lianjia.WebComponent.Service.Services.DistrictService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

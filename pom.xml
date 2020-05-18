@@ -7,9 +7,9 @@
     <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>WebSite-Root</module>
         <module>Website-config-server</module>
         <module>WebSite-web</module>
-        <module>WebSite-Root</module>
         <module>WebSite-eureka</module>
         <module>WebSite-lianjia</module>
     </modules>
