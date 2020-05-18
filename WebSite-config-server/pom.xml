@@ -5,10 +5,9 @@
     <artifactId>WebSite-config</artifactId>
     <version>2.0-SNAPSHOT</version>
     <parent>
-        <artifactId>WebSite-root</artifactId>
         <groupId>ddvudo</groupId>
+        <artifactId>WebSite</artifactId>
         <version>2.0-SNAPSHOT</version>
-        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
