@@ -31,6 +31,6 @@ class CityController {
 	@GetMapping("/avaliable")
 	@ResponseBody
 	public List<City> selectAvaliableCity() {
-		return lianjiaService.selectAvaliableCity();
+		return lianjiaService.selectAvailableCity();
 	}
 }

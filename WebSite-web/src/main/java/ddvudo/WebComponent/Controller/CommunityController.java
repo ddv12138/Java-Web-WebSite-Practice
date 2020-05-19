@@ -3,6 +3,7 @@ package ddvudo.WebComponent.Controller;
 import ddvudo.ORM.POJO.Community;
 import ddvudo.WebComponent.Service.Services.LianjiaService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,7 +19,7 @@ public class CommunityController {
 		this.lianjiaService = lianjiaService;
 	}
 
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	@ResponseBody
 	public List<Community> getCommunityByCity(String cityName) {
 		List<Community> communities = lianjiaService.getCommunityByCity(cityName);

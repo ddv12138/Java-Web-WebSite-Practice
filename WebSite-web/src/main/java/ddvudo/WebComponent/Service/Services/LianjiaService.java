@@ -5,26 +5,24 @@ import ddvudo.GlobalUtils.CommonResult;
 import ddvudo.ORM.POJO.City;
 import ddvudo.ORM.POJO.Community;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @FeignClient("lianjia")
-@Component
 public interface LianjiaService {
 
-	@GetMapping("/city/getCityInfo")
-	CommonResult getCityInfo(String cityName);
+	@RequestMapping(value = "/city/getCityInfo", method = RequestMethod.GET)
+	CommonResult getCityInfo(@RequestParam String cityName);
 
-	@GetMapping("/city/avaliable")
-	List<City> selectAvaliableCity();
+	@RequestMapping(value = "/city/available", method = RequestMethod.GET)
+	List<City> selectAvailableCity();
 
-	@GetMapping("/city/selectByName")
-	City selectByName(String cityName);
+	@RequestMapping(value = "/city/selectByName", method = RequestMethod.GET)
+	City selectByName(@RequestParam String cityName);
 
-	@PostMapping("/community/list")
-	List<Community> getCommunityByCity(@RequestParam String cityName);
+	@RequestMapping(value = "/community/list", method = RequestMethod.POST)
+	List<Community> getCommunityByCity(String cityName);
 }

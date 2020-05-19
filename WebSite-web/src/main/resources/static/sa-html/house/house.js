@@ -14,7 +14,7 @@ window.onload = function () {
         },
         mounted: function () {
             loadCityData(this.currentcity);
-            sa.get("/city/avaliable", null, function (res) {
+            sa.get("/city/available", null, function (res) {
                 if (res && res.state && res.data) {
                     console.log(res);
                     this.cityList = JSON.parse(JSON.stringify(res.data));
@@ -42,7 +42,7 @@ function loadCityData(cityStr) {
         } else {
             window.map.setCenter([cityData.location.lng, cityData.location.lat]);
         }
-        $.post("/community/list", {cityName: cityStr}, function (commData) {
+        $.get("/community/list", {cityName: cityStr}, function (commData) {
             let points = [];
             let height = 0;
             commData = commData.data;
