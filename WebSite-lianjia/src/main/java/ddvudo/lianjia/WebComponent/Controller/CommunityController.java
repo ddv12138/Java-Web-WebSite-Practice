@@ -4,13 +4,14 @@ import ddvudo.lianjia.ORM.POJO.City;
 import ddvudo.lianjia.ORM.POJO.Community;
 import ddvudo.lianjia.WebComponent.Service.CityServiceImpl;
 import ddvudo.lianjia.WebComponent.Service.Services.CommunityService;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/community")
 public class CommunityController {
 
@@ -23,7 +24,7 @@ public class CommunityController {
 		this.cityService = cityService;
 	}
 
-	@RequestMapping("/list")
+	@PostMapping("/list")
 	@ResponseBody
 	public List<Community> getCommunityByCity(String cityName) {
 		City city = cityService.selectByName(cityName);
