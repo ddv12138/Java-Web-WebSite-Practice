@@ -6,7 +6,6 @@ spring:
       server:
         git:
           uri: https://github.com/ddv12138/SpringCloudConfigrepository
-          search-paths: /website
           default-label: master
           skip-ssl-validation: true
   application:
