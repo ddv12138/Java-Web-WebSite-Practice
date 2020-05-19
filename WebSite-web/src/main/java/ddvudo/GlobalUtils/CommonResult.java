@@ -1,5 +1,6 @@
-package ddvudo.root.GlobalUtils;
+package ddvudo.GlobalUtils;
 
+import ddvudo.root.GlobalUtils.SystemCode;
 import org.apache.commons.lang3.StringUtils;
 
 public class CommonResult<T> {

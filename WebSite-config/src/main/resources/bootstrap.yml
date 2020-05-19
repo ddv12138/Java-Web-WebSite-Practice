@@ -12,7 +12,7 @@ spring:
     name: WebSite-config
 eureka:
   instance:
-    prefer-ip-address: true
+    preferIpAddress: true
   client:
     register-with-eureka: true
     fetch-registry: true

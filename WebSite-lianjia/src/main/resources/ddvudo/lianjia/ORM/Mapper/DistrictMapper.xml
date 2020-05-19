@@ -2,13 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ddvudo.ORM.Mapper.DistrictMapper">
-    <select id="selectByName" parameterType="String" resultType="ddvudo.ORM.POJO.District">
+<mapper namespace="ddvudo.lianjia.ORM.Mapper.DistrictMapper">
+    <select id="selectByName" parameterType="String" resultType="ddvudo.lianjia.ORM.POJO.District">
         select *
         from District
         where name = #{name};
     </select>
-    <select id="selectByCity" parameterType="ddvudo.ORM.POJO.City" resultType="ddvudo.ORM.POJO.District">
+    <select id="selectByCity" parameterType="ddvudo.lianjia.ORM.POJO.City"
+            resultType="ddvudo.lianjia.ORM.POJO.District">
         select *
         from District
         where city_id = #{city_id}

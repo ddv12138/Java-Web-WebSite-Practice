@@ -3,7 +3,7 @@ package ddvudo.WebComponent.Controller;
 import ddvudo.Exceptions.ResourceNotFoundException;
 import ddvudo.Exceptions.UserAleadyExistsException;
 import ddvudo.Exceptions.WrongPasswordException;
-import ddvudo.root.GlobalUtils.CommonResult;
+import ddvudo.GlobalUtils.CommonResult;
 import ddvudo.root.GlobalUtils.Global;
 import ddvudo.root.GlobalUtils.SystemCode;
 import org.springframework.http.HttpStatus;

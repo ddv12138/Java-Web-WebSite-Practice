@@ -2,38 +2,40 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ddvudo.ORM.Mapper.CommunityMapper">
-    <select id="selectByName" parameterType="String" resultType="ddvudo.ORM.POJO.Community">
+<mapper namespace="ddvudo.lianjia.ORM.Mapper.CommunityMapper">
+    <select id="selectByName" parameterType="String" resultType="ddvudo.lianjia.ORM.POJO.Community">
         select *
         from Community
         where name = #{name}
         limit 1;
     </select>
-    <select id="selectAll" resultType="ddvudo.ORM.POJO.Community">
+    <select id="selectAll" resultType="ddvudo.lianjia.ORM.POJO.Community">
         select *
         from Community;
     </select>
-    <select id="selectByDistrict" resultType="ddvudo.ORM.POJO.Community" parameterType="ddvudo.ORM.POJO.District">
+    <select id="selectByDistrict" resultType="ddvudo.lianjia.ORM.POJO.Community"
+            parameterType="ddvudo.lianjia.ORM.POJO.District">
         select *
         from Community
         where district_id = #{id};
     </select>
-    <select id="selectHetMapDataByCity" resultType="ddvudo.ORM.POJO.Community" parameterType="ddvudo.ORM.POJO.City">
+    <select id="selectHetMapDataByCity" resultType="ddvudo.lianjia.ORM.POJO.Community"
+            parameterType="ddvudo.lianjia.ORM.POJO.City">
         select uuid,longitude,latitude,gaode_lat,gaode_lng,unit_price,name
         from Community
         where city_id = #{city_id} order by name
     </select>
-    <select id="countPreHouseNumByDistrict" resultType="Integer" parameterType="ddvudo.ORM.POJO.District">
+    <select id="countPreHouseNumByDistrict" resultType="Integer" parameterType="ddvudo.lianjia.ORM.POJO.District">
         select sum(count)
         from Community
         where district_id = #{id};
     </select>
-    <select id="countPreHouseNumByCity" resultType="Integer" parameterType="ddvudo.ORM.POJO.City">
+    <select id="countPreHouseNumByCity" resultType="Integer" parameterType="ddvudo.lianjia.ORM.POJO.City">
         select sum(count)
         from Community
         where city_id = #{city_id}
     </select>
-    <update id="updateOneLoc" parameterType="ddvudo.ORM.POJO.Community">
+    <update id="updateOneLoc" parameterType="ddvudo.lianjia.ORM.POJO.Community">
         update Community set gaode_lat = #{gaode_lat},gaode_lng=#{gaode_lng} where uuid=#{uuid}
     </update>
     <insert id="bathInsertList" parameterType="java.util.List" useGeneratedKeys="true">
@@ -45,7 +47,7 @@
             ,#{item.count},#{item.name},#{item.district_name},#{item.longitude},#{item.latitude},#{item.gaode_lng},#{item.gaode_lat},#{item.city_name})
         </foreach>
     </insert>
-    <delete id="deleteByDistrict" parameterType="ddvudo.ORM.POJO.District">
+    <delete id="deleteByDistrict" parameterType="ddvudo.lianjia.ORM.POJO.District">
         delete
         from Community
         where district_id = #{id};

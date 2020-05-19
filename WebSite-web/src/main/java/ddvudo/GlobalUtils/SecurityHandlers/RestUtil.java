@@ -1,7 +1,7 @@
 package ddvudo.GlobalUtils.SecurityHandlers;
 
 import com.alibaba.fastjson.JSON;
-import ddvudo.root.GlobalUtils.CommonResult;
+import ddvudo.GlobalUtils.CommonResult;
 import ddvudo.root.GlobalUtils.Global;
 import ddvudo.root.GlobalUtils.SystemCode;
 

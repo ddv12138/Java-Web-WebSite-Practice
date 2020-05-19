@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ddvudo.ORM.Mapper.CityMapper">
-    <select id="selectByName" parameterType="String" resultType="ddvudo.ORM.POJO.City">
+<mapper namespace="ddvudo.lianjia.ORM.Mapper.CityMapper">
+    <select id="selectByName" parameterType="String" resultType="ddvudo.lianjia.ORM.POJO.City">
         select *
         from City
         where city_name = #{city_name}
     </select>
-    <select id="selectAvaliableCity" resultType="ddvudo.ORM.POJO.City">
+    <select id="selectAvaliableCity" resultType="ddvudo.lianjia.ORM.POJO.City">
         select city_id, city_name
         from community
         group by city_id, city_name

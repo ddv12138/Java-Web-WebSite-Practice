@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ddvudo.ORM.Mapper.HouseMapper">
-    <select id="selectByHouseId" resultType="ddvudo.ORM.POJO.House" parameterType="String">
+<mapper namespace="ddvudo.lianjia.ORM.Mapper.HouseMapper">
+    <select id="selectByHouseId" resultType="ddvudo.lianjia.ORM.POJO.House" parameterType="String">
         select *
         from House
         where houseId = #{houseId};
