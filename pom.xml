@@ -27,12 +27,12 @@
         <java.version>1.8</java.version>
         <springboot.version>2.2.1.RELEASE</springboot.version>
     </properties>
-    <repositories>
-        <repository>
-            <id>nexus-aliyun</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-        </repository>
-    </repositories>
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>nexus-aliyun</id>-->
+    <!--            <url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -145,6 +145,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>HdrHistogram</artifactId>
+                    <groupId>org.hdrhistogram</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

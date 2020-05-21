@@ -28,9 +28,9 @@ class CityController {
 		return new CommonResult(SystemCode.OK, "success", res);
 	}
 
-	@GetMapping("/avaliable")
+	@GetMapping("/available")
 	@ResponseBody
-	public List<City> selectAvaliableCity() {
+	public List<City> selectAvailableCity() {
 		return lianjiaService.selectAvailableCity();
 	}
 }

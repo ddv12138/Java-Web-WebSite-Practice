@@ -10,14 +10,6 @@
         <groupId>ddvudo</groupId>
         <version>2.0-SNAPSHOT</version>
     </parent>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <fastjson.version>1.2.58</fastjson.version>
-        <argLine>-Dfile.encoding=UTF-8</argLine>
-        <postgresql.version>42.2.6</postgresql.version>
-        <java.version>1.8</java.version>
-        <springboot.version>2.2.1.RELEASE</springboot.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,14 +24,6 @@
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
     </dependencies>
 </project>
