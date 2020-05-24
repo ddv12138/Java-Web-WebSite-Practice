@@ -26,6 +26,7 @@
         <postgresql.version>42.2.6</postgresql.version>
         <java.version>1.8</java.version>
         <springboot.version>2.2.1.RELEASE</springboot.version>
+        <springcloud.vaersion>Hoxton.SR4</springcloud.vaersion>
     </properties>
     <!--    <repositories>-->
     <!--        <repository>-->
@@ -45,7 +46,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.SR4</version>
+                <version>${springcloud.vaersion}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
