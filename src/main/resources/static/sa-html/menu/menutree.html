@@ -114,14 +114,6 @@
                         remove(node, data) {
                             layer.confirm("该操作将会删除该节点及其所有子节点，确认要删除吗？", function (arg) {
 								if (arg >= 1) {
-									// $.ajax({
-									//     url: '/resource/' + data.id,
-									//     type: 'DELETE',
-									//     success: function (result) {
-									//         layer.alert("删除成功");
-									//         refreshTreeData();
-									//     }
-									// });
 									sa.delete('/resource/' + data.id, null, function () {
 										layer.alert("删除成功");
                                         refreshTreeData();
