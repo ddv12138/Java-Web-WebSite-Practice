@@ -97,7 +97,7 @@ function loadlayer() {
                 document.getElementById('name').innerText = props.NAME_CHN;
                 document.getElementById('eng-name').innerText = props.NAME_ENG;
                 document.getElementById('soc').innerText = props.SOC;
-                document.getElementById('illnow').innerText = data ? parseInt(data.confirmed) - parseInt(data.cured) : "暂无数据";
+                document.getElementById('illnow').innerText = data ? parseInt(data.confirmed) - parseInt(data.cured) - parseInt(data.dead) : "暂无数据";
                 document.getElementById('confirmed').innerText = data ? data.confirmed : "暂无数据";
                 document.getElementById('suspected').innerText = data ? data.suspected : "暂无数据";
                 document.getElementById('cured').innerText = data ? data.cured : "暂无数据";
