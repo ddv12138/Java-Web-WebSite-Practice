@@ -8,10 +8,10 @@
 	<body>
 		<div class="block">
 			<el-tree :data="data"
-			         :expand-on-click-node="false"
-			         default-expand-all
-			         id="menutree"
-			         node-key="id">
+					 :expand-on-click-node="false"
+					 default-expand-all
+					 id="menutree"
+					 node-key="id">
 				<span class="custom-tree-node" slot-scope="{ node, data }">
 					<span>
 						<i :class="data.icon" :title="data.name" style="margin-right: 0.5rem"></i>{{ node.label }}
@@ -46,16 +46,16 @@
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script src="/res/sa.js"></script>
 	<script type="module">
-        let parseDataTooTree = function (arg) {
-            for (let i = 0; i < arg.length; i++) {
-                arg[i].label = arg[i].name;
-                if (arg[i].childList && arg[i].childList == 0) {
-                    delete arg[i].childList;
-                    continue;
-                }
-                if (arg[i].childList) {
-                    parseDataTooTree(arg[i].childList);
-                    arg[i].children = arg[i].childList;
+		let parseDataTooTree = function (arg) {
+			for (let i = 0; i < arg.length; i++) {
+				arg[i].label = arg[i].name;
+				if (arg[i].childList && arg[i].childList == 0) {
+					delete arg[i].childList;
+					continue;
+				}
+				if (arg[i].childList) {
+					parseDataTooTree(arg[i].childList);
+					arg[i].children = arg[i].childList;
                 }
             }
         };
@@ -113,17 +113,17 @@
                         },
                         remove(node, data) {
                             layer.confirm("该操作将会删除该节点及其所有子节点，确认要删除吗？", function (arg) {
-                                if (arg === 1) {
-                                    // $.ajax({
-                                    //     url: '/resource/' + data.id,
-                                    //     type: 'DELETE',
-                                    //     success: function (result) {
-                                    //         layer.alert("删除成功");
-                                    //         refreshTreeData();
-                                    //     }
-                                    // });
-                                    sa.delete('/resource/' + data.id, null, function () {
-                                        layer.alert("删除成功");
+								if (arg >= 1) {
+									// $.ajax({
+									//     url: '/resource/' + data.id,
+									//     type: 'DELETE',
+									//     success: function (result) {
+									//         layer.alert("删除成功");
+									//         refreshTreeData();
+									//     }
+									// });
+									sa.delete('/resource/' + data.id, null, function () {
+										layer.alert("删除成功");
                                         refreshTreeData();
                                     })
                                 }
@@ -149,16 +149,16 @@
                                     })
                                 },
                                 success: function (layero, index) {
-                                    let iframeWin = window[layero.find('iframe')[0]['name']];
-                                    iframeWin.setData(data, true);
-                                }
-                            });
-                        },
-                    }
-                });
-            });
-        };
-        window.loadTreeData();
+									let iframeWin = window[layero.find('iframe')[0]['name']];
+									iframeWin.setData(data, true);
+								}
+							});
+						},
+					}
+				});
+			});
+		};
+		window.loadTreeData();
 	</script>
 	<style>
 		.custom-tree-node {
