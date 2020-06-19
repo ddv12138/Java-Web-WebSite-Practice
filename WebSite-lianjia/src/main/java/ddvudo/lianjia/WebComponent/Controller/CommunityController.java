@@ -4,6 +4,7 @@ import ddvudo.lianjia.ORM.POJO.City;
 import ddvudo.lianjia.ORM.POJO.Community;
 import ddvudo.lianjia.WebComponent.Service.CityServiceImpl;
 import ddvudo.lianjia.WebComponent.Service.Services.CommunityService;
+import ddvudo.root.GlobalUtils.Global;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +27,8 @@ public class CommunityController {
 
 	@PostMapping(value = "/list")
 	public List<Community> getCommunityByCity(@RequestBody String cityName) {
-		City city = cityService.selectByName(cityName);
-		List<Community> communities = communityService.selectHetMapDataByCity(city);
-		return communities;
+		Global.Logger(this).info(cityName.replaceAll("\"", ""));
+		City city = cityService.selectByName(cityName.replaceAll("\"", ""));
+		return communityService.selectHetMapDataByCity(city);
 	}
 }
