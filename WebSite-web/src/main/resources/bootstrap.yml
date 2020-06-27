@@ -5,7 +5,7 @@ spring:
     config:
       discovery:
         enabled: true
-        service-id: website-config
+        service-id: website-eureka-config
 eureka:
   instance:
     preferIpAddress: true
@@ -13,7 +13,5 @@ eureka:
     service-url:
       defaultZone: http://localhost:8002/eureka/
 ribbon:
-  ReadTimeout: 60000
-  ConnectTimeout: 60000
-  eureka:
-    enable: true
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
