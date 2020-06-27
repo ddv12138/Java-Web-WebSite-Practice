@@ -24,7 +24,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public int addUser(User user) throws UserAleadyExistsException {
+	public int addUser(@RequestBody User user) throws UserAleadyExistsException {
 		return userService.saveOne(user);
 	}
 

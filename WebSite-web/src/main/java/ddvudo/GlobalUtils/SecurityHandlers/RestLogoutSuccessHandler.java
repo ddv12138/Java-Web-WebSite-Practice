@@ -21,9 +21,9 @@ public class RestLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-		org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+		User springUser = (User) authentication.getPrincipal();
 		if (null != springUser) {
-			User user = (User) userService.loadUserByUsername(springUser.getUsername());
+			User u = (User) userService.loadUserByUsername(springUser.getUsername());
 		}
 		RestUtil.response(response, SystemCode.OK);
 	}

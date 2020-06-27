@@ -48,7 +48,7 @@ public class SecurityConfig<S extends Session>
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/user/login", "/").permitAll()
-				.regexMatchers(".*(css|js|ico|png|jpg|html)\\??[^/\\\\]*").permitAll()
+//				.regexMatchers(".*(css|js|ico|png|jpg|html)\\??[^/\\\\]*").permitAll()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()
 				.and()

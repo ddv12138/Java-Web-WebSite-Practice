@@ -61,13 +61,12 @@ sa.ajax = function (url, data, type, callback) {
         msg: '努力加载中...',	// 提示语
         // baseUrl: (url.indexOf('/') == 0 ? sa.cfg.api_url : ''),// 父url，拼接在url前面
         baseUrl: url,// 父url，拼接在url前面
-        // 回调函数处理
-        success500: function (res) {
-            return layer.alert('失败：' + res.msg);
-        },
         // code=402, 代表密码错误
         success402: function (res) {
             return layer.alert("登陆失败", {icon: 5});
+        },
+        success500: function (res) {
+            return layer.alert(res.msg);
         },
         // code=401, 代表未登录
         success401: function (res) {
@@ -86,10 +85,13 @@ sa.ajax = function (url, data, type, callback) {
         },
         // ajax发生异常时的默认处理函数
         errorfn: function (xhr, type, errorThrown) {
+            console.log(ddv2020)
             if (xhr.status === 0) {
                 return layer.alert('无法连接到服务器，请检查网络');
             }
-            return layer.alert("异常：" + JSON.stringify(xhr));
+            let resObj = xhr;
+            if (resObj = JSON.parse(xhr.responseText))
+                return layer.alert("异常：" + resObj.msg);
         },
         // 成功失败都执行
         complete: function (XHR, TS) {
