@@ -27,12 +27,12 @@
         <springboot.version>2.2.1.RELEASE</springboot.version>
         <springcloud.vaersion>Hoxton.SR4</springcloud.vaersion>
     </properties>
-    <!--    <repositories>-->
-    <!--        <repository>-->
-    <!--            <id>nexus-aliyun</id>-->
-    <!--            <url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
-    <!--        </repository>-->
-    <!--    </repositories>-->
+    <repositories>
+        <repository>
+            <id>nexus-aliyun</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
     <dependencyManagement>
         <dependencies>
             <dependency>
