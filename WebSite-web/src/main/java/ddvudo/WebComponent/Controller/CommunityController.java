@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Api("社区信息")
+@Api(value = "社区信息", tags = "社区信息")
 @RequestMapping("/community")
 public class CommunityController {
 

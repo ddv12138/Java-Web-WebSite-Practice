@@ -4,6 +4,7 @@ import ddvudo.Exceptions.UserAleadyExistsException;
 import ddvudo.ORM.Mapper.UserMapper;
 import ddvudo.ORM.POJO.User;
 import ddvudo.WebComponent.Service.Services.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+@Api(value = "系统用户相关信息", tags = "系统用户相关信息")
 public class UserController {
 	UserService userService;
 	UserMapper mapper;

@@ -6,6 +6,7 @@ import ddvudo.ORM.POJO.Role;
 import ddvudo.ORM.POJO.User;
 import ddvudo.WebComponent.Service.Services.ResourceService;
 import ddvudo.WebComponent.Service.Services.RoleService;
+import io.swagger.annotations.Api;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
+@Api(value = "系统资源", tags = "系统资源")
 @RequestMapping("/resource")
 public class ResourceController {
 	ResourceService resourceService;

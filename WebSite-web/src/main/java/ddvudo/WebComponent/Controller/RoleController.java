@@ -3,6 +3,7 @@ package ddvudo.WebComponent.Controller;
 import com.alibaba.fastjson.JSON;
 import ddvudo.ORM.POJO.Role;
 import ddvudo.WebComponent.Service.Services.RoleService;
+import io.swagger.annotations.Api;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/role")
+@Api(value = "系统角色", tags = "系统角色")
 public class RoleController {
 	RoleService roleService;
 
