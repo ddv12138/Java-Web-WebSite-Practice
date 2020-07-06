@@ -4,6 +4,7 @@ import ddvudo.ORM.POJO.Enterprise;
 import ddvudo.ORM.POJO.EnterpriseExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.ResultHandler;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,4 +33,6 @@ public interface EnterpriseMapper {
 	int updateByPrimaryKeySelective(Enterprise record);
 
 	int updateByPrimaryKey(Enterprise record);
+
+	void selectByExample_Map_Forward(EnterpriseExample example, ResultHandler<Enterprise> handler);
 }

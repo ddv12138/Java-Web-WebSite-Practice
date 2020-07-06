@@ -202,6 +202,29 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
+    <select id="selectByExample_Map_Forward" parameterType="ddvudo.ORM.POJO.EnterpriseExample"
+            resultMap="BaseResultMap" resultSetType="FORWARD_ONLY" fetchSize="100">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from enterprise_registration
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                offset ${offset} limit ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update Enterprise_Registration
         <set>
