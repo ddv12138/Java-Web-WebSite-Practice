@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -67,6 +68,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Assert.isTrue(!StringUtils.isEmpty(StringUtils.trimAllWhitespace(username)), "用户名为空");
 		User user = mapper.selectByName(username);
 		Assert.notNull(user, "用户不存在");
 		user.setRoles(roleMapper.listRoleByUser(user));

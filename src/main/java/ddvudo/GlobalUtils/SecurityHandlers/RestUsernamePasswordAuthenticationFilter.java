@@ -31,7 +31,7 @@ public class RestUsernamePasswordAuthenticationFilter extends AbstractAuthentica
 					"Authentication method not supported: " + request.getMethod());
 		}
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken("", "");
-		if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
+		if (null != request.getContentType() && request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
 			String username = null;
 			String password = null;
 			try {
