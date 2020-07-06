@@ -13,22 +13,33 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Profile("server")
+@Component
 public class ElasticSearchTask {
 	private static final String ELASTICSEARCH_URL = "127.0.0.1";
 	private static final short ELASTICSEARCH_PORT = 9200;
 	private static final RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(
 			new HttpHost(ELASTICSEARCH_URL, ELASTICSEARCH_PORT)));
-	@Autowired
 	EnterpriseMapper enterpriseMapper;
+	static RedisTemplate<String, Object> redisTemplate = null;
 
+	public ElasticSearchTask(EnterpriseMapper enterpriseMapper,
+							 RedisTemplate redisTemplate) {
+		this.enterpriseMapper = enterpriseMapper;
+		ElasticSearchTask.redisTemplate = redisTemplate;
+	}
+
+	@Scheduled(fixedRate = 1000L * 60L * 60L * 24L * 30L)
 	public void doTask() {
 		EnterpriseExample example = new EnterpriseExample();
 		example.setOrderByClause("\"Id\"");
@@ -42,9 +53,6 @@ public class ElasticSearchTask {
 		private final short MAX_POOL_SIZE = 500;
 		private final Set<IndexRequest> requestSet = new HashSet<>();
 		int count = 0;
-
-		@Autowired
-		RedisTemplate<String, Long> redisTemplate;
 
 		@Override
 		public void handleResult(ResultContext resultContext) {
