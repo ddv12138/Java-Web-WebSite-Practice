@@ -31,24 +31,28 @@ public class RestUsernamePasswordAuthenticationFilter extends AbstractAuthentica
 					"Authentication method not supported: " + request.getMethod());
 		}
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken("", "");
-		if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
-			String username = null;
-			String password = null;
-			try {
-				Map<String, String> map = JSON.parseObject(request.getInputStream(), Map.class);
-				username = map.get("username");
-				password = map.get("password");
-			} catch (IOException e) {
-				Global.Logger(this).error(e);
+		try {
+			if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
+				String username = null;
+				String password = null;
+				try {
+					Map<String, String> map = JSON.parseObject(request.getInputStream(), Map.class);
+					username = map.get("username");
+					password = map.get("password");
+				} catch (IOException e) {
+					Global.Logger(this).error(e);
+				}
+				if (username == null) {
+					username = "";
+				}
+				if (password == null) {
+					password = "";
+				}
+				authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+				setDetails(request, authenticationToken);
 			}
-			if (username == null) {
-				username = "";
-			}
-			if (password == null) {
-				password = "";
-			}
-			authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-			setDetails(request, authenticationToken);
+		} catch (Exception e) {
+			Global.Logger(this).error(e);
 		}
 		return this.getAuthenticationManager().authenticate(authenticationToken);
 	}

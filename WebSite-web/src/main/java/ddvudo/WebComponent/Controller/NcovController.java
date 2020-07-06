@@ -2,6 +2,7 @@ package ddvudo.WebComponent.Controller;
 
 import ddvudo.ORM.POJO.Ncov;
 import ddvudo.WebComponent.Service.Services.NcovService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@Api("疫情数据")
 @RequestMapping("/ncov")
 public class NcovController {
 	NcovService ncovService;
