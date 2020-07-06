@@ -12,5 +12,6 @@
 */.idea/
 /ncovData/
 .idea/*
+.idea/
 */*.iml
 *.iml
