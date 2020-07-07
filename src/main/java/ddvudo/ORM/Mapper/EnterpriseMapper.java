@@ -24,7 +24,7 @@ public interface EnterpriseMapper {
 
 	List<Enterprise> selectByExample(EnterpriseExample example);
 
-	Enterprise selectByPrimaryKey(Integer id);
+	Enterprise selectByPrimaryKey(String id);
 
 	int updateByExampleSelective(@Param("record") Enterprise record, @Param("example") EnterpriseExample example);
 
