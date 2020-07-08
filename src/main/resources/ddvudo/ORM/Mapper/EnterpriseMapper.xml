@@ -78,7 +78,8 @@
         "Id", "name", "code", "regday", "character", "legalRepresentative", "capital", "businessScope",
     "province", "city", "address"
     </sql>
-    <select id="selectByExample" parameterType="ddvudo.ORM.POJO.EnterpriseExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="ddvudo.ORM.POJO.EnterpriseExample" fetchSize="100"
+            resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
@@ -93,7 +94,7 @@
         </if>
         <if test="limit != null">
             <if test="offset != null">
-                limit ${offset}, ${limit}
+                offset ${offset} limit ${limit}
             </if>
             <if test="offset == null">
                 limit ${limit}
