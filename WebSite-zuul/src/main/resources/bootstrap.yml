@@ -17,3 +17,9 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+zuul:
+  routes:
+    web: /website/**
+    lianjia: /linajia/**
+
+  ignored-services: "*"
