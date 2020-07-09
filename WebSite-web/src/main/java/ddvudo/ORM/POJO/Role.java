@@ -3,6 +3,10 @@ package ddvudo.ORM.POJO;
 import org.springframework.security.core.GrantedAuthority;
 
 public class Role implements GrantedAuthority {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -2820202174768533041L;
 	String name, desc;
 	Integer id;
 	Boolean lock;

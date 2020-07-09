@@ -1,6 +1,7 @@
 package ddvudo.WebComponent.Service;
 
 import ddvudo.ORM.Mapper.EnterpriseMapper;
+import ddvudo.ORM.POJO.Enterprise;
 import ddvudo.ORM.POJO.EnterpriseExample;
 import ddvudo.WebComponent.Service.Services.EnterpriseService;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +29,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 		long count = mapper.countByExample(example);
 		example.setLimit(limit);
 		example.setOffset(offset);
-		List data = mapper.selectByExample(example);
+		List<Enterprise> data = mapper.selectByExample(example);
 		Map<String, Object> res = new LinkedHashMap<>();
 		res.put("data", data);
 		res.put("count", count);

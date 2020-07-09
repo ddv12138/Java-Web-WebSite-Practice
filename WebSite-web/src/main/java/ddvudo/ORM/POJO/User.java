@@ -7,6 +7,10 @@ import java.util.Collection;
 import java.util.List;
 
 public class User implements UserDetails {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 2476687366466546959L;
 	Integer id;
 	String name, password;
 	Boolean baned, lock;
