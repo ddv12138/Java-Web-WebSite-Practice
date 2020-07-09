@@ -19,3 +19,4 @@
 /WebSite-config/target/
 /WebSite-lianjia/target/
 */target/
+*/.settings
