@@ -9,7 +9,7 @@
     <modules>
         <module>WebSite-Root</module>
         <module>WebSite-web</module>
-        <module>WebSite-eureka-config</module>
+        <module>WebSite-eureka-config-zuul</module>
         <module>WebSite-lianjia</module>
     </modules>
     <parent>
