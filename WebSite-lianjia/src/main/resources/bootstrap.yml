@@ -6,7 +6,7 @@ spring:
     config:
       discovery:
         enabled: true
-        serviceId: website-eureka-config
+        serviceId: website-eureka-config-zuul
 eureka:
   instance:
     prefer-ip-address: true

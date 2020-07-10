@@ -14,7 +14,7 @@ spring:
         #所以给config服务加前缀，避免这个问题
         prefix: /config
   application:
-    name: website-eureka-config
+    name: website-eureka-config-zuul
 eureka:
   instance:
     preferIpAddress: true
@@ -25,3 +25,13 @@ eureka:
       defaultZone: http://localhost:8002/eureka/
   server:
     wait-time-in-ms-when-sync-empty: 5
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+zuul:
+  prefix: /api/v1
