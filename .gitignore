@@ -8,6 +8,6 @@
 .factorypath
 .classpath
 .project
-/.idea/
+*/.idea/
 /ncovData/
-.idea/*
+/.idea/

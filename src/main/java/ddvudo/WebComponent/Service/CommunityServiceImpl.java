@@ -174,11 +174,13 @@ public class CommunityServiceImpl implements CommunityService {
 			Iterator<Community> it = communityList.iterator();
 			while (it.hasNext()) {
 				Community community = it.next();
-				if (null != this.selectByName(community.getName())
+				Community tmp = this.selectByName(community.getName());
+				if (null != tmp
 						|| !isCommunityInDistrict(community, district)) {
 					it.remove();
 					continue;
 				}
+				community.setUuid(tmp.getUuid());
 				community.setCity_id(district.getCity_id());
 				community.setCity_name(district.getCity_name());
 				community.setDistrict_id(district.getId() + "");
