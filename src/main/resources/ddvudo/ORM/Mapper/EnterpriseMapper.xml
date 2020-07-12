@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ddvudo.ORM.Mapper.EnterpriseMapper">
     <resultMap id="BaseResultMap" type="ddvudo.ORM.POJO.Enterprise">
-        <id column="Id" jdbcType="INTEGER" property="id"/>
+        <id column="Id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="regday" jdbcType="TIMESTAMP" property="regday"/>
@@ -75,16 +75,17 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        Id, `name`, code, regday, `character`, legalRepresentative, capital, businessScope,
-        province, city, address
+        "Id", "name", "code", "regday", "character", "legalRepresentative", "capital", "businessScope",
+    "province", "city", "address"
     </sql>
-    <select id="selectByExample" parameterType="ddvudo.ORM.POJO.EnterpriseExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="ddvudo.ORM.POJO.EnterpriseExample" fetchSize="100"
+            resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from Enterprise_Registration
+        from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -93,33 +94,33 @@
         </if>
         <if test="limit != null">
             <if test="offset != null">
-                limit ${offset}, ${limit}
+                offset ${offset} limit ${limit}
             </if>
             <if test="offset == null">
                 limit ${limit}
             </if>
         </if>
     </select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from Enterprise_Registration
-        where Id = #{id,jdbcType=INTEGER}
+        from enterprise_registration
+        where "Id" = #{id,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
-        from Enterprise_Registration
-        where Id = #{id,jdbcType=INTEGER}
+        from enterprise_registration
+        where "Id" = #{id,jdbcType=VARCHAR}
     </delete>
     <delete id="deleteByExample" parameterType="ddvudo.ORM.POJO.EnterpriseExample">
-        delete from Enterprise_Registration
+        delete from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
     <insert id="insert" keyColumn="Id" keyProperty="id" parameterType="ddvudo.ORM.POJO.Enterprise"
             useGeneratedKeys="true">
-        insert into Enterprise_Registration (`name`, code, regday,
+        insert into enterprise_registration (`name`, code, regday,
                                              `character`, legalRepresentative, capital,
                                              businessScope, province, city,
                                              address)
@@ -130,7 +131,7 @@
     </insert>
     <insert id="insertSelective" keyColumn="Id" keyProperty="id" parameterType="ddvudo.ORM.POJO.Enterprise"
             useGeneratedKeys="true">
-        insert into Enterprise_Registration
+        insert into enterprise_registration
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">
                 `name`,
@@ -171,7 +172,7 @@
                 #{code,jdbcType=VARCHAR},
             </if>
             <if test="regday != null">
-                #{regday,jdbcType=TIMESTAMP},
+                #{regday,jdbcType=VARCHAR},
             </if>
             <if test="character != null">
                 #{character,jdbcType=VARCHAR},
@@ -197,16 +198,39 @@
         </trim>
     </insert>
     <select id="countByExample" parameterType="ddvudo.ORM.POJO.EnterpriseExample" resultType="java.lang.Long">
-        select count(1) from Enterprise_Registration
+        select count(1) from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
+    <select id="selectByExample_Map_Forward" parameterType="ddvudo.ORM.POJO.EnterpriseExample"
+            resultMap="BaseResultMap" resultSetType="FORWARD_ONLY" fetchSize="100">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from enterprise_registration
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                offset ${offset} limit ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update Enterprise_Registration
+        update enterprise_registration
         <set>
             <if test="record.id != null">
-                Id = #{record.id,jdbcType=INTEGER},
+                Id = #{record.id,jdbcType=VARCHAR},
             </if>
             <if test="record.name != null">
                 `name` = #{record.name,jdbcType=VARCHAR},
@@ -244,8 +268,8 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update Enterprise_Registration
-        set Id = #{record.id,jdbcType=INTEGER},
+        update enterprise_registration
+        set Id = #{record.id,jdbcType=VARCHAR},
         `name` = #{record.name,jdbcType=VARCHAR},
         code = #{record.code,jdbcType=VARCHAR},
         regday = #{record.regday,jdbcType=TIMESTAMP},
@@ -261,7 +285,7 @@
         </if>
     </update>
     <update id="updateByPrimaryKeySelective" parameterType="ddvudo.ORM.POJO.Enterprise">
-        update Enterprise_Registration
+        update enterprise_registration
         <set>
             <if test="name != null">
                 `name` = #{name,jdbcType=VARCHAR},
@@ -294,10 +318,10 @@
                 address = #{address,jdbcType=VARCHAR},
             </if>
         </set>
-        where Id = #{id,jdbcType=INTEGER}
+        where Id = #{id,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="ddvudo.ORM.POJO.Enterprise">
-        update Enterprise_Registration
+        update enterprise_registration
         set `name`              = #{name,jdbcType=VARCHAR},
             code                = #{code,jdbcType=VARCHAR},
             regday              = #{regday,jdbcType=TIMESTAMP},
@@ -307,7 +331,7 @@
             businessScope       = #{businessscope,jdbcType=VARCHAR},
             province            = #{province,jdbcType=VARCHAR},
             city                = #{city,jdbcType=VARCHAR},
-        address = #{address,jdbcType=VARCHAR}
-        where Id = #{id,jdbcType=INTEGER}
+            address             = #{address,jdbcType=VARCHAR}
+        where Id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>

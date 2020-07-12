@@ -1,6 +1,9 @@
 package ddvudo.GlobalUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
@@ -33,10 +36,16 @@ public class CommonMethodReturnHanlder extends RequestResponseBodyMethodProcesso
 
 	@Override
 	public void handleReturnValue(@Nullable Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws IOException, HttpMediaTypeNotAcceptableException {
-		CommonResult responseInfo;
+		CommonResult responseInfo = null;
 		if (returnValue instanceof CommonResult) {
 			responseInfo = (CommonResult) returnValue;
-		} else {
+		} else if(returnValue instanceof ResponseEntity) {//Swagger2的特殊处理
+			ResponseEntity responseEntity = (ResponseEntity) returnValue;
+			mavContainer.setRequestHandled(true);
+			ServletServerHttpRequest inputMessage = createInputMessage(webRequest);
+			ServletServerHttpResponse outputMessage = createOutputMessage(webRequest);
+			writeWithMessageConverters(responseEntity.getBody(), returnType, inputMessage, outputMessage);
+		}else{
 			responseInfo = new CommonResult(SystemCode.OK, "success", returnValue);
 		}
 

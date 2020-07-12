@@ -1,4 +1,5 @@
 /target/
+*/target/
 /.metadata/
 /.settings
 /RemoteSystemsTempFiles
@@ -8,6 +9,9 @@
 .factorypath
 .classpath
 .project
-/.idea/
+*/.idea/
 /ncovData/
 .idea/*
+.idea/
+*/*.iml
+*.iml
