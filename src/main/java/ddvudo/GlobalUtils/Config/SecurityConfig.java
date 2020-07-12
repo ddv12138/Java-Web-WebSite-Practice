@@ -27,6 +27,14 @@ public class SecurityConfig<S extends Session>
 	RestAuthenticationProvider restAuthenticationProvider;
 	RestLogoutSuccessHandler restLogoutSuccessHandler;
 
+	private static final String[] AUTH_WHITELIST = new String[]{
+			"/user/login",
+			"/user/logout", "/",
+			"/swagger-resources/**",
+			"/swagger-ui.html",
+			"/v2/api-docs",
+			"/webjars/**"};
+
 	public SecurityConfig(UserService userService, PasswdEncoder passwdEncoder,
 						  RestAccessDeniedHandler restAccessDeniedHandler,
 						  RestAuthenticationSuccessHandler restAuthenticationSuccessHandler,
@@ -47,7 +55,7 @@ public class SecurityConfig<S extends Session>
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/user/login", "/user/logout", "/").permitAll()
+				.antMatchers(AUTH_WHITELIST).permitAll()
 				.regexMatchers(".*(css|js|ico|png|jpg|html)\\??[^/\\\\]*").permitAll()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()

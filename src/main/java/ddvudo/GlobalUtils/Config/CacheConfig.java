@@ -4,9 +4,12 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.batch.MyBatisCursorItemReader;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -20,8 +23,15 @@ import java.time.Duration;
 @EnableCaching
 class CacheConfig
 		extends CachingConfigurerSupport {
-	final
-	RedisConnectionFactory redisConnectionFactory;
+	final RedisConnectionFactory redisConnectionFactory;
+
+	@Bean
+	public MyBatisCursorItemReader myMyBatisCursorItemReader(SqlSessionFactory sqlSessionFactory) {
+		MyBatisCursorItemReader myBatisCursorItemReader = new MyBatisCursorItemReader();
+		myBatisCursorItemReader.setSqlSessionFactory(sqlSessionFactory);
+		myBatisCursorItemReader.setQueryId("ddvudo.ORM.Mapper.EnterpriseMapper.selectByExample");
+		return myBatisCursorItemReader;
+	}
 
 	public CacheConfig(RedisConnectionFactory redisConnectionFactory) {
 		this.redisConnectionFactory = redisConnectionFactory;
