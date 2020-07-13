@@ -1,5 +1,7 @@
 package ddvudo.WebComponent.Service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import ddvudo.ORM.Mapper.ResourceMapper;
 import ddvudo.ORM.POJO.Resource;
 import ddvudo.ORM.POJO.Role;
@@ -32,6 +34,15 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
+	@HystrixCommand(
+			commandProperties = {
+					@HystrixProperty(name = "execution.siolation.thread.timeoutInMilliseconds", value = "5000")
+			},
+			threadPoolKey = "selectResourceListByRole_POOL",
+			threadPoolProperties = {
+					@HystrixProperty(name = "coreSize", value = "5"),
+					@HystrixProperty(name = "maxQueueSize", value = "3")
+			})
 	public List<Resource> selectResourceListByRole(Role role) {
 		return resourceMapper.selectResourceListByRole(role);
 	}

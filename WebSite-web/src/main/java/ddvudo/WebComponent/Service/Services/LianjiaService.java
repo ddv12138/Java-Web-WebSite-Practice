@@ -16,7 +16,7 @@ import java.util.List;
 public interface LianjiaService {
 
 	@RequestMapping(value = "/city/getCityInfo", method = RequestMethod.GET, consumes = "application/json")
-	CommonResult getCityInfo(String cityName);
+	CommonResult<City> getCityInfo(String cityName);
 
 	@RequestMapping(value = "/city/available", method = RequestMethod.GET)
 	List<City> selectAvailableCity();

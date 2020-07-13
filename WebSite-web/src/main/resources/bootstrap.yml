@@ -15,7 +15,7 @@ eureka:
 ribbon:
   ReadTimeout: 5000
   ConnectTimeout: 5000
-logging:
-  level:
-    root:
-      debug
+#logging:
+#  level:
+#    root:
+#      info
