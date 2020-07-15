@@ -5,7 +5,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -54,7 +53,7 @@ public class ElasticSearchTask {
 //		}
 //	}
 
-	@Scheduled(fixedDelay = 1000L * 60L * 60L * 24L * 30L)
+//	@Scheduled(fixedDelay = 1000L * 60L * 60L * 24L * 30L)
 	public void doTask() {
 //		EnterpriseExample example = new EnterpriseExample();
 //		example.createCriteria();
