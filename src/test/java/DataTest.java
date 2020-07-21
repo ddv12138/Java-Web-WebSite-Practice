@@ -1,7 +1,7 @@
 import ddvudo.Application;
-import ddvudo.WebComponent.Service.Services.CityService;
-import ddvudo.WebComponent.Service.Services.CommunityService;
-import ddvudo.WebComponent.Service.Services.DistrictService;
+import ddvudo.Service.Services.CityService;
+import ddvudo.Service.Services.CommunityService;
+import ddvudo.Service.Services.DistrictService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

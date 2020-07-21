@@ -2,7 +2,7 @@ package ddvudo.ScheduledTask;
 
 import ddvudo.GlobalUtils.Global;
 import ddvudo.ORM.POJO.Ncov;
-import ddvudo.WebComponent.Service.Services.NcovService;
+import ddvudo.Service.Services.NcovService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Value;
