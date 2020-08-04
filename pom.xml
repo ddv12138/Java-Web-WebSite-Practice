@@ -11,6 +11,7 @@
         <module>WebSite-web</module>
         <module>WebSite-eureka-config-zuul</module>
         <module>WebSite-lianjia</module>
+        <module>WebSite_FileManage</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
