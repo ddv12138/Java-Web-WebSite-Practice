@@ -1,7 +1,7 @@
 package ddvudo.GlobalUtils.SecurityHandlers;
 
 import ddvudo.ORM.POJO.User;
-import ddvudo.WebComponent.Service.Services.UserService;
+import ddvudo.Service.Services.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;

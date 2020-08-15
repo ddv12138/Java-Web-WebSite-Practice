@@ -2,7 +2,7 @@ package ddvudo.GlobalUtils.SecurityHandlers;
 
 import ddvudo.GlobalUtils.SystemCode;
 import ddvudo.ORM.POJO.User;
-import ddvudo.WebComponent.Service.Services.UserService;
+import ddvudo.Service.Services.UserService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
