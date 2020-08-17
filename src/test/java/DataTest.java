@@ -1,7 +1,6 @@
 import ddvudo.Application;
-import ddvudo.Service.Services.CityService;
-import ddvudo.Service.Services.CommunityService;
-import ddvudo.Service.Services.DistrictService;
+import org.jasypt.encryption.StringEncryptor;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(classes = Application.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DataTest {
-	@Autowired
-	CityService cityService;
-	@Autowired
-	CommunityService communityService;
-	@Autowired
-	DistrictService districtService;
+//	@Autowired
+//	CityService cityService;
+//	@Autowired
+//	CommunityService communityService;
+//	@Autowired
+//	DistrictService districtService;
 
 	@Test
 	public void insertGaoDeLngAngLat() {
@@ -42,5 +41,21 @@ public class DataTest {
 //				Global.Logger(this).info(c+++"/"+communities.size());
 //			}
 //		}
+	}
+
+	@Autowired
+	StringEncryptor encryptor;
+
+	@Test
+	public void getPass() {
+		String url = encryptor.encrypt(
+				"jdbc:postgresql://149.129.74.179:5432/how2jdb?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8");
+		String name = encryptor.encrypt("postgres");
+		String password = encryptor.encrypt("liukang951006");
+		System.out.println(url + "----------------");
+		System.out.println(name + "----------------");
+		System.out.println(password + "----------------");
+		Assert.assertTrue(name.length() > 0);
+		Assert.assertTrue(password.length() > 0);
 	}
 }
