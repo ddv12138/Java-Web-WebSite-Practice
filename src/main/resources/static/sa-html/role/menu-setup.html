@@ -125,16 +125,15 @@
             }
         },
         created: function () {
-
-
+            let that = this;
             //当前有权限的节点
             sa.get('/resource/byrole/' + role_id, null, function (res) {
                 if (res && res.state) {
                     let data = res.data;
                     for (let i = 0; i < data.length; i++) {
-                        this.select_list.push(data[i].id);
+                        that.select_list.push(data[i].id);
                     }
-                    console.log(this.select_list);
+                    console.log(that.select_list);
                     // 全部
                     sa.get('/resource', null, function (arg) {
                         if (!arg || !arg.state) {
@@ -143,7 +142,7 @@
                             arg = arg.data;
                         }
                         parseDataTooTree(arg);
-                        this.dataList = arg;	// 数据
+                        that.dataList = arg;	// 数据
                     });
                 }
             });
