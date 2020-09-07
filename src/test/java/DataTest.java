@@ -49,12 +49,17 @@ public class DataTest {
 	@Test
 	public void getPass() {
 		String url = encryptor.encrypt(
-				"jdbc:postgresql://149.129.74.179:5432/how2jdb?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8");
+				"jdbc:postgresql://194.156.133.226:5432/how2jdb?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8");
 		String name = encryptor.encrypt("postgres");
 		String password = encryptor.encrypt("liukang951006");
-		System.out.println(url + "----------------");
-		System.out.println(name + "----------------");
-		System.out.println(password + "----------------");
+		System.out.println("----------------");
+		System.out.println(url);
+		System.out.println(name);
+		System.out.println(password);
+		System.out.println(encryptor.encrypt("194.156.133.226"));
+		System.out.println(encryptor.encrypt("6379"));
+		System.out.println(encryptor.encrypt(
+				"jdbc:postgresql://localhost:5432/how2jdb?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8"));
 		Assert.assertTrue(name.length() > 0);
 		Assert.assertTrue(password.length() > 0);
 	}
