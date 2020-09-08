@@ -2,6 +2,7 @@ package ddvudo.Service;
 
 import ddvudo.ORM.POJO.WireGuardConfig;
 import ddvudo.Service.Services.WireGuardService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.whispersystems.curve25519.Curve25519;
@@ -26,7 +27,13 @@ public class WireGuardServiceimpl implements WireGuardService {
 		String serverPrefix = serverCIDR.substring(0, serverCIDR.lastIndexOf("."));
 
 		config.getInterface().setAddress(serverPrefix + "." + 1).setListenPort(listeningPort)
-				.setPrivateKey(serverPri).setPostUp(postUpRule).setPostDown(postDownRule);
+				.setPrivateKey(serverPri);
+		if (!StringUtils.isEmpty(postUpRule)) {
+			config.getInterface().setPostUp(postUpRule);
+		}
+		if (!StringUtils.isEmpty(postDownRule)) {
+			config.getInterface().setPostDown(postDownRule);
+		}
 		configs.add(config);
 		for (int i = 2; i < numberOfClients + 2; i++) {
 			Curve25519KeyPair peerKeyPair = Curve25519.getInstance(Curve25519.JAVA).generateKeyPair();

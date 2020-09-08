@@ -166,6 +166,10 @@
             <artifactId>curve25519-java</artifactId>
             <version>0.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

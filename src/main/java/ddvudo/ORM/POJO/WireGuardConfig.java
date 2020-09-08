@@ -4,15 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WireGuardConfig {
-	Interface anInterface = new Interface();
+	Interface Interface = new Interface();
 	List<Peer> peers = new LinkedList<Peer>();
 
 	public Interface getInterface() {
-		return anInterface;
+		return Interface;
 	}
 
 	public void setInterface(Interface anInterface) {
-		this.anInterface = anInterface;
+		this.Interface = anInterface;
 	}
 
 	public List<Peer> getPeers() {
