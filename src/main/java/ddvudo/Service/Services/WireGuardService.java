@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface WireGuardService {
 	List<WireGuardConfig> newConfigList(String serverCIDR, int port, int numberOfClients, String Endpoint,
+										String ClientDns,
 										String postUpRule, String postDownRule);
 }

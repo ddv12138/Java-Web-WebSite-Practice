@@ -16,7 +16,8 @@ import java.util.List;
 @Transactional
 public class WireGuardServiceimpl implements WireGuardService {
 	public List<WireGuardConfig> newConfigList(String serverCIDR, int listeningPort, int numberOfClients,
-											   String Endpoint, String postUpRule, String postDownRule) {
+											   String Endpoint, String ClientDns, String postUpRule,
+											   String postDownRule) {
 		List<WireGuardConfig> configs = new LinkedList<>();
 		Curve25519KeyPair serverkeyPair = Curve25519.getInstance(Curve25519.JAVA).generateKeyPair();
 		String serverPub = Base64.getEncoder().encodeToString(serverkeyPair.getPublicKey());
@@ -45,8 +46,9 @@ public class WireGuardServiceimpl implements WireGuardService {
 			config.getPeers().add(peer);
 
 			WireGuardConfig peerConfig = new WireGuardConfig();
-			peerConfig.getInterface().setPrivateKey(peerPri).setAddress(serverPrefix + "." + i + "/" + subNetShadow)
-					.setDNS("114.114.114.114");
+			peerConfig.getInterface().setPrivateKey(peerPri).setAddress(serverPrefix + "." + i + "/" + subNetShadow);
+			if (!StringUtils.isEmpty(ClientDns))
+				peerConfig.getInterface().setDNS(ClientDns);
 			WireGuardConfig.Peer peerOfpeer = peerConfig.new Peer();
 			peerOfpeer.setPublicKey(serverPub).setAllowedIPs("0.0.0.0/0").setEndpoint(Endpoint);
 			peerConfig.getPeers().add(peerOfpeer);

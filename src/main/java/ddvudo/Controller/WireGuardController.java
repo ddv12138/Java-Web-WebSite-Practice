@@ -33,9 +33,11 @@ public class WireGuardController {
 		Assert.notNull(endPoint, "客户端使用的服务器端的端点为空");
 		Assert.isTrue(numberOfClients > 0, "客户端数量必须大于0");
 
+		String dns = par.get("dns");
 		String postUpRule = par.get("postUpRule");
 		String postDownRule = par.get("postDownRule");
 
-		return wireGuardService.newConfigList(ServerCIDR, port, numberOfClients, endPoint, postUpRule, postDownRule);
+		return wireGuardService
+				.newConfigList(ServerCIDR, port, numberOfClients, endPoint, dns, postUpRule, postDownRule);
 	}
 }
