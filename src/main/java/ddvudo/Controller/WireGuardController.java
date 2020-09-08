@@ -22,7 +22,7 @@ public class WireGuardController {
 		this.wireGuardService = wireGuardService;
 	}
 
-	@PostMapping("/generatorConfig")
+	@PostMapping("/genconfig")
 	@ApiOperation("生成wireguard服务端配置和相应数量的客户端配置")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "par", dataTypeClass = Map.class, examples = @Example({
