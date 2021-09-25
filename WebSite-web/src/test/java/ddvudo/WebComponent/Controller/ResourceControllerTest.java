@@ -1,7 +1,7 @@
 package ddvudo.WebComponent.Controller;
 
 import com.alibaba.fastjson.JSON;
-import ddvudo.Application;
+import ddvudo.WebApplication;
 import ddvudo.ORM.POJO.Resource;
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = WebApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @ContextConfiguration

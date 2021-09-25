@@ -1,6 +1,7 @@
-package ddvudo.root.GlobalUtils;
+package ddvudo.GlobalUtils;
 
 
+import ddvudo.root.GlobalUtils.Global;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

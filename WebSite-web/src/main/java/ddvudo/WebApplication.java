@@ -15,9 +15,9 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @SpringBootApplication
 @EnableFeignClients
 @EnableCircuitBreaker
-public class Application {
+public class WebApplication {
 	public static void main(String... args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(WebApplication.class, args);
 	}
 
 	@Bean

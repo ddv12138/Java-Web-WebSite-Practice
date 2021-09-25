@@ -1,0 +1,21 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: website-eureka
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 5
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

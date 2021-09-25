@@ -2,7 +2,7 @@ package ddvudo.WebComponent.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import ddvudo.Application;
+import ddvudo.WebApplication;
 import ddvudo.ORM.POJO.Role;
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = WebApplication.class)
 @RunWith(SpringRunner.class)
 @Transactional
 @WithMockUser(username = "测试用户", authorities = {"管理员", "普通用户"})

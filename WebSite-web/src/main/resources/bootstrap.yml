@@ -5,13 +5,13 @@ spring:
     config:
       discovery:
         enabled: true
-        service-id: website-eureka-config-zuul
+        service-id: website-config
 eureka:
   instance:
     preferIpAddress: true
   client:
     service-url:
-      defaultZone: http://localhost:8002/eureka/
+      defaultZone: http://localhost:8001/eureka/
 ribbon:
   ReadTimeout: 5000
   ConnectTimeout: 5000

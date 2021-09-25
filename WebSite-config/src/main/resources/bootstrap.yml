@@ -1,0 +1,38 @@
+server:
+  port: 8002
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:config/
+      enabled: true
+  #        git:
+#          uri: https://github.com/ddv12138/SpringCloudConfigrepository
+#          default-label: master
+#          skip-ssl-validation: true
+#        #eureka和config集成在一起时，config会拦截/**/**的调用，
+#        #导致http://localhost:8080/eureka/css/wro.css
+#        #和http://localhost:8080/eureka/js/wro.js这两个eureka页面的资源文件访问不到，
+#        #所以给config服务加前缀，避免这个问题
+#        prefix: /config
+  application:
+    name: website-config
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8001/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
