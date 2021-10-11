@@ -1,0 +1,57 @@
+server:
+  compression:
+    enabled: true
+  port: 8080
+  servlet:
+    session:
+      timeout: 600
+spring:
+  datasource:
+    druid:
+      driver-class-name: org.postgresql.Driver
+      initial-size: 5
+      max-active: 10
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      url: jdbc:postgresql://ddvudo.top:5432/how2jdb?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
+      username: '{cipher}a6a8d8f0967e219f31881b95c81bdbafb5a701a6c88b33b1fe1e907ef1aae2b9'
+      password: '{cipher}177b92806ff31e402e8ca4a7572b469a2b8315136f82bdd98de67914aa9353b3'
+  mvc:
+    hiddenmethod:
+      filter: true
+  redis:
+    host: ddvudo.top
+    password: '{cipher}177b92806ff31e402e8ca4a7572b469a2b8315136f82bdd98de67914aa9353b3'
+    port: 6379
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 500MB
+  session:
+    store-type: redis
+    timeout: 3600
+ddvudo:
+  MinIO:
+    accessKey: admin
+    endpoint: 'http://149.129.74.179:9000/'
+    secretKey: liukang951006
+file:
+  tmp:
+    location: 'D://ncovData'
+logging:
+  level:
+    root: INFO
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+mybatis:
+  mapper-locations: 'classpath:ddvudo/ORM/Mapper/*.xml'
+pagehelper:
+  reasonable: true

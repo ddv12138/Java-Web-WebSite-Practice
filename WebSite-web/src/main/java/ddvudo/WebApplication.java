@@ -24,4 +24,5 @@ public class WebApplication {
 	Logger.Level feignLoggerLevel() {
 		return Logger.Level.FULL;
 	}
+
 }

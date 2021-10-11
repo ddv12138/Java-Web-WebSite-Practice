@@ -76,10 +76,6 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>2.1.1</version>
             </dependency>
-            <!--        <dependency>-->
-            <!--            <groupId>org.springframework.boot</groupId>-->
-            <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-            <!--        </dependency>-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -114,22 +110,6 @@
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-core</artifactId>
                 <version>1.4.0</version>
-            </dependency>
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>6.0.11</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>jsr305</artifactId>
-                        <groupId>com.google.code.findbugs</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-csv</artifactId>
-                <version>1.8</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -170,6 +150,7 @@
                     <groupId>com.google.code.findbugs</groupId>
                 </exclusion>
             </exclusions>
+            <version>6.0.11</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -179,6 +160,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
+            <version>1.8</version>
         </dependency>
     </dependencies>
 </project>
