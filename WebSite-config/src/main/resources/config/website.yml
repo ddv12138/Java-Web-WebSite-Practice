@@ -52,6 +52,6 @@ management:
       exposure:
         include: '*'
 mybatis:
-  mapper-locations: 'classpath:ddvudo/ORM/Mapper/*.xml'
+  mapper-locations: 'classpath:ddvudo/ORM/mapper/*.xml'
 pagehelper:
   reasonable: true

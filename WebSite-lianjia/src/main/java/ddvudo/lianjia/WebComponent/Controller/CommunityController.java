@@ -4,7 +4,7 @@ import ddvudo.lianjia.ORM.POJO.City;
 import ddvudo.lianjia.ORM.POJO.Community;
 import ddvudo.lianjia.WebComponent.Service.CityServiceImpl;
 import ddvudo.lianjia.WebComponent.Service.Services.CommunityService;
-import ddvudo.root.GlobalUtils.Global;
+import ddvudo.web.utils.Global;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
