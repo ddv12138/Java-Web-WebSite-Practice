@@ -7,7 +7,7 @@ import ddvudo.lianjia.ORM.POJO.City;
 import ddvudo.lianjia.ORM.POJO.Community;
 import ddvudo.lianjia.ORM.POJO.District;
 import ddvudo.lianjia.WebComponent.Service.Services.CommunityService;
-import ddvudo.web.utils.Global;
+import ddvudo.lianjia.utils.Global;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

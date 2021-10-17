@@ -8,7 +8,7 @@ import ddvudo.lianjia.ORM.POJO.District;
 import ddvudo.lianjia.WebComponent.Service.Services.CityService;
 import ddvudo.lianjia.WebComponent.Service.Services.CommunityService;
 import ddvudo.lianjia.WebComponent.Service.Services.DistrictService;
-import ddvudo.web.utils.Global;
+import ddvudo.lianjia.utils.Global;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;

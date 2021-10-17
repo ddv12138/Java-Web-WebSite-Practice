@@ -2,7 +2,7 @@ package ddvudo.lianjia.WebComponent.Controller;
 
 import ddvudo.lianjia.ORM.POJO.City;
 import ddvudo.lianjia.WebComponent.Service.Services.CityService;
-import ddvudo.web.utils.Global;
+import ddvudo.lianjia.utils.Global;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
