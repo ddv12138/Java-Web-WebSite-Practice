@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ddvudo.ORM.Mapper.RoleMapper">
+    <resultMap id="roleResult" type="ddvudo.web.ORM.POJO.Role">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="desc" column="desc"/>
+        <result property="lock" column="lock"/>
+    </resultMap>
+    <select id="listRole" resultType="ddvudo.web.ORM.POJO.Role">
+        select id, name, "desc", "lock"
+        From roletable
+        order by id
+    </select>
+    <select id="selectById" resultType="ddvudo.web.ORM.POJO.Role">
+        select id, name, "desc", "lock"
+        From roletable
+        where id = #{id}
+        order by id
+    </select>
+    <insert id="updateRoleResource">
+        insert into role_res_map (roleid, resid) values
+        <foreach collection="resids" item="resid" separator=",">
+            (#{role.id},#{resid})
+        </foreach>
+    </insert>
+    <insert id="updateRoleByUser">
+        insert into user_role_map (userid, roleid) values
+        <foreach collection="roleids" item="roleid" separator=",">
+            (#{user.id},#{roleid})
+        </foreach>
+    </insert>
+    <insert id="insertOne" parameterType="ddvudo.web.ORM.POJO.Role">
+        insert into roletable (name, "desc", "lock")
+        VALUES (#{name}, #{desc}, #{lock})
+    </insert>
+    <delete id="clearResourceByRole">
+        delete
+        from role_res_map
+        where roleid = #{id}
+    </delete>
+    <delete id="deleteOne">
+        delete
+        from roletable
+        where id = #{id}
+    </delete>
+    <update id="updateOne">
+        update roletable
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null!=name">name=#{name},</if>
+            <if test="null!=desc">"desc"=#{desc},</if>
+            <if test="null!=lock">"lock"=#{lock},</if>
+        </trim>
+        where id=#{id}
+    </update>
+    <select id="listRoleByUser" parameterType="ddvudo.web.ORM.POJO.User" resultMap="roleResult">
+        select r.*
+        From roletable r
+                 inner join user_role_map map on map.roleid = r.id
+                 inner join usertable u on u.id = map.userid
+        where u.id = #{id}
+    </select>
+    <select id="clearRoleByUser" parameterType="ddvudo.web.ORM.POJO.User">
+        delete
+        from user_role_map
+        where userid = #{id}
+    </select>
+</mapper>

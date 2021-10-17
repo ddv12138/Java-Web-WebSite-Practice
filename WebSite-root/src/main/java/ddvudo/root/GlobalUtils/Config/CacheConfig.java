@@ -59,7 +59,7 @@ class CacheConfig
         反解析就会报com.alibaba.fastjson.JSONException: autoType is not support的异常
         可参考 https://blog.csdn.net/u012240455/article/details/80538540
          */
-		ParserConfig.getGlobalInstance().addAccept("ddvudo.ORM.POJO.");
+		ParserConfig.getGlobalInstance().addAccept("ddvudo.web.ORM.POJO.");
 
 		//Jackson序列化方式
 //		Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
