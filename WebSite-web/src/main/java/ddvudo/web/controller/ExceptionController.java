@@ -1,7 +1,10 @@
 package ddvudo.web.controller;
 
+import com.netflix.discovery.converters.Auto;
+import ddvudo.web.clients.LianjiaClient;
 import ddvudo.web.exception.ControllerException;
 import ddvudo.web.service.ExceptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/exception")
 public class ExceptionController {
 	ExceptionService exceptionService;
+	@Autowired
+	LianjiaClient lianjiaClient;
 
 	public ExceptionController(ExceptionService exceptionService) {
 		this.exceptionService = exceptionService;
@@ -28,5 +33,10 @@ public class ExceptionController {
 	@GetMapping("/mapper")
 	public Boolean getMapperException() {
 		return exceptionService.getMapperException();
+	}
+
+	@GetMapping("/test")
+	public String test(){
+		return lianjiaClient.getCityInfo("武汉");
 	}
 }

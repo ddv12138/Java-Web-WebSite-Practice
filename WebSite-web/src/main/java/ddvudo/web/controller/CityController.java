@@ -1,8 +1,8 @@
 package ddvudo.web.controller;
 
+import ddvudo.web.clients.LianjiaClient;
 import ddvudo.web.utils.CommonResult;
 import ddvudo.web.bean.City;
-import ddvudo.web.service.LianjiaService;
 import ddvudo.web.utils.Global;
 import ddvudo.web.utils.SystemCode;
 import io.swagger.annotations.Api;
@@ -20,10 +20,11 @@ import java.util.List;
 @RequestMapping("/city")
 @Api(value = "城市信息", tags = "城市信息")
 class CityController {
-	LianjiaService lianjiaService;
 
-	public CityController(LianjiaService lianjiaService) {
-		this.lianjiaService = lianjiaService;
+	LianjiaClient lianjiaClient;
+
+	public CityController(LianjiaClient lianjiaClient) {
+		this.lianjiaClient = lianjiaClient;
 	}
 
 	@GetMapping("/getCityInfo")
@@ -39,6 +40,6 @@ class CityController {
 	@GetMapping("/available")
 	@ApiOperation(value = "城市列表", notes = "获取可用城市列表", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<City> selectAvailableCity() {
-		return lianjiaService.selectAvailableCity();
+		return lianjiaClient.selectAvailableCity();
 	}
 }

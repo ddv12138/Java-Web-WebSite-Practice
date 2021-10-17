@@ -1,7 +1,7 @@
 package ddvudo.web.controller;
 
 import ddvudo.web.bean.Community;
-import ddvudo.web.service.LianjiaService;
+import ddvudo.web.clients.LianjiaClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/community")
 public class CommunityController {
 
-	LianjiaService lianjiaService;
+	LianjiaClient lianjiaClient;
 
-	public CommunityController(LianjiaService lianjiaService) {
-		this.lianjiaService = lianjiaService;
+	public CommunityController(LianjiaClient lianjiaClient) {
+		this.lianjiaClient = lianjiaClient;
 	}
 
 	@GetMapping("/list")
@@ -30,7 +30,7 @@ public class CommunityController {
 			@ApiImplicitParam(name = "cityName", value = "城市名称", example = "武汉", required = true)
 	})
 	public List<Community> getCommunityByCity(String cityName) {
-		List<Community> communities = lianjiaService.getCommunityByCity(cityName);
+		List<Community> communities = lianjiaClient.getCommunityByCity(cityName);
 		return communities;
 	}
 }

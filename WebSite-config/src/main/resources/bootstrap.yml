@@ -36,5 +36,3 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-encrypt:
-  key: liukang951006
