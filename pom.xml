@@ -7,10 +7,10 @@
     <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>WebSite-web</module>
-        <module>WebSite-eureka</module>
-        <module>WebSite-lianjia</module>
-        <module>WebSite-config</module>
+        <module>web</module>
+        <module>eureka</module>
+        <module>lianjia</module>
+        <module>config</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

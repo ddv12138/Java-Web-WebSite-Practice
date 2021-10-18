@@ -19,7 +19,7 @@ spring:
 #        #所以给config服务加前缀，避免这个问题
 #        prefix: /config
   application:
-    name: website-config
+    name: config
 eureka:
   instance:
     prefer-ip-address: true

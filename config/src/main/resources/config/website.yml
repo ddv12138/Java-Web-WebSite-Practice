@@ -32,6 +32,10 @@ spring:
   session:
     store-type: redis
     timeout: 3600
+ribbon:
+  eager-load:
+    enabled: true
+    clients: lianjia
 ddvudo:
   MinIO:
     accessKey: admin

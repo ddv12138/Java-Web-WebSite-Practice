@@ -1,5 +1,6 @@
 package ddvudo.web.controller;
 
+import ddvudo.web.bean.Community;
 import ddvudo.web.clients.LianjiaClient;
 import ddvudo.web.utils.CommonResult;
 import ddvudo.web.bean.City;
@@ -10,9 +11,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,8 +32,7 @@ class CityController {
 			@ApiImplicitParam(name = "cityName", value = "城市名称", example = "武汉", required = true)
 	})
 	public CommonResult getCityInfo(String cityName) {
-		String res = Global.doGetHttpRequest("http://api.map.baidu.com/place/v2/search?query=" + cityName + "&region=全国&output=json&ak=pB1cQmp3mKHrI8PMYQGoogGvGnpahqNn");
-		return new CommonResult(SystemCode.OK, "success", res);
+		return new CommonResult(SystemCode.OK, "success", lianjiaClient.getCityInfo(cityName));
 	}
 
 	@GetMapping("/available")

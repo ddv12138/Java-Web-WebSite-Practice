@@ -30,7 +30,6 @@ public class CommunityController {
 			@ApiImplicitParam(name = "cityName", value = "城市名称", example = "武汉", required = true)
 	})
 	public List<Community> getCommunityByCity(String cityName) {
-		List<Community> communities = lianjiaClient.getCommunityByCity(cityName);
-		return communities;
+		return lianjiaClient.getCommunityByCity(cityName);
 	}
 }
