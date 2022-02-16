@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <fastjson.version>1.2.58</fastjson.version>
         <argLine>-Dfile.encoding=UTF-8</argLine>
-        <postgresql.version>42.2.6</postgresql.version>
+        <postgresql.version>42.3.3</postgresql.version>
         <java.version>1.8</java.version>
         <springboot.version>2.2.1.RELEASE</springboot.version>
         <springcloud.vaersion>Hoxton.SR4</springcloud.vaersion>
